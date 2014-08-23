@@ -15,7 +15,7 @@
     TileNode *tileNode = [TileNode spriteNodeWithImageNamed:@"key"];
     tileNode.position = position;
     tileNode.anchorPoint = CGPointMake(0.5, 0);
-    tileNode.name = @"keyTile";
+    tileNode.name = @"tileNode";
 
     return tileNode;
 }

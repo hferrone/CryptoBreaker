@@ -11,11 +11,15 @@
 #import "RotorNode.h"
 #import "TileNode.h"
 
+static NSString * const tileNodeName = @"movable";
+
 @interface MainGameScene ()
 
-@property NSNumber *levelScore;
+@property NSInteger levelScore;
 @property NSString *deckLetter1;
 @property NSString *deckLetter2;
+@property (nonatomic, strong) SKSpriteNode *selectedNode;
+@property (nonatomic, strong) SKSpriteNode *destinationNode;
 
 @end
 
@@ -29,12 +33,14 @@
 //        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
 //        [self addChild:background];
 
-        self.levelScore = @0;
-        [self randomTileSelection];
+        //[self randomTileSelection];
+        self.levelScore = 0;
+        [self generateNewTile];
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
         keyNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 25);
+        _destinationNode = keyNode1;
         [self addChild:keyNode1];
 
         KeyNode *keyNode2 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
@@ -62,45 +68,14 @@
         scoreNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) + 100);
         [self addChild:scoreNode2];
 
-        //tile deck nodes
-        KeyNode *tileNode1 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(25, 65)];
-        tileNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 25);
-        [self addChild:tileNode1];
-
-        //add label as child and use random tile letter generator to fill text
-        SKLabelNode *tileLetterLabel1 = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        tileLetterLabel1.text = self.deckLetter1;
-        tileLetterLabel1.fontColor = [UIColor blackColor];
-        tileLetterLabel1.fontSize = 16;
-        [tileNode1 addChild:tileLetterLabel1];
-
-        KeyNode *tileNode2 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(25, 65)];
-        tileNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 25);
-        [self addChild:tileNode2];
-
-        //add label as child and use random tile letter generator to fill text
-        SKLabelNode *tileLetterLabel2 = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        tileLetterLabel2.text = self.deckLetter2;
-        tileLetterLabel2.fontColor = [UIColor blackColor];
-        tileLetterLabel2.fontSize = 16;
-        [tileNode2 addChild:tileLetterLabel2];
-
         //rotor instance
         RotorNode *rotorNode = [RotorNode spriteNodeWithImageNamed:@"rotor"];
         rotorNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 235);
         [self addChild:rotorNode];
 
-        //score label
-        SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        scoreLabel.text = self.levelScore.description;
-        scoreLabel.fontColor = [UIColor whiteColor];
-        scoreLabel.fontSize = 16;
-        scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
-        [self addChild:scoreLabel];
-
         //timer lable
         SKLabelNode *timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        timerLabel.text = self.levelScore.description;
+        timerLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
         timerLabel.fontColor = [UIColor whiteColor];
         timerLabel.fontSize = 16;
         timerLabel.text = @"0:00";
@@ -110,28 +85,117 @@
     return self;
 }
 
-#pragma tile selection methods
--(void)randomTileSelection
+-(void)generateNewTile
 {
-    //array of possible letters
-    NSArray *letterArray = @[@"A",@"B",@"C",@"D",@"E",@"F",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z"];
+    KeyNode *tileNode1 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(20, 55)];
+    tileNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 25);
+    [tileNode1 setName:tileNodeName];
+    [self addChild:tileNode1];
 
-    //2 random number generators, one for each tile deck
-    int randomTileGenerator1 = arc4random_uniform(25);
-    int randomTileGenerator2 = arc4random_uniform(25);
+    //        //add label as child and use random tile letter generator to fill text
+    //        SKLabelNode *tileLetterLabel1 = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+    //        tileLetterLabel1.text = self.deckLetter1;
+    //        tileLetterLabel1.fontColor = [UIColor blackColor];
+    //        tileLetterLabel1.fontSize = 16;
+    //        [tileNode1 addChild:tileLetterLabel1];
 
-    //assign each random number to array - do this twice so we have a variable for each tile deck
-    NSString *deckLetter1 = [letterArray objectAtIndex:randomTileGenerator1];
-    NSString *deckLetter2 = [letterArray objectAtIndex:randomTileGenerator2];
+    KeyNode *tileNode2 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(20, 55)];
+    tileNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 25);
+    [tileNode2 setName:tileNodeName];
+    [self addChild:tileNode2];
 
-    self.deckLetter1 = deckLetter1;
-    self.deckLetter2 = deckLetter2;
+    //        //add label as child and use random tile letter generator to fill text
+    //        SKLabelNode *tileLetterLabel2 = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+    //        tileLetterLabel2.text = self.deckLetter2;
+    //        tileLetterLabel2.fontColor = [UIColor blackColor];
+    //        tileLetterLabel2.fontSize = 16;
+    //        [tileNode2 addChild:tileLetterLabel2];
+
 }
 
+-(void)updateScore
+{
+    //score label
+    SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+    scoreLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
+    scoreLabel.fontColor = [UIColor whiteColor];
+    scoreLabel.fontSize = 16;
+    scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
+    [self addChild:scoreLabel];
+}
+
+#pragma tile selection methods
+
+//-(void)randomTileSelection
+//{
+//    //array of possible letters
+//    NSArray *letterArray = @[@"A",@"B",@"C",@"D",@"E",@"F",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z"];
+//
+//    //2 random number generators, one for each tile deck
+//    int randomTileGenerator1 = arc4random_uniform(25);
+//    int randomTileGenerator2 = arc4random_uniform(25);
+//
+//    //assign each random number to array - do this twice so we have a variable for each tile deck
+//    NSString *deckLetter1 = [letterArray objectAtIndex:randomTileGenerator1];
+//    NSString *deckLetter2 = [letterArray objectAtIndex:randomTileGenerator2];
+//
+//    self.deckLetter1 = deckLetter1;
+//    self.deckLetter2 = deckLetter2;
+//}
+
 #pragma dragging and dropping methods
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch *touch = [touches anyObject];
+    CGPoint positionInScene = [touch locationInNode:self];
+    [self selectNodeForTouch:positionInScene];
+}
 
+- (void)selectNodeForTouch:(CGPoint)touchLocation
+{
+    //1
+    SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
+
+    //2
+	if(![_selectedNode isEqual:touchedNode])
+    {
+		[_selectedNode removeAllActions];
+		[_selectedNode runAction:[SKAction rotateToAngle:0.0f duration:0.1]];
+
+		_selectedNode = touchedNode;
+	}
+    
+}
+
+float degToRad(float degree) {
+	return degree / 180.0f * M_PI;
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];
+	CGPoint positionInScene = [touch locationInNode:self];
+	CGPoint previousPosition = [touch previousLocationInNode:self];
+
+	CGPoint translation = CGPointMake(positionInScene.x - previousPosition.x, positionInScene.y - previousPosition.y);
+
+    if (CGRectContainsPoint(_destinationNode.frame, positionInScene))
+    {
+        NSLog(@"We Collided! Score: %d", self.levelScore);
+        self.levelScore += 50;
+        [self updateScore];
+        [self generateNewTile];
+    }
+
+	[self panForTranslation:translation];
+}
+
+- (void)panForTranslation:(CGPoint)translation {
+    CGPoint position = [_selectedNode position];
+    if([[_selectedNode name] isEqualToString:tileNodeName]) {
+        [_selectedNode setPosition:CGPointMake(position.x + translation.x, position.y + translation.y)];
+    }
 }
 
 #pragma scoring methods

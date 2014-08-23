@@ -19,8 +19,9 @@
         for (int i = 0; i < titleMenuButtons.count; i++)
         {
             NSString *imageName = [titleMenuButtons objectAtIndex:i];
+            NSString *imageTag = [menuButtonTags objectAtIndex:i];
             SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: imageName];
-            [menuButton setName:menuButtonTags[i]];
+            [menuButton setName:imageTag];
 
             float offsetFraction = ((float)(i + 1)) / ([titleMenuButtons count] + 1);
             [menuButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 75, size.height * offsetFraction)];
