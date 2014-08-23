@@ -14,18 +14,18 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
-        //adding menu buttons
-        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(50, 50)];
-        menuButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-        menuButton.name = @"menuButton";
-        [self addChild:menuButton];
+        NSArray *titleMenuButtons = @[@"New Game", @"Options", @"Profile", @"Credits"];
+        NSArray *menuButtonTags = @[@"credits", @"profile", @"options", @"newGame"];
+        for (int i = 0; i < titleMenuButtons.count; i++)
+        {
+            NSString *imageName = [titleMenuButtons objectAtIndex:i];
+            SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: imageName];
+            [menuButton setName:menuButtonTags[i]];
 
-        SKLabelNode *menuText = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        menuText.fontColor = [UIColor blackColor];
-        menuText.text = @"New Game";
-        menuText.fontSize = 10;
-        menuText.name = @"menuLabel";
-        [menuButton addChild:menuText];
+            float offsetFraction = ((float)(i + 1)) / ([titleMenuButtons count] + 1);
+            [menuButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 75, size.height * offsetFraction)];
+            [self addChild:menuButton];
+        }
 
 //        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"menu"];
 //        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
@@ -41,7 +41,7 @@
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
 
-    if ([node.name isEqualToString:@"menuLabel"])
+    if ([node.name isEqualToString:@"newGame"])
     {
         MainGameScene *mainGameScene = [MainGameScene sceneWithSize:self.frame.size];
         SKTransition *transition =[SKTransition fadeWithDuration:1.0];

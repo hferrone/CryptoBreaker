@@ -29,7 +29,7 @@
 //        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
 //        [self addChild:background];
 
-        self.levelScore = @100;
+        self.levelScore = @0;
         [self randomTileSelection];
 
         //instances and positioning of keys
@@ -110,6 +110,7 @@
     return self;
 }
 
+#pragma tile selection methods
 -(void)randomTileSelection
 {
     //array of possible letters
@@ -126,5 +127,13 @@
     self.deckLetter1 = deckLetter1;
     self.deckLetter2 = deckLetter2;
 }
+
+#pragma dragging and dropping methods
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+
+}
+
+#pragma scoring methods
 
 @end
