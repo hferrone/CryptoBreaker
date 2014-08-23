@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36ACCADB19A7E48500AA29D4 /* KeyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADA19A7E48500AA29D4 /* KeyNode.m */; };
+		36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADD19A7E96700AA29D4 /* RotorNode.m */; };
+		36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE019A7EB3600AA29D4 /* TileNode.m */; };
+		36ACCAE419A90D2700AA29D4 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE319A90D2700AA29D4 /* MenuScene.m */; };
 		36B7E2E119A7DCE900BFFECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E019A7DCE900BFFECC /* Foundation.framework */; };
 		36B7E2E319A7DCE900BFFECC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */; };
 		36B7E2E519A7DCE900BFFECC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E419A7DCE900BFFECC /* UIKit.framework */; };
@@ -16,14 +20,14 @@
 		36B7E2F319A7DCE900BFFECC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B7E2F219A7DCE900BFFECC /* AppDelegate.m */; };
 		36B7E2F619A7DCE900BFFECC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36B7E2F419A7DCE900BFFECC /* Main.storyboard */; };
 		36B7E2F919A7DCE900BFFECC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B7E2F819A7DCE900BFFECC /* ViewController.m */; };
-		36B7E2FC19A7DCE900BFFECC /* MyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B7E2FB19A7DCE900BFFECC /* MyScene.m */; };
-		36B7E2FE19A7DCE900BFFECC /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 36B7E2FD19A7DCE900BFFECC /* Spaceship.png */; };
 		36B7E30019A7DCE900BFFECC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36B7E2FF19A7DCE900BFFECC /* Images.xcassets */; };
 		36B7E30719A7DCE900BFFECC /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E30619A7DCE900BFFECC /* XCTest.framework */; };
 		36B7E30819A7DCE900BFFECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E019A7DCE900BFFECC /* Foundation.framework */; };
 		36B7E30919A7DCE900BFFECC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E419A7DCE900BFFECC /* UIKit.framework */; };
 		36B7E31119A7DCE900BFFECC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 36B7E30F19A7DCE900BFFECC /* InfoPlist.strings */; };
 		36B7E31319A7DCE900BFFECC /* Crypto_TestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B7E31219A7DCE900BFFECC /* Crypto_TestTests.m */; };
+		36B7E31E19A7DD1C00BFFECC /* TitleScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B7E31D19A7DD1C00BFFECC /* TitleScene.m */; };
+		36B7E32119A7DF8A00BFFECC /* MainGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B7E32019A7DF8A00BFFECC /* MainGameScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +41,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		36ACCAD919A7E48500AA29D4 /* KeyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyNode.h; sourceTree = "<group>"; };
+		36ACCADA19A7E48500AA29D4 /* KeyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyNode.m; sourceTree = "<group>"; };
+		36ACCADC19A7E96700AA29D4 /* RotorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotorNode.h; sourceTree = "<group>"; };
+		36ACCADD19A7E96700AA29D4 /* RotorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotorNode.m; sourceTree = "<group>"; };
+		36ACCADF19A7EB3600AA29D4 /* TileNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileNode.h; sourceTree = "<group>"; };
+		36ACCAE019A7EB3600AA29D4 /* TileNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileNode.m; sourceTree = "<group>"; };
+		36ACCAE219A90D2700AA29D4 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
+		36ACCAE319A90D2700AA29D4 /* MenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
 		36B7E2DD19A7DCE900BFFECC /* Crypto_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crypto_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36B7E2E019A7DCE900BFFECC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -51,15 +63,16 @@
 		36B7E2F519A7DCE900BFFECC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		36B7E2F719A7DCE900BFFECC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		36B7E2F819A7DCE900BFFECC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		36B7E2FA19A7DCE900BFFECC /* MyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScene.h; sourceTree = "<group>"; };
-		36B7E2FB19A7DCE900BFFECC /* MyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScene.m; sourceTree = "<group>"; };
-		36B7E2FD19A7DCE900BFFECC /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		36B7E2FF19A7DCE900BFFECC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		36B7E30519A7DCE900BFFECC /* Crypto_TestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Crypto_TestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36B7E30619A7DCE900BFFECC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		36B7E30E19A7DCE900BFFECC /* Crypto_TestTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Crypto_TestTests-Info.plist"; sourceTree = "<group>"; };
 		36B7E31019A7DCE900BFFECC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		36B7E31219A7DCE900BFFECC /* Crypto_TestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Crypto_TestTests.m; sourceTree = "<group>"; };
+		36B7E31C19A7DD1C00BFFECC /* TitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleScene.h; sourceTree = "<group>"; };
+		36B7E31D19A7DD1C00BFFECC /* TitleScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleScene.m; sourceTree = "<group>"; };
+		36B7E31F19A7DF8A00BFFECC /* MainGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGameScene.h; sourceTree = "<group>"; };
+		36B7E32019A7DF8A00BFFECC /* MainGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainGameScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,9 +139,18 @@
 				36B7E2F419A7DCE900BFFECC /* Main.storyboard */,
 				36B7E2F719A7DCE900BFFECC /* ViewController.h */,
 				36B7E2F819A7DCE900BFFECC /* ViewController.m */,
-				36B7E2FA19A7DCE900BFFECC /* MyScene.h */,
-				36B7E2FB19A7DCE900BFFECC /* MyScene.m */,
-				36B7E2FD19A7DCE900BFFECC /* Spaceship.png */,
+				36B7E31C19A7DD1C00BFFECC /* TitleScene.h */,
+				36B7E31D19A7DD1C00BFFECC /* TitleScene.m */,
+				36ACCAE219A90D2700AA29D4 /* MenuScene.h */,
+				36ACCAE319A90D2700AA29D4 /* MenuScene.m */,
+				36B7E31F19A7DF8A00BFFECC /* MainGameScene.h */,
+				36B7E32019A7DF8A00BFFECC /* MainGameScene.m */,
+				36ACCAD919A7E48500AA29D4 /* KeyNode.h */,
+				36ACCADA19A7E48500AA29D4 /* KeyNode.m */,
+				36ACCADF19A7EB3600AA29D4 /* TileNode.h */,
+				36ACCAE019A7EB3600AA29D4 /* TileNode.m */,
+				36ACCADC19A7E96700AA29D4 /* RotorNode.h */,
+				36ACCADD19A7E96700AA29D4 /* RotorNode.m */,
 				36B7E2FF19A7DCE900BFFECC /* Images.xcassets */,
 				36B7E2E919A7DCE900BFFECC /* Supporting Files */,
 			);
@@ -242,7 +264,6 @@
 			files = (
 				36B7E2ED19A7DCE900BFFECC /* InfoPlist.strings in Resources */,
 				36B7E30019A7DCE900BFFECC /* Images.xcassets in Resources */,
-				36B7E2FE19A7DCE900BFFECC /* Spaceship.png in Resources */,
 				36B7E2F619A7DCE900BFFECC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,10 +283,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36B7E2FC19A7DCE900BFFECC /* MyScene.m in Sources */,
 				36B7E2F919A7DCE900BFFECC /* ViewController.m in Sources */,
+				36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */,
+				36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */,
 				36B7E2F319A7DCE900BFFECC /* AppDelegate.m in Sources */,
 				36B7E2EF19A7DCE900BFFECC /* main.m in Sources */,
+				36ACCADB19A7E48500AA29D4 /* KeyNode.m in Sources */,
+				36ACCAE419A90D2700AA29D4 /* MenuScene.m in Sources */,
+				36B7E32119A7DF8A00BFFECC /* MainGameScene.m in Sources */,
+				36B7E31E19A7DD1C00BFFECC /* TitleScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +498,7 @@
 				36B7E31819A7DCE900BFFECC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		36B7E31919A7DCE900BFFECC /* Build configuration list for PBXNativeTarget "Crypto_TestTests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +507,7 @@
 				36B7E31B19A7DCE900BFFECC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
