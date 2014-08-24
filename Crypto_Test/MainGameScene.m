@@ -7,6 +7,7 @@
 //
 
 #import "MainGameScene.h"
+#import "MenuScene.h"
 #import "KeyNode.h"
 #import "RotorNode.h"
 #import "TileNode.h"
@@ -81,50 +82,30 @@ static NSString * const tileNodeName = @"movable";
         timerLabel.text = @"0:00";
         timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 140, CGRectGetMidY(self.frame) + 250);
         [self addChild:timerLabel];
+
+//        //back button
+//        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"backButton"];
+//        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 50);
+//        [menuButton setName:@"backButtonNode"];
+//        [self addChild:menuButton];
     }
     return self;
 }
 
+#pragma tile selection methods
+
 -(void)generateNewTile
 {
-    KeyNode *tileNode1 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(20, 55)];
+    KeyNode *tileNode1 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(23, 63)];
     tileNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 25);
     [tileNode1 setName:tileNodeName];
     [self addChild:tileNode1];
 
-    //        //add label as child and use random tile letter generator to fill text
-    //        SKLabelNode *tileLetterLabel1 = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-    //        tileLetterLabel1.text = self.deckLetter1;
-    //        tileLetterLabel1.fontColor = [UIColor blackColor];
-    //        tileLetterLabel1.fontSize = 16;
-    //        [tileNode1 addChild:tileLetterLabel1];
-
-    KeyNode *tileNode2 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(20, 55)];
+    KeyNode *tileNode2 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(23, 63)];
     tileNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 25);
     [tileNode2 setName:tileNodeName];
     [self addChild:tileNode2];
-
-    //        //add label as child and use random tile letter generator to fill text
-    //        SKLabelNode *tileLetterLabel2 = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-    //        tileLetterLabel2.text = self.deckLetter2;
-    //        tileLetterLabel2.fontColor = [UIColor blackColor];
-    //        tileLetterLabel2.fontSize = 16;
-    //        [tileNode2 addChild:tileLetterLabel2];
-
 }
-
--(void)updateScore
-{
-    //score label
-    SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-    scoreLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
-    scoreLabel.fontColor = [UIColor whiteColor];
-    scoreLabel.fontSize = 16;
-    scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
-    [self addChild:scoreLabel];
-}
-
-#pragma tile selection methods
 
 //-(void)randomTileSelection
 //{
@@ -148,6 +129,16 @@ static NSString * const tileNodeName = @"movable";
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+
+    if ([node.name isEqualToString:@"backButtonNode"])
+    {
+        MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];
+        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+        [self.view presentScene:menuScene transition:transition];
+    }
+
     CGPoint positionInScene = [touch locationInNode:self];
     [self selectNodeForTouch:positionInScene];
 }
@@ -180,9 +171,11 @@ float degToRad(float degree) {
 
 	CGPoint translation = CGPointMake(positionInScene.x - previousPosition.x, positionInScene.y - previousPosition.y);
 
-    if (CGRectContainsPoint(_destinationNode.frame, positionInScene))
+    if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
     {
         NSLog(@"We Collided! Score: %d", self.levelScore);
+        [_selectedNode setName:@"notMovable"];
+        _selectedNode.position = _destinationNode.position;
         self.levelScore += 50;
         [self updateScore];
         [self generateNewTile];
@@ -199,5 +192,16 @@ float degToRad(float degree) {
 }
 
 #pragma scoring methods
+
+-(void)updateScore
+{
+    //score label
+    SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+    scoreLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
+    scoreLabel.fontColor = [UIColor whiteColor];
+    scoreLabel.fontSize = 16;
+    scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
+    [self addChild:scoreLabel];
+}
 
 @end

@@ -8,22 +8,24 @@
 
 #import "MenuScene.h"
 #import "MainGameScene.h"
+#import "CreditsScene.h"
+#import "ProfileScene.h"
 
 @implementation MenuScene
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
-        NSArray *titleMenuButtons = @[@"New Game", @"Options", @"Profile", @"Credits"];
-        NSArray *menuButtonTags = @[@"credits", @"profile", @"options", @"newGame"];
-        for (int i = 0; i < titleMenuButtons.count; i++)
+        NSArray *menuButtonImages = @[@"New Game", @"Profile", @"Credits"];
+        NSArray *menuButtonTags = @[@"credits", @"profile", @"newGame"];
+        for (int i = 0; i < menuButtonImages.count; i++)
         {
-            NSString *imageName = [titleMenuButtons objectAtIndex:i];
+            NSString *imageName = [menuButtonImages objectAtIndex:i];
             NSString *imageTag = [menuButtonTags objectAtIndex:i];
             SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: imageName];
             [menuButton setName:imageTag];
 
-            float offsetFraction = ((float)(i + 1)) / ([titleMenuButtons count] + 1);
+            float offsetFraction = ((float)(i + 1)) / ([menuButtonImages count] + 1);
             [menuButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 75, size.height * offsetFraction)];
             [self addChild:menuButton];
         }
@@ -45,8 +47,16 @@
     if ([node.name isEqualToString:@"newGame"])
     {
         MainGameScene *mainGameScene = [MainGameScene sceneWithSize:self.frame.size];
-        SKTransition *transition =[SKTransition fadeWithDuration:1.0];
+        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:mainGameScene transition:transition];
+    }else if ([node.name isEqualToString:@"profile"]){
+        ProfileScene *profileScene = [ProfileScene sceneWithSize:self.frame.size];
+        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+        [self.view presentScene:profileScene transition:transition];
+    }else if ([node.name isEqualToString:@"credits"]){
+        CreditsScene *creditScene = [CreditsScene sceneWithSize:self.frame.size];
+        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+        [self.view presentScene:creditScene transition:transition];
     }
 }
 

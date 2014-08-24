@@ -11,6 +11,8 @@
 		36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADD19A7E96700AA29D4 /* RotorNode.m */; };
 		36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE019A7EB3600AA29D4 /* TileNode.m */; };
 		36ACCAE419A90D2700AA29D4 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE319A90D2700AA29D4 /* MenuScene.m */; };
+		36ACCB3F19A99DA700AA29D4 /* CreditsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */; };
+		36ACCB4219A99DB600AA29D4 /* ProfileScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB4119A99DB600AA29D4 /* ProfileScene.m */; };
 		36B7E2E119A7DCE900BFFECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E019A7DCE900BFFECC /* Foundation.framework */; };
 		36B7E2E319A7DCE900BFFECC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */; };
 		36B7E2E519A7DCE900BFFECC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E419A7DCE900BFFECC /* UIKit.framework */; };
@@ -49,6 +51,10 @@
 		36ACCAE019A7EB3600AA29D4 /* TileNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileNode.m; sourceTree = "<group>"; };
 		36ACCAE219A90D2700AA29D4 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
 		36ACCAE319A90D2700AA29D4 /* MenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
+		36ACCB3D19A99DA700AA29D4 /* CreditsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsScene.h; sourceTree = "<group>"; };
+		36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsScene.m; sourceTree = "<group>"; };
+		36ACCB4019A99DB600AA29D4 /* ProfileScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileScene.h; sourceTree = "<group>"; };
+		36ACCB4119A99DB600AA29D4 /* ProfileScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileScene.m; sourceTree = "<group>"; };
 		36B7E2DD19A7DCE900BFFECC /* Crypto_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crypto_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36B7E2E019A7DCE900BFFECC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -151,6 +157,10 @@
 				36ACCAE019A7EB3600AA29D4 /* TileNode.m */,
 				36ACCADC19A7E96700AA29D4 /* RotorNode.h */,
 				36ACCADD19A7E96700AA29D4 /* RotorNode.m */,
+				36ACCB3D19A99DA700AA29D4 /* CreditsScene.h */,
+				36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */,
+				36ACCB4019A99DB600AA29D4 /* ProfileScene.h */,
+				36ACCB4119A99DB600AA29D4 /* ProfileScene.m */,
 				36B7E2FF19A7DCE900BFFECC /* Images.xcassets */,
 				36B7E2E919A7DCE900BFFECC /* Supporting Files */,
 			);
@@ -290,8 +300,10 @@
 				36B7E2EF19A7DCE900BFFECC /* main.m in Sources */,
 				36ACCADB19A7E48500AA29D4 /* KeyNode.m in Sources */,
 				36ACCAE419A90D2700AA29D4 /* MenuScene.m in Sources */,
+				36ACCB3F19A99DA700AA29D4 /* CreditsScene.m in Sources */,
 				36B7E32119A7DF8A00BFFECC /* MainGameScene.m in Sources */,
 				36B7E31E19A7DD1C00BFFECC /* TitleScene.m in Sources */,
+				36ACCB4219A99DB600AA29D4 /* ProfileScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
