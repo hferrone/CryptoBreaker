@@ -13,6 +13,9 @@
 #import "TileNode.h"
 
 static NSString * const tileNodeName = @"movable";
+static NSString * const vowelString = @"vowel";
+static NSString * const nonVowelString = @"nonVowel";
+
 
 @interface MainGameScene ()
 
@@ -23,6 +26,7 @@ static NSString * const tileNodeName = @"movable";
 @property (nonatomic, strong) SKSpriteNode *destinationNode;
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
 @property BOOL hasCollidedAndScored;
+@property NSArray *tileSlotsArray;
 
 @end
 
@@ -37,14 +41,12 @@ static NSString * const tileNodeName = @"movable";
 //        [self addChild:background];
 
         //[self randomTileSelection];
-        int startScore = 0;
-        self.levelScore = startScore;
+        self.levelScore = 0;
         [self generateNewTile];
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
         keyNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 25);
-        _destinationNode = keyNode1;
         [self addChild:keyNode1];
 
         KeyNode *keyNode2 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
@@ -62,6 +64,8 @@ static NSString * const tileNodeName = @"movable";
         KeyNode *keyNode5 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
         keyNode5.position = CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 25);
         [self addChild:keyNode5];
+
+        self.tileSlotsArray = @[keyNode1, keyNode2, keyNode3, keyNode4, keyNode5];
 
         //scoring tile nodes
         KeyNode *scoreNode1 = [KeyNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(25, 65)];
@@ -133,6 +137,8 @@ static NSString * const tileNodeName = @"movable";
 //
 //    self.deckLetter1 = deckLetter1;
 //    self.deckLetter2 = deckLetter2;
+
+//    NSArray *array = @[[SKSpriteNode spriteNodeWithImageNamed:@"key"].name = vowelString];
 //}
 
 #pragma dragging and dropping methods
@@ -182,20 +188,25 @@ float degToRad(float degree) {
 
 	CGPoint translation = CGPointMake(positionInScene.x - previousPosition.x, positionInScene.y - previousPosition.y);
 
-    if (CGRectContainsPoint(_destinationNode.frame, positionInScene))
+    for (SKSpriteNode *node in self.tileSlotsArray)
     {
-        NSLog(@"We Collided! Score: %d", self.levelScore);
-        [_selectedNode setName:@"notMovable"];
-        _selectedNode.position = _destinationNode.position;
-        self.hasCollidedAndScored = YES;
+        _destinationNode = node;
 
-        if (self.hasCollidedAndScored)
+        if (CGRectContainsPoint(_destinationNode.frame, positionInScene))
         {
-            [self updateScore];
-            [self generateNewTile];
+            [_selectedNode setName:@"notMovable"];
+            _selectedNode.position = _destinationNode.position;
+            self.hasCollidedAndScored = YES;
         }
     }
+
 	[self panForTranslation:translation];
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self updateScore];
+    [self generateNewTile];
 }
 
 - (void)panForTranslation:(CGPoint)translation {
