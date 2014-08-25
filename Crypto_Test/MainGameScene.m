@@ -11,6 +11,7 @@
 #import "KeyNode.h"
 #import "RotorNode.h"
 #import "TileNode.h"
+#import "WinConditionScene.h"
 
 static NSString * const tileNodeName = @"movable";
 static NSString * const vowelString = @"vowel";
@@ -20,6 +21,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @interface MainGameScene ()
 
 @property NSInteger levelScore;
+@property NSInteger comboScore;
 @property NSString *deckLetter1;
 @property NSString *deckLetter2;
 @property (nonatomic, strong) SKSpriteNode *selectedNode;
@@ -42,27 +44,28 @@ static NSString * const nonVowelString = @"nonVowel";
 
         //[self randomTileSelection];
         self.levelScore = 0;
+        self.comboScore = 1;
         [self generateNewTile];
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 25);
+        keyNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 55);
         [self addChild:keyNode1];
 
         KeyNode *keyNode2 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode2.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 175);
+        keyNode2.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 205);
         [self addChild:keyNode2];
 
         KeyNode *keyNode3 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode3.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 25);
+        keyNode3.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 55);
         [self addChild:keyNode3];
 
         KeyNode *keyNode4 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode4.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 175);
+        keyNode4.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 205);
         [self addChild:keyNode4];
 
         KeyNode *keyNode5 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode5.position = CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 25);
+        keyNode5.position = CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 55);
         [self addChild:keyNode5];
 
         self.tileSlotsArray = @[keyNode1, keyNode2, keyNode3, keyNode4, keyNode5];
@@ -112,12 +115,19 @@ static NSString * const nonVowelString = @"nonVowel";
 -(void)generateNewTile
 {
     KeyNode *tileNode1 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(23, 63)];
-    tileNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 25);
+    tileNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
     [tileNode1 setName:tileNodeName];
     [self addChild:tileNode1];
 
+    SKLabelNode *comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+    comboLabel.fontColor = [UIColor whiteColor];
+    comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+    comboLabel.fontSize = 12;
+    comboLabel.position = CGPointMake(5, 5);
+    [tileNode1 addChild:comboLabel];
+
     KeyNode *tileNode2 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(23, 63)];
-    tileNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 25);
+    tileNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 55);
     [tileNode2 setName:tileNodeName];
     [self addChild:tileNode2];
 }
@@ -222,6 +232,16 @@ float degToRad(float degree) {
 {
     self.levelScore += 50;
     self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
+
+    self.comboScore += 1;
+
+    //win condition and segue back to menu (resets game conditions)
+    if (self.levelScore > 250)
+    {
+        WinConditionScene *menuScene = [WinConditionScene sceneWithSize:self.frame.size];
+        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+        [self.view presentScene:menuScene transition:transition];
+    }
 }
 
 @end
