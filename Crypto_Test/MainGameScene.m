@@ -119,6 +119,7 @@ static NSString * const nonVowelString = @"nonVowel";
     [tileNode1 setName:tileNodeName];
     [self addChild:tileNode1];
 
+    self.comboScore = 1;
     SKLabelNode *comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
     comboLabel.fontColor = [UIColor whiteColor];
     comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
@@ -233,7 +234,7 @@ float degToRad(float degree) {
     self.levelScore += 50;
     self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
 
-    self.comboScore += 1;
+    //only increment child comboLabel for the selected tile
 
     //win condition and segue back to menu (resets game conditions)
     if (self.levelScore > 250)
