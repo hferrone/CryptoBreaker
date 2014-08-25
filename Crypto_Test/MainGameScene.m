@@ -21,6 +21,8 @@ static NSString * const tileNodeName = @"movable";
 @property NSString *deckLetter2;
 @property (nonatomic, strong) SKSpriteNode *selectedNode;
 @property (nonatomic, strong) SKSpriteNode *destinationNode;
+@property (nonatomic, strong) SKLabelNode *scoreLabel;
+@property BOOL hasCollidedAndScored;
 
 @end
 
@@ -35,7 +37,8 @@ static NSString * const tileNodeName = @"movable";
 //        [self addChild:background];
 
         //[self randomTileSelection];
-        self.levelScore = 0;
+        int startScore = 0;
+        self.levelScore = startScore;
         [self generateNewTile];
 
         //instances and positioning of keys
@@ -82,6 +85,14 @@ static NSString * const tileNodeName = @"movable";
         timerLabel.text = @"0:00";
         timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 140, CGRectGetMidY(self.frame) + 250);
         [self addChild:timerLabel];
+
+        //score label
+        self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+        self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
+        self.scoreLabel.fontColor = [UIColor whiteColor];
+        self.scoreLabel.fontSize = 16;
+        self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
+        [self addChild: self.scoreLabel];
 
 //        //back button
 //        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"backButton"];
@@ -171,16 +182,19 @@ float degToRad(float degree) {
 
 	CGPoint translation = CGPointMake(positionInScene.x - previousPosition.x, positionInScene.y - previousPosition.y);
 
-    if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
+    if (CGRectContainsPoint(_destinationNode.frame, positionInScene))
     {
         NSLog(@"We Collided! Score: %d", self.levelScore);
         [_selectedNode setName:@"notMovable"];
         _selectedNode.position = _destinationNode.position;
-        self.levelScore += 50;
-        [self updateScore];
-        [self generateNewTile];
-    }
+        self.hasCollidedAndScored = YES;
 
+        if (self.hasCollidedAndScored)
+        {
+            [self updateScore];
+            [self generateNewTile];
+        }
+    }
 	[self panForTranslation:translation];
 }
 
@@ -195,13 +209,8 @@ float degToRad(float degree) {
 
 -(void)updateScore
 {
-    //score label
-    SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-    scoreLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
-    scoreLabel.fontColor = [UIColor whiteColor];
-    scoreLabel.fontSize = 16;
-    scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
-    [self addChild:scoreLabel];
+    self.levelScore += 50;
+    self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
 }
 
 @end
