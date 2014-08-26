@@ -16,23 +16,29 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
-        NSArray *menuButtonImages = @[@"New Game", @"Profile", @"Credits"];
-        NSArray *menuButtonTags = @[@"credits", @"profile", @"newGame"];
-        for (int i = 0; i < menuButtonImages.count; i++)
-        {
-            NSString *imageName = [menuButtonImages objectAtIndex:i];
-            NSString *imageTag = [menuButtonTags objectAtIndex:i];
-            SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: imageName];
-            [menuButton setName:imageTag];
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"MenuSceneBackground"];
+        background.size = CGSizeMake(320, 568);
+        background.color = [UIColor blackColor];
+        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        [self addChild:background];
 
-            float offsetFraction = ((float)(i + 1)) / ([menuButtonImages count] + 1);
-            [menuButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 75, size.height * offsetFraction)];
-            [self addChild:menuButton];
-        }
+        SKSpriteNode *newGameButton = [SKSpriteNode spriteNodeWithImageNamed: @"NewGame"];
+        newGameButton.size = CGSizeMake(75, 65);
+        [newGameButton setName:@"newGame"];
+        [newGameButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 85, CGRectGetMidY(self.frame) + 100)];
+        [self addChild:newGameButton];
 
-//        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"menu"];
-//        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-//        [self addChild:background];
+        SKSpriteNode *profileButton = [SKSpriteNode spriteNodeWithImageNamed: @"Profile"];
+        profileButton.size = CGSizeMake(75, 65);
+        [profileButton setName:@"profile"];
+        [profileButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 85, CGRectGetMidY(self.frame) + 10)];
+        [self addChild:profileButton];
+
+        SKSpriteNode *creditsButton = [SKSpriteNode spriteNodeWithImageNamed: @"Credits"];
+        creditsButton.size = CGSizeMake(75, 65);
+        [creditsButton setName:@"credits"];
+        [creditsButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 85, CGRectGetMidY(self.frame) - 80)];
+        [self addChild:creditsButton];
     }
 
     return self;

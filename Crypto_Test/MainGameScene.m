@@ -46,7 +46,6 @@ static NSString * const nonVowelString = @"nonVowel";
 
         //[self randomTileSelection];
         self.levelScore = 0;
-        self.comboScore = 1;
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
@@ -222,6 +221,9 @@ float degToRad(float degree) {
 {
     if (self.hasCollidedAndScored)
     {
+        self.comboScore += 1;
+        self.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+
         [self generateNewTile];
         [self updateScore];
     }else{

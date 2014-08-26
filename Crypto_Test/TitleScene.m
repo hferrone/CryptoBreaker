@@ -14,21 +14,16 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
-        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"splashScreen"];
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"TitleScene"];
         background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         [self addChild:background];
 
-        SKLabelNode *clickToContinue = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        clickToContinue.text = @"Touch Screen to Play";
-        clickToContinue.fontSize = 12;
-        clickToContinue.fontColor = [SKColor blackColor];
-        clickToContinue.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 40);
-        [self addChild:clickToContinue];
+        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
     }
     return self;
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)segueToMenu
 {
     MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];
     SKTransition *transition = [SKTransition fadeWithDuration:1.0];
