@@ -27,10 +27,14 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSString *deckLetter2;
 @property (nonatomic, strong) SKSpriteNode *selectedNode;
 @property (nonatomic, strong) SKSpriteNode *destinationNode;
+@property (nonatomic, strong) SKSpriteNode *previousSelectedNode;
+@property (nonatomic, strong) KeyNode *capNode1;
+@property (nonatomic, strong) KeyNode *capNode2;
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
 @property (nonatomic, strong) SKLabelNode *comboLabel;
 @property BOOL hasCollidedAndScored;
-@property NSArray *tileSlotsArray;
+@property BOOL hasNewDestination;
+@property NSMutableArray *tileSlotsArray;
 
 @end
 
@@ -68,17 +72,25 @@ static NSString * const nonVowelString = @"nonVowel";
         keyNode5.position = CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 55);
         [self addChild:keyNode5];
 
+        KeyNode *keyNode6 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
+        keyNode6.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
+        [self addChild:keyNode6];
+
+        KeyNode *keyNode7 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
+        keyNode7.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 55);
+        [self addChild:keyNode7];
+
         [self generateNewTile];
-        self.tileSlotsArray = @[keyNode1, keyNode2, keyNode3, keyNode4, keyNode5];
+        self.tileSlotsArray = [[NSMutableArray alloc] initWithObjects:keyNode1, keyNode2, keyNode3, keyNode4, keyNode5, keyNode6, keyNode7, nil];
 
         //scoring tile nodes
-        KeyNode *scoreNode1 = [KeyNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(25, 65)];
-        scoreNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) + 100);
-        [self addChild:scoreNode1];
+        self.capNode1 = [KeyNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(25, 65)];
+        self.capNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) + 100);
+        [self addChild:self.capNode1];
 
-        KeyNode *scoreNode2 = [KeyNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(25, 65)];
-        scoreNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) + 100);
-        [self addChild:scoreNode2];
+        self.capNode2 = [KeyNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(25, 65)];
+        self.capNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) + 100);
+        [self addChild:self.capNode2];
 
         //rotor instance
         RotorNode *rotorNode = [RotorNode spriteNodeWithImageNamed:@"rotor"];
@@ -116,7 +128,7 @@ static NSString * const nonVowelString = @"nonVowel";
 -(void)generateNewTile
 {
     KeyNode *tileNode1 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(23, 63)];
-    tileNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
+    tileNode1.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
     [tileNode1 setName:tileNodeName];
     [self addChild:tileNode1];
 
@@ -128,11 +140,6 @@ static NSString * const nonVowelString = @"nonVowel";
     self.comboLabel.fontSize = 12;
     self.comboLabel.position = CGPointMake(7, 7);
     [tileNode1 addChild:self.comboLabel];
-
-    KeyNode *tileNode2 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(23, 63)];
-    tileNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 55);
-    [tileNode2 setName:tileNodeName];
-    [self addChild:tileNode2];
 }
 
 //-(void)randomTileSelection
@@ -219,6 +226,13 @@ float degToRad(float degree) {
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    self.previousSelectedNode = _selectedNode;
+    if (CGRectContainsPoint(_previousSelectedNode.frame, self.positionInScene))
+    {
+        [self.tileSlotsArray addObject:self.previousSelectedNode];
+        self.comboScore += 1;
+    }
+
     if (self.hasCollidedAndScored)
     {
         self.comboScore += 1;
@@ -226,6 +240,8 @@ float degToRad(float degree) {
 
         [self generateNewTile];
         [self updateScore];
+        [self checkForCapPoint];
+
     }else{
         _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
     }
@@ -252,6 +268,15 @@ float degToRad(float degree) {
         WinConditionScene *menuScene = [WinConditionScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:menuScene transition:transition];
+    }
+}
+
+-(void)checkForCapPoint
+{
+    if (self.comboScore >= 7)
+    {
+        [self.tileSlotsArray addObject:self.capNode1];
+        [self.tileSlotsArray addObject:self.capNode2];
     }
 }
 
