@@ -22,11 +22,13 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property NSInteger levelScore;
 @property NSInteger comboScore;
+@property CGPoint positionInScene;
 @property NSString *deckLetter1;
 @property NSString *deckLetter2;
 @property (nonatomic, strong) SKSpriteNode *selectedNode;
 @property (nonatomic, strong) SKSpriteNode *destinationNode;
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
+@property (nonatomic, strong) SKLabelNode *comboLabel;
 @property BOOL hasCollidedAndScored;
 @property NSArray *tileSlotsArray;
 
@@ -45,7 +47,6 @@ static NSString * const nonVowelString = @"nonVowel";
         //[self randomTileSelection];
         self.levelScore = 0;
         self.comboScore = 1;
-        [self generateNewTile];
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
@@ -68,6 +69,7 @@ static NSString * const nonVowelString = @"nonVowel";
         keyNode5.position = CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 55);
         [self addChild:keyNode5];
 
+        [self generateNewTile];
         self.tileSlotsArray = @[keyNode1, keyNode2, keyNode3, keyNode4, keyNode5];
 
         //scoring tile nodes
@@ -120,12 +122,13 @@ static NSString * const nonVowelString = @"nonVowel";
     [self addChild:tileNode1];
 
     self.comboScore = 1;
-    SKLabelNode *comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-    comboLabel.fontColor = [UIColor whiteColor];
-    comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
-    comboLabel.fontSize = 12;
-    comboLabel.position = CGPointMake(5, 5);
-    [tileNode1 addChild:comboLabel];
+
+    self.comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+    self.comboLabel.fontColor = [UIColor whiteColor];
+    self.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+    self.comboLabel.fontSize = 12;
+    self.comboLabel.position = CGPointMake(7, 7);
+    [tileNode1 addChild:self.comboLabel];
 
     KeyNode *tileNode2 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(23, 63)];
     tileNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 55);
@@ -195,6 +198,7 @@ float degToRad(float degree) {
 {
 	UITouch *touch = [touches anyObject];
 	CGPoint positionInScene = [touch locationInNode:self];
+    self.positionInScene = positionInScene;
 	CGPoint previousPosition = [touch previousLocationInNode:self];
 
 	CGPoint translation = CGPointMake(positionInScene.x - previousPosition.x, positionInScene.y - previousPosition.y);
@@ -216,8 +220,14 @@ float degToRad(float degree) {
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self updateScore];
-    [self generateNewTile];
+    if (self.hasCollidedAndScored)
+    {
+        [self generateNewTile];
+        [self updateScore];
+    }else{
+        _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
+    }
+    self.hasCollidedAndScored = NO;
 }
 
 - (void)panForTranslation:(CGPoint)translation {
@@ -233,8 +243,6 @@ float degToRad(float degree) {
 {
     self.levelScore += 50;
     self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
-
-    //only increment child comboLabel for the selected tile
 
     //win condition and segue back to menu (resets game conditions)
     if (self.levelScore > 250)
