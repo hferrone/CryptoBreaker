@@ -23,8 +23,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSInteger levelScore;
 @property NSInteger comboScore;
 @property CGPoint positionInScene;
-@property NSString *deckLetter1;
-@property NSString *deckLetter2;
+//@property (nonatomic, strong) SKSpriteNode *newTileNode;
 @property (nonatomic, strong) SKSpriteNode *selectedNode;
 @property (nonatomic, strong) SKSpriteNode *destinationNode;
 @property (nonatomic, strong) SKSpriteNode *previousSelectedNode;
@@ -35,6 +34,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property BOOL hasCollidedAndScored;
 @property BOOL hasNewDestination;
 @property NSMutableArray *tileSlotsArray;
+
 
 @end
 
@@ -127,12 +127,52 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)generateNewTile
 {
-    KeyNode *tileNode1 = [KeyNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(23, 63)];
+    self.comboScore = 1;
+
+    SKSpriteNode *nodeA = [SKSpriteNode spriteNodeWithImageNamed:@"A"];
+    nodeA.name = vowelString;
+
+    SKSpriteNode *nodeB = [SKSpriteNode spriteNodeWithImageNamed:@"B"];
+    nodeB.name = nonVowelString;
+
+    SKSpriteNode *nodeC = [SKSpriteNode spriteNodeWithImageNamed:@"C"];
+    nodeC.name = nonVowelString;
+
+    SKSpriteNode *nodeD = [SKSpriteNode spriteNodeWithImageNamed:@"D"];
+    nodeD.name = nonVowelString;
+
+    SKSpriteNode *nodeE = [SKSpriteNode spriteNodeWithImageNamed:@"E"];
+    nodeE.name = vowelString;
+
+    SKSpriteNode *nodeF = [SKSpriteNode spriteNodeWithImageNamed:@"F"];
+    nodeF.name = nonVowelString;
+
+    SKSpriteNode *nodeG = [SKSpriteNode spriteNodeWithImageNamed:@"G"];
+    nodeG.name = nonVowelString;
+
+    SKSpriteNode *nodeH = [SKSpriteNode spriteNodeWithImageNamed:@"H"];
+    nodeH.name = nonVowelString;
+
+    SKSpriteNode *nodeI = [SKSpriteNode spriteNodeWithImageNamed:@"I"];
+    nodeI.name = vowelString;
+
+    SKSpriteNode *nodeO = [SKSpriteNode spriteNodeWithImageNamed:@"O"];
+    nodeO.name = vowelString;
+
+    SKSpriteNode *nodeU= [SKSpriteNode spriteNodeWithImageNamed:@"U"];
+    nodeU.name = vowelString;
+
+    SKSpriteNode *nodeY = [SKSpriteNode spriteNodeWithImageNamed:@"Y"];
+    nodeY.name = vowelString;
+
+    NSArray *tileImagesArray = @[nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG, nodeH, nodeI, nodeO, nodeU, nodeY];
+    int randomTileGenerator = arc4random_uniform(11);
+
+    TileNode *tileNode1 = [tileImagesArray objectAtIndex:randomTileGenerator];
     tileNode1.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+    tileNode1.size = CGSizeMake(23, 63);
     [tileNode1 setName:tileNodeName];
     [self addChild:tileNode1];
-
-    self.comboScore = 1;
 
     self.comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
     self.comboLabel.fontColor = [UIColor whiteColor];
@@ -142,24 +182,11 @@ static NSString * const nonVowelString = @"nonVowel";
     [tileNode1 addChild:self.comboLabel];
 }
 
-//-(void)randomTileSelection
-//{
-//    //array of possible letters
-//    NSArray *letterArray = @[@"A",@"B",@"C",@"D",@"E",@"F",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z"];
-//
-//    //2 random number generators, one for each tile deck
-//    int randomTileGenerator1 = arc4random_uniform(25);
-//    int randomTileGenerator2 = arc4random_uniform(25);
-//
-//    //assign each random number to array - do this twice so we have a variable for each tile deck
-//    NSString *deckLetter1 = [letterArray objectAtIndex:randomTileGenerator1];
-//    NSString *deckLetter2 = [letterArray objectAtIndex:randomTileGenerator2];
-//
-//    self.deckLetter1 = deckLetter1;
-//    self.deckLetter2 = deckLetter2;
-
-//    NSArray *array = @[[SKSpriteNode spriteNodeWithImageNamed:@"key"].name = vowelString];
-//}
+- (void) incorrectDragByUser
+{
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"HALT!" message:@"A good cryptologist knows when to pair keys. Try combining a vowel with a non-vowel." delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
+    [alertView show];
+}
 
 #pragma dragging and dropping methods
 
@@ -193,7 +220,6 @@ static NSString * const nonVowelString = @"nonVowel";
 
 		_selectedNode = touchedNode;
 	}
-    
 }
 
 float degToRad(float degree) {
@@ -219,6 +245,18 @@ float degToRad(float degree) {
             _selectedNode.position = _destinationNode.position;
             self.hasCollidedAndScored = YES;
         }
+
+        if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
+            {
+                if (_destinationNode.name == vowelString && _selectedNode.name == vowelString)
+                {
+                    [self incorrectDragByUser];
+                }else{
+                    [_selectedNode setName:@"notMovable"];
+                    _selectedNode.position = _destinationNode.position;
+                    self.hasCollidedAndScored = YES;
+                }
+            }
     }
 
 	[self panForTranslation:translation];
@@ -226,12 +264,12 @@ float degToRad(float degree) {
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.previousSelectedNode = _selectedNode;
-    if (CGRectContainsPoint(_previousSelectedNode.frame, self.positionInScene))
-    {
-        [self.tileSlotsArray addObject:self.previousSelectedNode];
-        self.comboScore += 1;
-    }
+//    self.previousSelectedNode = _selectedNode;
+//    if (CGRectContainsPoint(_previousSelectedNode.frame, self.positionInScene))
+//    {
+//        [self.tileSlotsArray addObject:self.previousSelectedNode];
+//        self.comboScore += 1;
+//    }
 
     if (self.hasCollidedAndScored)
     {

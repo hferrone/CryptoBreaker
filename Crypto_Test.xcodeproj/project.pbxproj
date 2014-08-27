@@ -14,6 +14,7 @@
 		36ACCB3F19A99DA700AA29D4 /* CreditsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */; };
 		36ACCB4219A99DB600AA29D4 /* ProfileScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB4119A99DB600AA29D4 /* ProfileScene.m */; };
 		36ACCB4519ABC16100AA29D4 /* WinConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */; };
+		36ACCB4719AE257000AA29D4 /* CryptoImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 36ACCB4619AE257000AA29D4 /* CryptoImages.atlas */; };
 		36B7E2E119A7DCE900BFFECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E019A7DCE900BFFECC /* Foundation.framework */; };
 		36B7E2E319A7DCE900BFFECC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */; };
 		36B7E2E519A7DCE900BFFECC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E419A7DCE900BFFECC /* UIKit.framework */; };
@@ -58,6 +59,7 @@
 		36ACCB4119A99DB600AA29D4 /* ProfileScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileScene.m; sourceTree = "<group>"; };
 		36ACCB4319ABC16100AA29D4 /* WinConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinConditionScene.h; sourceTree = "<group>"; };
 		36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinConditionScene.m; sourceTree = "<group>"; };
+		36ACCB4619AE257000AA29D4 /* CryptoImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = CryptoImages.atlas; sourceTree = "<group>"; };
 		36B7E2DD19A7DCE900BFFECC /* Crypto_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crypto_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36B7E2E019A7DCE900BFFECC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -143,6 +145,7 @@
 		36B7E2E819A7DCE900BFFECC /* Crypto_Test */ = {
 			isa = PBXGroup;
 			children = (
+				36ACCB4619AE257000AA29D4 /* CryptoImages.atlas */,
 				36B7E2F119A7DCE900BFFECC /* AppDelegate.h */,
 				36B7E2F219A7DCE900BFFECC /* AppDelegate.m */,
 				36B7E2F419A7DCE900BFFECC /* Main.storyboard */,
@@ -277,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36ACCB4719AE257000AA29D4 /* CryptoImages.atlas in Resources */,
 				36B7E2ED19A7DCE900BFFECC /* InfoPlist.strings in Resources */,
 				36B7E30019A7DCE900BFFECC /* Images.xcassets in Resources */,
 				36B7E2F619A7DCE900BFFECC /* Main.storyboard in Resources */,

@@ -8,6 +8,10 @@
 
 #import "TileNode.h"
 
+@interface TileNode ()
+
+@end
+
 @implementation TileNode
 
 +(instancetype)tileNodeAtPosition:(CGPoint)position
