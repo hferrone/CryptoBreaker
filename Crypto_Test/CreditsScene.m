@@ -14,9 +14,10 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
-//        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"menu"];
-//        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-//        [self addChild:background];
+        SKSpriteNode *creditBackground = [SKSpriteNode spriteNodeWithImageNamed:@"CreditSceneBackground"];
+        creditBackground.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        creditBackground.size = CGSizeMake(320, 568);
+        [self addChild:creditBackground];
 
         SKLabelNode *clickToContinue = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
         clickToContinue.text = @"CREDITS";
@@ -26,8 +27,9 @@
         [self addChild:clickToContinue];
 
         //back button
-        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"backButton"];
+        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
         menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 50);
+        menuButton.size = CGSizeMake(75, 65);
         [menuButton setName:@"backButtonNode"];
         [self addChild:menuButton];
     }
