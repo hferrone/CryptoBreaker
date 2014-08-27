@@ -248,9 +248,10 @@ float degToRad(float degree) {
 
         if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
             {
-                if (_destinationNode.name == vowelString && _selectedNode.name == vowelString)
+                if (_destinationNode.name == _selectedNode.name)
                 {
                     [self incorrectDragByUser];
+                    _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
                 }else{
                     [_selectedNode setName:@"notMovable"];
                     _selectedNode.position = _destinationNode.position;
@@ -275,6 +276,8 @@ float degToRad(float degree) {
     {
         self.comboScore += 1;
         self.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+
+        [self.tileSlotsArray addObject:_selectedNode];
 
         [self generateNewTile];
         [self updateScore];
