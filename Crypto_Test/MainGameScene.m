@@ -14,15 +14,15 @@
 #import "WinConditionScene.h"
 #import "LoseConditionScene.h"
 
-static NSString * const tileNodeName = @"movable";
 static NSString * const vowelString = @"vowel";
 static NSString * const nonVowelString = @"nonVowel";
 
-
-@interface MainGameScene ()
+@interface MainGameScene () <UIAlertViewDelegate>
 
 @property NSInteger levelScore;
 @property NSInteger comboScore;
+@property int selectedTileComboScore;
+@property int destinationTileComboScore;
 @property CGPoint positionInScene;
 //@property (nonatomic, strong) SKSpriteNode *newTileNode;
 @property (nonatomic, strong) SKSpriteNode *selectedNode;
@@ -49,11 +49,6 @@ static NSString * const nonVowelString = @"nonVowel";
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
-//        //background image
-//        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"map"];
-//        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-//        [self addChild:background];
-
         //[self randomTileSelection];
         self.levelScore = 0;
         self.gameStartTimer = NO;
@@ -127,12 +122,6 @@ static NSString * const nonVowelString = @"nonVowel";
         self.scoreLabel.fontSize = 16;
         self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
         [self addChild: self.scoreLabel];
-
-//        //back button
-//        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"backButton"];
-//        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 50);
-//        [menuButton setName:@"backButtonNode"];
-//        [self addChild:menuButton];
     }
     return self;
 }
@@ -185,7 +174,6 @@ static NSString * const nonVowelString = @"nonVowel";
     TileNode *tileNode1 = [tileImagesArray objectAtIndex:randomTileGenerator];
     tileNode1.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
     tileNode1.size = CGSizeMake(23, 63);
-    [tileNode1 setName:tileNodeName];
     [self addChild:tileNode1];
 
     self.comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
@@ -195,15 +183,25 @@ static NSString * const nonVowelString = @"nonVowel";
     self.comboLabel.position = CGPointMake(7, 7);
     [tileNode1 addChild:self.comboLabel];
     
-//    for (SKLabelNode *labelNode in tileNode1.children) {
-//        labelNode.text
-//    }
+    for (SKLabelNode *labelNode in tileNode1.children)
+    {
+        labelNode.text = [NSString stringWithFormat: @"%d",self.comboScore];
+        self.selectedTileComboScore = self.comboScore;
+    }
 }
 
 - (void) incorrectDragByUser
 {
     UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"HALT!" message:@"A good cryptologist knows when to pair keys. Try combining a vowel with a consonant." delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
     [alertView show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex)
+    {
+        _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+    }
 }
 
 #pragma dragging and dropping methods
@@ -221,6 +219,7 @@ static NSString * const nonVowelString = @"nonVowel";
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:menuScene transition:transition];
     }
+
     //Timer logic.
     for (UITouch *touch in touches){
         CGPoint location = [touch locationInNode:_selectedNode];
@@ -291,9 +290,9 @@ static NSString * const nonVowelString = @"nonVowel";
 
         if (CGRectContainsPoint(_destinationNode.frame, positionInScene))
         {
-            [_selectedNode setName:@"notMovable"];
             _selectedNode.position = _destinationNode.position;
             self.hasCollidedAndScored = YES;
+            self.isMovable = NO;
         }
 
         if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
@@ -301,11 +300,10 @@ static NSString * const nonVowelString = @"nonVowel";
                 if (_destinationNode.name == _selectedNode.name)
                 {
                     [self incorrectDragByUser];
-                    _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
                 }else{
-                    [_selectedNode setName:@"notMovable"];
                     _selectedNode.position = _destinationNode.position;
                     self.hasCollidedAndScored = YES;
+                    self.isMovable = NO;
                 }
             }
     }
@@ -316,16 +314,11 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    self.previousSelectedNode = _selectedNode;
-//    if (CGRectContainsPoint(_previousSelectedNode.frame, self.positionInScene))
-//    {
-//        [self.tileSlotsArray addObject:self.previousSelectedNode];
-//        self.comboScore += 1;
-//    }
-
     if (self.hasCollidedAndScored)
     {
-        self.comboScore += 1;
+        self.selectedTileComboScore++;
+        self.destinationTileComboScore = self.selectedTileComboScore;
+        self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
         self.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
 
         [self.tileSlotsArray addObject:_selectedNode];
@@ -336,13 +329,15 @@ static NSString * const nonVowelString = @"nonVowel";
 
     }else{
         _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+        self.isMovable = YES;
     }
     self.hasCollidedAndScored = NO;
+    self.isMovable = YES;
 }
 
 - (void)panForTranslation:(CGPoint)translation {
     CGPoint position = [_selectedNode position];
-    if([[_selectedNode name] isEqualToString:tileNodeName]) {
+    if(self.isMovable) {
         [_selectedNode setPosition:CGPointMake(position.x + translation.x, position.y + translation.y)];
     }
 }

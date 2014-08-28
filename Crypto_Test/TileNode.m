@@ -10,6 +10,8 @@
 
 @interface TileNode ()
 
+@property BOOL isMovable;
+
 @end
 
 @implementation TileNode
@@ -20,6 +22,7 @@
     tileNode.position = position;
     tileNode.anchorPoint = CGPointMake(0.5, 0);
     tileNode.name = @"tileNode";
+    tileNode.isMovable = YES;
 
     return tileNode;
 }
