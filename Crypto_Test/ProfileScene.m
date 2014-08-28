@@ -19,16 +19,9 @@
         profileBackground.size = CGSizeMake(320, 568);
         [self addChild:profileBackground];
 
-        SKLabelNode *clickToContinue = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        clickToContinue.text = @"PROFILE";
-        clickToContinue.fontSize = 12;
-        clickToContinue.fontColor = [SKColor whiteColor];
-        clickToContinue.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 40);
-        [self addChild:clickToContinue];
-
         //back button
-        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"backButton"];
-        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 50);
+        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 67, CGRectGetMidY(self.frame) - 75);
         menuButton.size = CGSizeMake(75, 65);
         [menuButton setName:@"backButtonNode"];
         [self addChild:menuButton];

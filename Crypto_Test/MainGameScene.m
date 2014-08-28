@@ -81,9 +81,9 @@ static NSString * const nonVowelString = @"nonVowel";
         [self addChild:keyNode7];
 
         //back button
-        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"backButton"];
-        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 50);
-        menuButton.size = CGSizeMake(50, 35);
+        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 250);
+        menuButton.size = CGSizeMake(65, 50);
         [menuButton setName:@"backButtonNode"];
         [self addChild:menuButton];
 
