@@ -14,18 +14,17 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
-        SKLabelNode *clickToContinue = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        clickToContinue.text = @"You lose! Europe is lost!";
-        clickToContinue.fontSize = 12;
-        clickToContinue.fontColor = [SKColor whiteColor];
-        clickToContinue.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 40);
-        [self addChild:clickToContinue];
+        SKSpriteNode *creditBackground = [SKSpriteNode spriteNodeWithImageNamed:@"LoseSceneBackground"];
+        creditBackground.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        creditBackground.size = CGSizeMake(320, 568);
+        [self addChild:creditBackground];
 
         //back button
-        SKSpriteNode *restartButton = [SKSpriteNode spriteNodeWithImageNamed: @"backButton"];
-        restartButton.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 50);
-        restartButton.name = @"restartButtonNode";
-        [self addChild:restartButton];
+        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) - 50);
+        menuButton.size = CGSizeMake(75, 65);
+        [menuButton setName:@"restartButtonNode"];
+        [self addChild:menuButton];
     }
 
     return self;

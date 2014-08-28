@@ -21,7 +21,7 @@
 
         //back button
         SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
-        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 67, CGRectGetMidY(self.frame) - 75);
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 63, CGRectGetMidY(self.frame) - 75);
         menuButton.size = CGSizeMake(75, 65);
         [menuButton setName:@"backButtonNode"];
         [self addChild:menuButton];
