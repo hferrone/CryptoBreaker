@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25BC3FF719AEE9E400719EDB /* LoseConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */; };
 		36ACCADB19A7E48500AA29D4 /* KeyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADA19A7E48500AA29D4 /* KeyNode.m */; };
 		36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADD19A7E96700AA29D4 /* RotorNode.m */; };
 		36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE019A7EB3600AA29D4 /* TileNode.m */; };
@@ -45,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoseConditionScene.h; sourceTree = "<group>"; };
+		25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoseConditionScene.m; sourceTree = "<group>"; };
 		36ACCAD919A7E48500AA29D4 /* KeyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyNode.h; sourceTree = "<group>"; };
 		36ACCADA19A7E48500AA29D4 /* KeyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyNode.m; sourceTree = "<group>"; };
 		36ACCADC19A7E96700AA29D4 /* RotorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotorNode.h; sourceTree = "<group>"; };
@@ -153,6 +156,8 @@
 				36B7E2F819A7DCE900BFFECC /* ViewController.m */,
 				36B7E31C19A7DD1C00BFFECC /* TitleScene.h */,
 				36B7E31D19A7DD1C00BFFECC /* TitleScene.m */,
+				25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */,
+				25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */,
 				36ACCAE219A90D2700AA29D4 /* MenuScene.h */,
 				36ACCAE319A90D2700AA29D4 /* MenuScene.m */,
 				36B7E31F19A7DF8A00BFFECC /* MainGameScene.h */,
@@ -304,6 +309,7 @@
 			files = (
 				36B7E2F919A7DCE900BFFECC /* ViewController.m in Sources */,
 				36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */,
+				25BC3FF719AEE9E400719EDB /* LoseConditionScene.m in Sources */,
 				36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */,
 				36B7E2F319A7DCE900BFFECC /* AppDelegate.m in Sources */,
 				36B7E2EF19A7DCE900BFFECC /* main.m in Sources */,
