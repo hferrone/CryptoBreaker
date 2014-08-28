@@ -12,6 +12,7 @@
 #import "RotorNode.h"
 #import "TileNode.h"
 #import "WinConditionScene.h"
+#import "LoseConditionScene.h"
 
 static NSString * const tileNodeName = @"movable";
 static NSString * const vowelString = @"vowel";
@@ -31,6 +32,10 @@ static NSString * const nonVowelString = @"nonVowel";
 @property (nonatomic, strong) KeyNode *capNode2;
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
 @property (nonatomic, strong) SKLabelNode *comboLabel;
+@property (nonatomic, strong) SKLabelNode *timerLabel;
+@property NSTimeInterval startTime;
+@property BOOL gameStartTimer;
+@property BOOL startGame;
 @property BOOL hasCollidedAndScored;
 @property BOOL hasNewDestination;
 @property NSMutableArray *tileSlotsArray;
@@ -50,6 +55,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
         //[self randomTileSelection];
         self.levelScore = 0;
+        self.gameStartTimer = NO;
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
@@ -98,13 +104,13 @@ static NSString * const nonVowelString = @"nonVowel";
         [self addChild:rotorNode];
 
         //timer lable
-        SKLabelNode *timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        timerLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
-        timerLabel.fontColor = [UIColor whiteColor];
-        timerLabel.fontSize = 16;
-        timerLabel.text = @"0:00";
-        timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 140, CGRectGetMidY(self.frame) + 250);
-        [self addChild:timerLabel];
+        self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+        self.timerLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
+        self.timerLabel.fontColor = [UIColor whiteColor];
+        self.timerLabel.fontSize = 16;
+        self.timerLabel.text = @"Ready";
+        self.timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 140, CGRectGetMidY(self.frame) + 250);
+        [self addChild:self.timerLabel];
 
         //score label
         self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
@@ -192,6 +198,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
@@ -202,9 +209,37 @@ static NSString * const nonVowelString = @"nonVowel";
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:menuScene transition:transition];
     }
+    //Timer logic.
+    for (UITouch *touch in touches){
+        CGPoint location = [touch locationInNode:_selectedNode];
+        if (CGRectContainsPoint(self.frame, location)){
+            self.startGame = YES;
+            self.gameStartTimer = YES;
+        }
+    }
 
     CGPoint positionInScene = [touch locationInNode:self];
     [self selectNodeForTouch:positionInScene];
+}
+
+-(void)update:(NSTimeInterval)currentTime
+{
+    if (self.startGame){
+        self.startTime = currentTime;
+        self.startGame = NO;
+    }
+    int countDownInt = 10.0 - (int)(currentTime - self.startTime);
+
+    if (self.gameStartTimer) {
+        if (countDownInt>0){
+            self.timerLabel.text = [NSString stringWithFormat:@"%i", countDownInt];
+        }else if (countDownInt == 0) {
+            self.timerLabel.text = [NSString stringWithFormat:@"%@", @"TIME"];
+            LoseConditionScene *loseScene = [LoseConditionScene sceneWithSize:self.frame.size];
+            SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+            [self.view presentScene:loseScene transition:transition];
+        }
+    }
 }
 
 - (void)selectNodeForTouch:(CGPoint)touchLocation
@@ -262,6 +297,7 @@ float degToRad(float degree) {
 	[self panForTranslation:translation];
 }
 
+
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 //    self.previousSelectedNode = _selectedNode;
@@ -281,7 +317,7 @@ float degToRad(float degree) {
         [self checkForCapPoint];
 
     }else{
-        _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
+        _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
     }
     self.hasCollidedAndScored = NO;
 }

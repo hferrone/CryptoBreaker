@@ -14,7 +14,6 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
-
         SKLabelNode *clickToContinue = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
         clickToContinue.text = @"You lose! Europe is lost!";
         clickToContinue.fontSize = 12;
