@@ -37,6 +37,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property BOOL gameStartTimer;
 @property BOOL startGame;
 @property BOOL hasCollidedAndScored;
+@property BOOL hasComboed;
 @property BOOL hasNewDestination;
 @property BOOL isMovable;
 @property NSMutableArray *tileSlotsArray;
@@ -186,7 +187,6 @@ static NSString * const nonVowelString = @"nonVowel";
     for (SKLabelNode *labelNode in tileNode1.children)
     {
         labelNode.text = [NSString stringWithFormat: @"%d",self.comboScore];
-        self.selectedTileComboScore = self.comboScore;
     }
 }
 
@@ -302,7 +302,7 @@ static NSString * const nonVowelString = @"nonVowel";
                     [self incorrectDragByUser];
                 }else{
                     _selectedNode.position = _destinationNode.position;
-                    self.hasCollidedAndScored = YES;
+                    self.hasComboed = YES;
                     self.isMovable = NO;
                 }
             }
@@ -316,10 +316,12 @@ static NSString * const nonVowelString = @"nonVowel";
 {
     if (self.hasCollidedAndScored)
     {
-        self.selectedTileComboScore++;
-        self.destinationTileComboScore = self.selectedTileComboScore;
-        self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
-        self.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+        for (SKLabelNode *labelNode in _selectedNode.children)
+        {
+            self.comboScore++;
+            self.selectedTileComboScore = self.comboScore;
+            labelNode.text = [NSString stringWithFormat: @"%d",self.comboScore];
+        }
 
         [self.tileSlotsArray addObject:_selectedNode];
 
@@ -331,6 +333,16 @@ static NSString * const nonVowelString = @"nonVowel";
         _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
         self.isMovable = YES;
     }
+
+    if (self.hasComboed)
+    {
+        for (SKLabelNode *labelNode in _destinationNode.children)
+        {
+            labelNode.text = [NSString stringWithFormat: @"%d",self.comboScore];
+            self.comboScore = self.selectedTileComboScore + self.comboScore;
+        }
+    }
+
     self.hasCollidedAndScored = NO;
     self.isMovable = YES;
 }
