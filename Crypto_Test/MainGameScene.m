@@ -86,6 +86,13 @@ static NSString * const nonVowelString = @"nonVowel";
         keyNode7.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 55);
         [self addChild:keyNode7];
 
+        //back button
+        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 250);
+        menuButton.size = CGSizeMake(65, 50);
+        [menuButton setName:@"backButtonNode"];
+        [self addChild:menuButton];
+
         [self generateNewTile];
         self.tileSlotsArray = [[NSMutableArray alloc] initWithObjects:keyNode1, keyNode2, keyNode3, keyNode4, keyNode5, keyNode6, keyNode7, nil];
 
@@ -186,11 +193,15 @@ static NSString * const nonVowelString = @"nonVowel";
     self.comboLabel.fontSize = 12;
     self.comboLabel.position = CGPointMake(7, 7);
     [tileNode1 addChild:self.comboLabel];
+    
+//    for (SKLabelNode *labelNode in tileNode1.children) {
+//        labelNode.text
+//    }
 }
 
 - (void) incorrectDragByUser
 {
-    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"HALT!" message:@"A good cryptologist knows when to pair keys. Try combining a vowel with a non-vowel." delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"HALT!" message:@"A good cryptologist knows when to pair keys. Try combining a vowel with a consonant." delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
     [alertView show];
 }
 
@@ -220,6 +231,13 @@ static NSString * const nonVowelString = @"nonVowel";
 
     CGPoint positionInScene = [touch locationInNode:self];
     [self selectNodeForTouch:positionInScene];
+
+    if ([node.name isEqualToString:@"backButton"])
+    {
+        MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];
+        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+        [self.view presentScene:menuScene transition:transition];
+    }
 }
 
 -(void)update:(NSTimeInterval)currentTime
@@ -257,10 +275,6 @@ static NSString * const nonVowelString = @"nonVowel";
 	}
 }
 
-float degToRad(float degree) {
-	return degree / 180.0f * M_PI;
-}
-
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
@@ -283,9 +297,10 @@ float degToRad(float degree) {
 
         if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
             {
-                if (_destinationNode.name == vowelString && _selectedNode.name == vowelString)
+                if (_destinationNode.name == _selectedNode.name)
                 {
                     [self incorrectDragByUser];
+                    _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
                 }else{
                     [_selectedNode setName:@"notMovable"];
                     _selectedNode.position = _destinationNode.position;
@@ -311,6 +326,8 @@ float degToRad(float degree) {
     {
         self.comboScore += 1;
         self.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+
+        [self.tileSlotsArray addObject:_selectedNode];
 
         [self generateNewTile];
         [self updateScore];
