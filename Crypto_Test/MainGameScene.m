@@ -33,6 +33,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property (nonatomic, strong) SKLabelNode *comboLabel;
 @property BOOL hasCollidedAndScored;
 @property BOOL hasNewDestination;
+@property BOOL isMovable;
 @property NSMutableArray *tileSlotsArray;
 
 
