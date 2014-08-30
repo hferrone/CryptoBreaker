@@ -10,6 +10,6 @@
 
 @interface TileNode : SKSpriteNode
 
-+ (instancetype)tileNodeAtPosition:(CGPoint)position;
++(instancetype)tileNodeAtPosition:(CGPoint)position tileComboScore:(NSInteger)comboScore tileArray:(NSArray*)array randomNumber:(int)randomNumber initialCombo:(NSInteger)initCombo;
 
 @end

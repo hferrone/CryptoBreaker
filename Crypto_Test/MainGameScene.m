@@ -21,6 +21,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property NSInteger levelScore;
 @property NSInteger comboScore;
+@property NSInteger initialCombo;
 @property int selectedTileComboScore;
 @property int destinationTileComboScore;
 @property CGPoint positionInScene;
@@ -103,8 +104,7 @@ static NSString * const nonVowelString = @"nonVowel";
         [self addChild:self.capNode2];
 
         //rotor instance
-        RotorNode *rotorNode = [RotorNode spriteNodeWithImageNamed:@"rotor"];
-        rotorNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 235);
+        RotorNode *rotorNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 235)];
         [self addChild:rotorNode];
 
         //timer lable
@@ -131,8 +131,6 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)generateNewTile
 {
-    self.comboScore = 1;
-
     SKSpriteNode *nodeA = [SKSpriteNode spriteNodeWithImageNamed:@"A"];
     nodeA.name = vowelString;
 
@@ -172,22 +170,12 @@ static NSString * const nonVowelString = @"nonVowel";
     NSArray *tileImagesArray = @[nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG, nodeH, nodeI, nodeO, nodeU, nodeY];
     int randomTileGenerator = arc4random_uniform(11);
 
-    TileNode *tileNode1 = [tileImagesArray objectAtIndex:randomTileGenerator];
-    tileNode1.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
-    tileNode1.size = CGSizeMake(23, 63);
-    [self addChild:tileNode1];
+    self.initialCombo = 1;
+    CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+    TileNode *tileNode1 = [TileNode tileNodeAtPosition:position tileComboScore:self.comboScore tileArray:tileImagesArray randomNumber:randomTileGenerator initialCombo:self.initialCombo];
+    self.isMovable = YES;
 
-    self.comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-    self.comboLabel.fontColor = [UIColor whiteColor];
-    self.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
-    self.comboLabel.fontSize = 12;
-    self.comboLabel.position = CGPointMake(7, 7);
-    [tileNode1 addChild:self.comboLabel];
-    
-    for (SKLabelNode *labelNode in tileNode1.children)
-    {
-        labelNode.text = [NSString stringWithFormat: @"%d",self.comboScore];
-    }
+    [self addChild:tileNode1];
 }
 
 - (void) incorrectDragByUser
