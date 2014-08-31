@@ -14,7 +14,7 @@
 {
     KeyNode *keyTile = [KeyNode spriteNodeWithImageNamed:@"key"];
     keyTile.position = position;
-    keyTile.anchorPoint = CGPointMake(0.5, 0);
+    keyTile.anchorPoint = CGPointMake(0.5, 0.5);
     keyTile.name = @"keyNode";
 
     return keyTile;

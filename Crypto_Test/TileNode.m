@@ -24,14 +24,14 @@
 {
     TileNode *tileNode = [array objectAtIndex:randomNumber];
     tileNode.position = position;
-    tileNode.anchorPoint = CGPointMake(0.5, 0);
+    //tileNode.anchorPoint = CGPointMake(0.5, 0);
     tileNode.size = CGSizeMake(23, 63);
 
     SKLabelNode *comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
     comboLabel.fontColor = [UIColor whiteColor];
     comboLabel.text = [NSString stringWithFormat: @"%d",comboScore];
     comboLabel.fontSize = 12;
-    comboLabel.position = CGPointMake(10, 50);
+    comboLabel.position = CGPointMake(13, 45);
     [tileNode addChild:comboLabel];
 
     for (SKLabelNode *labelNode in tileNode.children)
