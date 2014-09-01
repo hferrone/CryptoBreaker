@@ -306,9 +306,10 @@ static NSString * const nonVowelString = @"nonVowel";
     {
         for (SKLabelNode *labelNode in _selectedNode.children)
         {
-            self.comboScore++;
-            self.selectedTileComboScore = self.comboScore;
-            labelNode.text = [NSString stringWithFormat: @"%d",self.comboScore];
+            NSInteger selectedTileComboInt = [labelNode.text intValue];
+            self.selectedTileComboScore = (int)selectedTileComboInt;
+            selectedTileComboInt++;
+            labelNode.text = [NSString stringWithFormat: @"%d",selectedTileComboInt];
         }
 
         [self.tileSlotsArray addObject:_selectedNode];
@@ -326,8 +327,10 @@ static NSString * const nonVowelString = @"nonVowel";
     {
         for (SKLabelNode *labelNode in _destinationNode.children)
         {
+            NSInteger destinationTileComboInt = [labelNode.text intValue];
+            self.destinationTileComboScore = (int)destinationTileComboInt;
+            self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
             labelNode.text = [NSString stringWithFormat: @"%d",self.comboScore];
-            self.comboScore = self.selectedTileComboScore + self.comboScore;
         }
     }
 
