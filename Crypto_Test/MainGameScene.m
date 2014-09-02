@@ -131,40 +131,40 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)generateNewTile
 {
-    SKSpriteNode *nodeA = [SKSpriteNode spriteNodeWithImageNamed:@"A"];
+    TileNode *nodeA = [TileNode spriteNodeWithImageNamed:@"A"];
     nodeA.name = vowelString;
 
-    SKSpriteNode *nodeB = [SKSpriteNode spriteNodeWithImageNamed:@"B"];
+    TileNode *nodeB = [TileNode spriteNodeWithImageNamed:@"B"];
     nodeB.name = nonVowelString;
 
-    SKSpriteNode *nodeC = [SKSpriteNode spriteNodeWithImageNamed:@"C"];
+    TileNode *nodeC = [TileNode spriteNodeWithImageNamed:@"C"];
     nodeC.name = nonVowelString;
 
-    SKSpriteNode *nodeD = [SKSpriteNode spriteNodeWithImageNamed:@"D"];
+    TileNode *nodeD = [TileNode spriteNodeWithImageNamed:@"D"];
     nodeD.name = nonVowelString;
 
-    SKSpriteNode *nodeE = [SKSpriteNode spriteNodeWithImageNamed:@"E"];
+    TileNode *nodeE = [TileNode spriteNodeWithImageNamed:@"E"];
     nodeE.name = vowelString;
 
-    SKSpriteNode *nodeF = [SKSpriteNode spriteNodeWithImageNamed:@"F"];
+    TileNode *nodeF = [TileNode spriteNodeWithImageNamed:@"F"];
     nodeF.name = nonVowelString;
 
-    SKSpriteNode *nodeG = [SKSpriteNode spriteNodeWithImageNamed:@"G"];
+    TileNode *nodeG = [TileNode spriteNodeWithImageNamed:@"G"];
     nodeG.name = nonVowelString;
 
-    SKSpriteNode *nodeH = [SKSpriteNode spriteNodeWithImageNamed:@"H"];
+    TileNode *nodeH = [TileNode spriteNodeWithImageNamed:@"H"];
     nodeH.name = nonVowelString;
 
-    SKSpriteNode *nodeI = [SKSpriteNode spriteNodeWithImageNamed:@"I"];
+    TileNode *nodeI = [TileNode spriteNodeWithImageNamed:@"I"];
     nodeI.name = vowelString;
 
-    SKSpriteNode *nodeO = [SKSpriteNode spriteNodeWithImageNamed:@"O"];
+    TileNode *nodeO = [TileNode spriteNodeWithImageNamed:@"O"];
     nodeO.name = vowelString;
 
-    SKSpriteNode *nodeU= [SKSpriteNode spriteNodeWithImageNamed:@"U"];
+    TileNode *nodeU= [TileNode spriteNodeWithImageNamed:@"U"];
     nodeU.name = vowelString;
 
-    SKSpriteNode *nodeY = [SKSpriteNode spriteNodeWithImageNamed:@"Y"];
+    TileNode *nodeY = [TileNode spriteNodeWithImageNamed:@"Y"];
     nodeY.name = vowelString;
 
     NSArray *tileImagesArray = @[nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG, nodeH, nodeI, nodeO, nodeU, nodeY];
@@ -172,6 +172,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
     self.initialCombo = 1;
     CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+
     TileNode *tileNode1 = [TileNode tileNodeAtPosition:position tileComboScore:self.comboScore tileArray:tileImagesArray randomNumber:randomTileGenerator initialCombo:self.initialCombo];
     self.isMovable = YES;
 
