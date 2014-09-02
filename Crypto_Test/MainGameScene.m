@@ -25,7 +25,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSInteger selectedTileComboScore;
 @property NSInteger destinationTileComboScore;
 @property CGPoint positionInScene;
-@property (nonatomic, strong) SKSpriteNode *selectedNode;
+@property (nonatomic, strong) TileNode *selectedNode;
 @property (nonatomic, strong) SKSpriteNode *destinationNode;
 @property (nonatomic, strong) SKSpriteNode *previousSelectedNode;
 @property (nonatomic, strong) RotorNode *rotorCapNode;
@@ -242,7 +242,7 @@ static NSString * const nonVowelString = @"nonVowel";
 - (void)selectNodeForTouch:(CGPoint)touchLocation
 {
     //1
-    SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
+    TileNode *touchedNode = (TileNode *)[self nodeAtPoint:touchLocation];
 
     //2
 	if(![_selectedNode isEqual:touchedNode])
@@ -281,9 +281,9 @@ static NSString * const nonVowelString = @"nonVowel";
                     [self incorrectDragByUser];
                 }else{
                     _selectedNode.position = _destinationNode.position;
-                    [_destinationNode removeFromParent];
                     self.hasComboed = YES;
                     self.isMovable = NO;
+                    [_destinationNode removeFromParent];
                 }
             }
     }
@@ -312,21 +312,20 @@ static NSString * const nonVowelString = @"nonVowel";
         self.isMovable = YES;
     }
 
-//    if (self.hasComboed)
-//    {
-//        TileNode *tileNode = (TileNode*)_selectedNode;
-//        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
-//
-//        for (SKLabelNode *labelNode in _destinationNode.children)
-//        {
-//            self.destinationTileComboScore = [labelNode.text intValue];
-//        }
-//
-//        self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
-//        tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
-//
-//        [self resetTileMovement];
-//    }
+    if (self.hasComboed)
+    {
+        TileNode *tileNode = (TileNode*)_selectedNode;
+        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
+
+        for (SKLabelNode *labelNode in _destinationNode.children)
+        {
+            self.destinationTileComboScore = [labelNode.text intValue];
+            self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
+            tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+        }
+
+        [self resetTileMovement];
+    }
 
     self.hasCollidedAndScored = NO;
 }
@@ -359,17 +358,14 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)checkForCapPoint
 {
-//    TileNode *tileNode = (TileNode*)_selectedNode;
-//    NSInteger comboCheck = [tileNode.comboLabel.text intValue];
-
-    if (self.comboScore >= 2)
+    if (self.selectedTileComboScore >= 7)
     {
-        [self.tileSlotsArray addObject:self];
-        //[self executeRotorAnimation];
+        [self executeRotorAnimation];
+        [self.tileSlotsArray addObject:self.rotorCapNode];
     }
 }
 
--(RotorNode*)executeRotorAnimation
+-(void)executeRotorAnimation
 {
     //rotor instance
     self.rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
@@ -385,8 +381,6 @@ static NSString * const nonVowelString = @"nonVowel";
     SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
     SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
     [self.rotorCapNode runAction:animationRepeat];
-
-    return self.rotorCapNode;
 }
 
 @end
