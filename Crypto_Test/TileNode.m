@@ -24,7 +24,6 @@
 {
     TileNode *tileNode = [array objectAtIndex:randomNumber];
     tileNode.position = position;
-    //tileNode.anchorPoint = CGPointMake(0.5, 0);
     tileNode.size = CGSizeMake(23, 63);
 
     tileNode.comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];

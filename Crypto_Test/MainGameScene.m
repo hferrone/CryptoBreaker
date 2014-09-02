@@ -25,12 +25,10 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSInteger selectedTileComboScore;
 @property NSInteger destinationTileComboScore;
 @property CGPoint positionInScene;
-//@property (nonatomic, strong) SKSpriteNode *newTileNode;
 @property (nonatomic, strong) SKSpriteNode *selectedNode;
 @property (nonatomic, strong) SKSpriteNode *destinationNode;
 @property (nonatomic, strong) SKSpriteNode *previousSelectedNode;
-@property (nonatomic, strong) KeyNode *capNode1;
-@property (nonatomic, strong) KeyNode *capNode2;
+@property (nonatomic, strong) RotorNode *rotorCapNode;
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
 @property (nonatomic, strong) SKLabelNode *comboLabel;
 @property (nonatomic, strong) SKLabelNode *timerLabel;
@@ -57,31 +55,31 @@ static NSString * const nonVowelString = @"nonVowel";
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 55);
+        keyNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 15);
         [self addChild:keyNode1];
 
         KeyNode *keyNode2 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode2.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 205);
+        keyNode2.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 155);
         [self addChild:keyNode2];
 
         KeyNode *keyNode3 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode3.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 55);
+        keyNode3.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 15);
         [self addChild:keyNode3];
 
         KeyNode *keyNode4 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode4.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 205);
+        keyNode4.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 155);
         [self addChild:keyNode4];
 
         KeyNode *keyNode5 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode5.position = CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 55);
+        keyNode5.position = CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 15);
         [self addChild:keyNode5];
 
         KeyNode *keyNode6 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode6.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 55);
+        keyNode6.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) + 105);
         [self addChild:keyNode6];
 
         KeyNode *keyNode7 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode7.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 55);
+        keyNode7.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) + 105);
         [self addChild:keyNode7];
 
         //back button
@@ -94,26 +92,13 @@ static NSString * const nonVowelString = @"nonVowel";
         [self generateNewTile];
         self.tileSlotsArray = [[NSMutableArray alloc] initWithObjects:keyNode1, keyNode2, keyNode3, keyNode4, keyNode5, keyNode6, keyNode7, nil];
 
-        //scoring tile nodes
-        self.capNode1 = [KeyNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(25, 65)];
-        self.capNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) + 100);
-        [self addChild:self.capNode1];
-
-        self.capNode2 = [KeyNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(25, 65)];
-        self.capNode2.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) + 100);
-        [self addChild:self.capNode2];
-
-        //rotor instance
-        RotorNode *rotorNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 235)];
-        [self addChild:rotorNode];
-
         //timer lable
         self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
         self.timerLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
         self.timerLabel.fontColor = [UIColor whiteColor];
         self.timerLabel.fontSize = 16;
         self.timerLabel.text = @"Ready";
-        self.timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 140, CGRectGetMidY(self.frame) + 250);
+        self.timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) + 250);
         [self addChild:self.timerLabel];
 
         //score label
@@ -171,12 +156,17 @@ static NSString * const nonVowelString = @"nonVowel";
     int randomTileGenerator = arc4random_uniform(11);
 
     self.initialCombo = 1;
-    CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+    CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 180);
 
     TileNode *tileNode1 = [TileNode tileNodeAtPosition:position tileComboScore:self.comboScore tileArray:tileImagesArray randomNumber:randomTileGenerator initialCombo:self.initialCombo];
     self.isMovable = YES;
 
     [self addChild:tileNode1];
+}
+
+-(void)resetTileMovement
+{
+    self.isMovable = YES;
 }
 
 - (void) incorrectDragByUser
@@ -189,7 +179,7 @@ static NSString * const nonVowelString = @"nonVowel";
 {
     if (buttonIndex == alertView.cancelButtonIndex)
     {
-        _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+        _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 155);
     }
 }
 
@@ -235,7 +225,7 @@ static NSString * const nonVowelString = @"nonVowel";
         self.startTime = currentTime;
         self.startGame = NO;
     }
-    int countDownInt = 10.0 - (int)(currentTime - self.startTime);
+    int countDownInt = 30.0 - (int)(currentTime - self.startTime);
 
     if (self.gameStartTimer) {
         if (countDownInt>0){
@@ -291,6 +281,7 @@ static NSString * const nonVowelString = @"nonVowel";
                     [self incorrectDragByUser];
                 }else{
                     _selectedNode.position = _destinationNode.position;
+                    [_destinationNode removeFromParent];
                     self.hasComboed = YES;
                     self.isMovable = NO;
                 }
@@ -300,49 +291,44 @@ static NSString * const nonVowelString = @"nonVowel";
 	[self panForTranslation:translation];
 }
 
-
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (self.hasCollidedAndScored)
     {
-        for (SKLabelNode *labelNode in _selectedNode.children)
-        {
-            self.selectedTileComboScore = [labelNode.text intValue];
-            self.selectedTileComboScore++;
-            labelNode.text = [NSString stringWithFormat: @"%d",self.selectedTileComboScore];
-        }
-
-        //TileNode *tileNode = (TileNode*)_selectedNode;
-        //tileNode.comboLabel = nil;
+        TileNode *tileNode = (TileNode*)_selectedNode;
+        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
+        self.selectedTileComboScore++;
+        tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.selectedTileComboScore];
 
         [self.tileSlotsArray addObject:_selectedNode];
 
         [self generateNewTile];
         [self updateScore];
         [self checkForCapPoint];
+        //[self resetTileMovement];
 
     }else{
         _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
         self.isMovable = YES;
     }
 
-    if (self.hasComboed)
-    {
-        for(SKLabelNode *labelNode in _selectedNode.children)
-        {
-            self.selectedTileComboScore = [labelNode.text intValue];
-        }
-
-        for (SKLabelNode *labelNode in _destinationNode.children)
-        {
-            self.destinationTileComboScore = [labelNode.text intValue];
-            self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
-            labelNode.text = [NSString stringWithFormat: @"%d",self.comboScore];
-        }
-    }
+//    if (self.hasComboed)
+//    {
+//        TileNode *tileNode = (TileNode*)_selectedNode;
+//        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
+//
+//        for (SKLabelNode *labelNode in _destinationNode.children)
+//        {
+//            self.destinationTileComboScore = [labelNode.text intValue];
+//        }
+//
+//        self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
+//        tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+//
+//        [self resetTileMovement];
+//    }
 
     self.hasCollidedAndScored = NO;
-    self.isMovable = YES;
 }
 
 - (void)panForTranslation:(CGPoint)translation {
@@ -356,11 +342,14 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)updateScore
 {
+    //TileNode *tileNode = (TileNode*)_selectedNode;
+    //NSInteger scoreMultiplier = [tileNode.comboLabel.text intValue];
+
     self.levelScore += 50;
     self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
 
     //win condition and segue back to menu (resets game conditions)
-    if (self.levelScore > 250)
+    if (self.levelScore > 1000)
     {
         WinConditionScene *menuScene = [WinConditionScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
@@ -370,11 +359,34 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)checkForCapPoint
 {
-    if (self.comboScore >= 7)
+//    TileNode *tileNode = (TileNode*)_selectedNode;
+//    NSInteger comboCheck = [tileNode.comboLabel.text intValue];
+
+    if (self.comboScore >= 2)
     {
-        [self.tileSlotsArray addObject:self.capNode1];
-        [self.tileSlotsArray addObject:self.capNode2];
+        [self.tileSlotsArray addObject:self];
+        //[self executeRotorAnimation];
     }
+}
+
+-(RotorNode*)executeRotorAnimation
+{
+    //rotor instance
+    self.rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
+    self.rotorCapNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225);
+    self.rotorCapNode.size = CGSizeMake(100, 150);
+    [self addChild:self.rotorCapNode];
+
+    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
+                                     [SKTexture textureWithImageNamed:@"rotor2"],
+                                     [SKTexture textureWithImageNamed:@"rotor3"],
+                                     [SKTexture textureWithImageNamed:@"rotor4"]];
+
+    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
+    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
+    [self.rotorCapNode runAction:animationRepeat];
+
+    return self.rotorCapNode;
 }
 
 @end
