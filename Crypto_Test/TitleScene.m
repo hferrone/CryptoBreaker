@@ -14,6 +14,7 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
+        //background setup and segue with fade
         SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"TitleScene"];
         background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         [self addChild:background];
@@ -25,6 +26,7 @@
 
 -(void)segueToMenu
 {
+    //segue to next scene - menu scene
     MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];
     SKTransition *transition = [SKTransition fadeWithDuration:1.0];
     [self.view presentScene:menuScene transition:transition];

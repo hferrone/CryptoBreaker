@@ -32,10 +32,12 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    //user touch location - UI button interaction
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
 
+    //segue to main menu and game reset
     if ([node.name isEqualToString:@"backButtonNode"])
     {
         MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];

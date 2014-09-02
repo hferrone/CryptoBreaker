@@ -14,6 +14,7 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
+        //background setup
         SKSpriteNode *creditBackground = [SKSpriteNode spriteNodeWithImageNamed:@"LoseSceneBackground"];
         creditBackground.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         creditBackground.size = CGSizeMake(320, 568);
@@ -32,10 +33,12 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    //user touch location - UI button interaction
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
 
+    //segue to main menu and game reset
     if ([node.name isEqualToString:@"restartButtonNode"])
     {
         MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];

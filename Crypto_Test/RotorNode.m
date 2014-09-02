@@ -12,6 +12,7 @@
 
 +(instancetype)rotorNodeAtPosition:(CGPoint)position
 {
+    //custom node properties
     RotorNode *rotorTile = [RotorNode spriteNodeWithImageNamed:@"rotor"];
     rotorTile.position = position;
     rotorTile.anchorPoint = CGPointMake(0.5, 0);

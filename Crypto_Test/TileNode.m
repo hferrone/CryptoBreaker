@@ -10,8 +10,6 @@
 
 @interface TileNode ()
 
-@property BOOL isMovable;
-
 @end
 
 @implementation TileNode
@@ -22,10 +20,12 @@
                 randomNumber:(int)randomNumber
                 initialCombo:(NSInteger)initCombo
 {
+    //custom node properties
     TileNode *tileNode = [array objectAtIndex:randomNumber];
     tileNode.position = position;
     tileNode.size = CGSizeMake(23, 63);
 
+    //using label property from .h file and parenting to generated tileNode
     tileNode.comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
     tileNode.comboLabel.fontColor = [UIColor whiteColor];
     tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",comboScore];

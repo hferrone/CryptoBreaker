@@ -10,7 +10,7 @@
 
 @interface RotorNode : SKSpriteNode
 
+//custom initializing method w/ position
 + (instancetype)rotorNodeAtPosition:(CGPoint)position;
-
 
 @end

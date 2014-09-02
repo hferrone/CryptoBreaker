@@ -10,6 +10,7 @@
 
 @interface KeyNode : SKSpriteNode
 
+//custom initializing method w/ position input in MainGameScene
 + (instancetype)keyNodeAtPosition:(CGPoint)position;
 
 @end

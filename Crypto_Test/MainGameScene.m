@@ -14,6 +14,7 @@
 #import "WinConditionScene.h"
 #import "LoseConditionScene.h"
 
+//global constant variables
 static NSString * const vowelString = @"vowel";
 static NSString * const nonVowelString = @"nonVowel";
 
@@ -24,21 +25,28 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSInteger initialCombo;
 @property NSInteger selectedTileComboScore;
 @property NSInteger destinationTileComboScore;
+
 @property CGPoint positionInScene;
-@property (nonatomic, strong) TileNode *selectedNode;
+
+@property (nonatomic, strong) SKSpriteNode *selectedNode;
 @property (nonatomic, strong) SKSpriteNode *destinationNode;
 @property (nonatomic, strong) SKSpriteNode *previousSelectedNode;
+
 @property (nonatomic, strong) RotorNode *rotorCapNode;
+
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
 @property (nonatomic, strong) SKLabelNode *comboLabel;
 @property (nonatomic, strong) SKLabelNode *timerLabel;
+
 @property NSTimeInterval startTime;
+
 @property BOOL gameStartTimer;
 @property BOOL startGame;
 @property BOOL hasCollidedAndScored;
 @property BOOL hasComboed;
 @property BOOL hasNewDestination;
 @property BOOL isMovable;
+
 @property NSMutableArray *tileSlotsArray;
 
 
@@ -187,7 +195,6 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
@@ -304,7 +311,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
         [self generateNewTile];
         [self updateScore];
-        [self checkForCapPoint];
+        [self checkForCapPoint:self.selectedTileComboScore];
         //[self resetTileMovement];
 
     }else{
@@ -330,7 +337,8 @@ static NSString * const nonVowelString = @"nonVowel";
     self.hasCollidedAndScored = NO;
 }
 
-- (void)panForTranslation:(CGPoint)translation {
+- (void)panForTranslation:(CGPoint)translation
+{
     CGPoint position = [_selectedNode position];
     if(self.isMovable) {
         [_selectedNode setPosition:CGPointMake(position.x + translation.x, position.y + translation.y)];
@@ -341,9 +349,6 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)updateScore
 {
-    //TileNode *tileNode = (TileNode*)_selectedNode;
-    //NSInteger scoreMultiplier = [tileNode.comboLabel.text intValue];
-
     self.levelScore += 50;
     self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
 
@@ -356,16 +361,18 @@ static NSString * const nonVowelString = @"nonVowel";
     }
 }
 
--(void)checkForCapPoint
+-(void)checkForCapPoint:(NSInteger)tileCombo
 {
-    if (self.selectedTileComboScore >= 7)
+    if (tileCombo >= 7)
     {
-        [self executeRotorAnimation];
+        [self executeRotorAnimationForward];
         [self.tileSlotsArray addObject:self.rotorCapNode];
     }
+
+    [self executeRotorAnimationBackward];
 }
 
--(void)executeRotorAnimation
+-(void)executeRotorAnimationForward
 {
     //rotor instance
     self.rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
@@ -377,6 +384,24 @@ static NSString * const nonVowelString = @"nonVowel";
                                      [SKTexture textureWithImageNamed:@"rotor2"],
                                      [SKTexture textureWithImageNamed:@"rotor3"],
                                      [SKTexture textureWithImageNamed:@"rotor4"]];
+
+    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
+    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
+    [self.rotorCapNode runAction:animationRepeat];
+}
+
+-(void)executeRotorAnimationBackward
+{
+    //rotor instance
+    self.rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
+    self.rotorCapNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225);
+    self.rotorCapNode.size = CGSizeMake(100, 150);
+    [self addChild:self.rotorCapNode];
+
+    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor4"],
+                                     [SKTexture textureWithImageNamed:@"rotor3"],
+                                     [SKTexture textureWithImageNamed:@"rotor2"],
+                                     [SKTexture textureWithImageNamed:@"rotor1"]];
 
     SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
     SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
