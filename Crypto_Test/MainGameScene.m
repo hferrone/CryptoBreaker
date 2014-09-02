@@ -22,8 +22,8 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSInteger levelScore;
 @property NSInteger comboScore;
 @property NSInteger initialCombo;
-@property int selectedTileComboScore;
-@property int destinationTileComboScore;
+@property NSInteger selectedTileComboScore;
+@property NSInteger destinationTileComboScore;
 @property CGPoint positionInScene;
 //@property (nonatomic, strong) SKSpriteNode *newTileNode;
 @property (nonatomic, strong) SKSpriteNode *selectedNode;
@@ -306,11 +306,13 @@ static NSString * const nonVowelString = @"nonVowel";
     {
         for (SKLabelNode *labelNode in _selectedNode.children)
         {
-            NSInteger selectedTileComboInt = [labelNode.text intValue];
-            self.selectedTileComboScore = (int)selectedTileComboInt;
-            selectedTileComboInt++;
-            labelNode.text = [NSString stringWithFormat: @"%d",selectedTileComboInt];
+            self.selectedTileComboScore = [labelNode.text intValue];
+            self.selectedTileComboScore++;
+            labelNode.text = [NSString stringWithFormat: @"%d",self.selectedTileComboScore];
         }
+
+        //TileNode *tileNode = (TileNode*)_selectedNode;
+        //tileNode.comboLabel = nil;
 
         [self.tileSlotsArray addObject:_selectedNode];
 
@@ -325,10 +327,14 @@ static NSString * const nonVowelString = @"nonVowel";
 
     if (self.hasComboed)
     {
+        for(SKLabelNode *labelNode in _selectedNode.children)
+        {
+            self.selectedTileComboScore = [labelNode.text intValue];
+        }
+
         for (SKLabelNode *labelNode in _destinationNode.children)
         {
-            NSInteger destinationTileComboInt = [labelNode.text intValue];
-            self.destinationTileComboScore = (int)destinationTileComboInt;
+            self.destinationTileComboScore = [labelNode.text intValue];
             self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
             labelNode.text = [NSString stringWithFormat: @"%d",self.comboScore];
         }

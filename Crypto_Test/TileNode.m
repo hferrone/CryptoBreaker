@@ -27,17 +27,14 @@
     //tileNode.anchorPoint = CGPointMake(0.5, 0);
     tileNode.size = CGSizeMake(23, 63);
 
-    SKLabelNode *comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-    comboLabel.fontColor = [UIColor whiteColor];
-    comboLabel.text = [NSString stringWithFormat: @"%d",comboScore];
-    comboLabel.fontSize = 12;
-    comboLabel.position = CGPointMake(13, 45);
-    [tileNode addChild:comboLabel];
+    tileNode.comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+    tileNode.comboLabel.fontColor = [UIColor whiteColor];
+    tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",comboScore];
+    tileNode.comboLabel.fontSize = 12;
+    tileNode.comboLabel.position = CGPointMake(13, 45);
+    [tileNode addChild:tileNode.comboLabel];
 
-    for (SKLabelNode *labelNode in tileNode.children)
-    {
-        labelNode.text = [NSString stringWithFormat: @"%d",initCombo];
-    }
+    tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",initCombo];
 
     return tileNode;
 }
