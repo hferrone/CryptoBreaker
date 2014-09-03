@@ -12,6 +12,7 @@
 		251982D719B79BEE009AA435 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 251982D519B79BEE009AA435 /* spark.png */; };
 		25BC3FF719AEE9E400719EDB /* LoseConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */; };
 		362CA8C119B6341300EE09CE /* CryptoImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 362CA8C019B6341300EE09CE /* CryptoImages.atlas */; };
+		362CA8C419B7915E00EE09CE /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 362CA8C319B7915E00EE09CE /* Utilities.m */; };
 		36ACCADB19A7E48500AA29D4 /* KeyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADA19A7E48500AA29D4 /* KeyNode.m */; };
 		36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADD19A7E96700AA29D4 /* RotorNode.m */; };
 		36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE019A7EB3600AA29D4 /* TileNode.m */; };
@@ -56,6 +57,8 @@
 		25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoseConditionScene.h; sourceTree = "<group>"; };
 		25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoseConditionScene.m; sourceTree = "<group>"; };
 		362CA8C019B6341300EE09CE /* CryptoImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = CryptoImages.atlas; sourceTree = "<group>"; };
+		362CA8C219B7915E00EE09CE /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		362CA8C319B7915E00EE09CE /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		36ACCAD919A7E48500AA29D4 /* KeyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyNode.h; sourceTree = "<group>"; };
 		36ACCADA19A7E48500AA29D4 /* KeyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyNode.m; sourceTree = "<group>"; };
 		36ACCADC19A7E96700AA29D4 /* RotorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotorNode.h; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */,
 				25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */,
 				25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */,
+				362CA8C219B7915E00EE09CE /* Utilities.h */,
+				362CA8C319B7915E00EE09CE /* Utilities.m */,
 				36B7E2FF19A7DCE900BFFECC /* Images.xcassets */,
 				36B7E2E919A7DCE900BFFECC /* Supporting Files */,
 			);
@@ -332,6 +337,7 @@
 				36ACCB3F19A99DA700AA29D4 /* CreditsScene.m in Sources */,
 				36B7E32119A7DF8A00BFFECC /* MainGameScene.m in Sources */,
 				36B7E31E19A7DD1C00BFFECC /* TitleScene.m in Sources */,
+				362CA8C419B7915E00EE09CE /* Utilities.m in Sources */,
 				251982D319B794D5009AA435 /* PauseButtonNode.m in Sources */,
 				36ACCB4219A99DB600AA29D4 /* ProfileScene.m in Sources */,
 			);

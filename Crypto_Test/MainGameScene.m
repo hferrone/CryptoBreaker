@@ -13,6 +13,7 @@
 #import "TileNode.h"
 #import "WinConditionScene.h"
 #import "LoseConditionScene.h"
+#import "Utilities.h"
 #import "PauseButtonNode.h"
 
 //global constant variables
@@ -100,7 +101,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
         [self generateNewTile];
 
-        self.tileSlotsArray = [[NSMutableArray alloc] initWithObjects:keyNode1, keyNode2, keyNode3, keyNode4, keyNode5, keyNode6, keyNode7, nil];
+        //self.tileSlotsArray = [[NSMutableArray alloc] initWithObjects:keyNode1, keyNode2, keyNode3, keyNode4, keyNode5, keyNode6, keyNode7, nil];
 
         //timer lable
         self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
@@ -122,7 +123,8 @@ static NSString * const nonVowelString = @"nonVowel";
         self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
         [self addChild: self.scoreLabel];
 
-        //self.physicsWorld.gravity = CGVectorMake(0, 0);
+        self.physicsWorld.gravity = CGVectorMake(0, 0);
+        self.physicsWorld.contactDelegate = self;
     }
     return self;
 }
@@ -177,11 +179,6 @@ static NSString * const nonVowelString = @"nonVowel";
     self.isMovable = YES;
 
     [self addChild:tileNode1];
-}
-
--(void)resetTileMovement
-{
-    self.isMovable = YES;
 }
 
 - (void) incorrectDragByUser
@@ -274,10 +271,14 @@ static NSString * const nonVowelString = @"nonVowel";
 	CGPoint positionInScene = [touch locationInNode:self];
     self.positionInScene = positionInScene;
 	CGPoint previousPosition = [touch previousLocationInNode:self];
-
 	CGPoint translation = CGPointMake(positionInScene.x - previousPosition.x, positionInScene.y - previousPosition.y);
 
 	[self panForTranslation:translation];
+}
+
+-(void)didEndContact:(SKPhysicsContact *)contact
+{
+
 }
 
 -(void)checkForTileCollision
@@ -379,18 +380,15 @@ static NSString * const nonVowelString = @"nonVowel";
     if (tileCombo >= 7)
     {
         [self executeRotorAnimationForward];
-        [self.tileSlotsArray addObject:self.rotorCapNode];
+        //[self.tileSlotsArray addObject:self.rotorCapNode];
     }
 }
 
 -(void)executeRotorAnimationForward
 {
     //rotor instance
-    self.rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
-    self.rotorCapNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225);
-    self.rotorCapNode.size = CGSizeMake(100, 150);
-//    self.rotorCapNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(100, 150)];
-//    self.rotorCapNode.physicsBody.affectedByGravity = NO;
+    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
     [self addChild:self.rotorCapNode];
 
     NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
@@ -406,9 +404,8 @@ static NSString * const nonVowelString = @"nonVowel";
 -(void)executeRotorAnimationBackward
 {
     //rotor instance
-    self.rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
-    self.rotorCapNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225);
-    self.rotorCapNode.size = CGSizeMake(100, 150);
+    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor4"];
     [self addChild:self.rotorCapNode];
 
     NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor4"],
