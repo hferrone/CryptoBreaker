@@ -17,8 +17,8 @@
     keyTile.position = position;
     keyTile.anchorPoint = CGPointMake(0.5, 0.5);
     keyTile.name = @"keyNode";
-//    keyTile.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(25, 65)];
-//    keyTile.physicsBody.affectedByGravity = NO;
+    keyTile.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(25, 65)];
+    keyTile.physicsBody.affectedByGravity = NO;
 
     return keyTile;
 }
