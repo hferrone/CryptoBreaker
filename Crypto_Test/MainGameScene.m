@@ -278,6 +278,14 @@ static NSString * const nonVowelString = @"nonVowel";
 -(void)didEndContact:(SKPhysicsContact *)contact
 {
 
+    //Condition for key and tile contact
+    if (contact.bodyA.categoryBitMask == ContactCategoryTile  && contact.bodyB.categoryBitMask == ContactCategoryKey) {
+        NSLog(@"Tile contact with key");
+    }else if (contact.bodyA.categoryBitMask == ContactCategoryTile && contact.bodyB.categoryBitMask == ContactCategoryTile){
+        NSLog(@"Tile contact with tile");
+    }else if(contact.bodyA.categoryBitMask == ContactCategoryTile && contact.bodyB.categoryBitMask == ContactCategoryRotor){
+        NSLog(@"Tile contact with rotor");
+    }
 }
 
 -(void)checkForTileCollision
@@ -376,7 +384,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)checkForCapPoint:(NSInteger)tileCombo
 {
-    if (tileCombo >= 7)
+    if (tileCombo >= 1)
     {
         [self executeRotorAnimationForward];
         //[self.tileSlotsArray addObject:self.rotorCapNode];
