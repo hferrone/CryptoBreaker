@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		251982D319B794D5009AA435 /* PauseButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 251982D219B794D5009AA435 /* PauseButtonNode.m */; };
 		25BC3FF719AEE9E400719EDB /* LoseConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */; };
 		362CA8C119B6341300EE09CE /* CryptoImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 362CA8C019B6341300EE09CE /* CryptoImages.atlas */; };
 		36ACCADB19A7E48500AA29D4 /* KeyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADA19A7E48500AA29D4 /* KeyNode.m */; };
@@ -46,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		251982D119B794D5009AA435 /* PauseButtonNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseButtonNode.h; path = ../PauseButtonNode.h; sourceTree = "<group>"; };
+		251982D219B794D5009AA435 /* PauseButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PauseButtonNode.m; path = ../PauseButtonNode.m; sourceTree = "<group>"; };
 		25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoseConditionScene.h; sourceTree = "<group>"; };
 		25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoseConditionScene.m; sourceTree = "<group>"; };
 		362CA8C019B6341300EE09CE /* CryptoImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = CryptoImages.atlas; sourceTree = "<group>"; };
@@ -153,6 +156,8 @@
 				36B7E2F219A7DCE900BFFECC /* AppDelegate.m */,
 				36B7E2F419A7DCE900BFFECC /* Main.storyboard */,
 				36B7E2F719A7DCE900BFFECC /* ViewController.h */,
+				251982D119B794D5009AA435 /* PauseButtonNode.h */,
+				251982D219B794D5009AA435 /* PauseButtonNode.m */,
 				36B7E2F819A7DCE900BFFECC /* ViewController.m */,
 				36B7E31C19A7DD1C00BFFECC /* TitleScene.h */,
 				36B7E31D19A7DD1C00BFFECC /* TitleScene.m */,
@@ -319,6 +324,7 @@
 				36ACCB3F19A99DA700AA29D4 /* CreditsScene.m in Sources */,
 				36B7E32119A7DF8A00BFFECC /* MainGameScene.m in Sources */,
 				36B7E31E19A7DD1C00BFFECC /* TitleScene.m in Sources */,
+				251982D319B794D5009AA435 /* PauseButtonNode.m in Sources */,
 				36ACCB4219A99DB600AA29D4 /* ProfileScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
