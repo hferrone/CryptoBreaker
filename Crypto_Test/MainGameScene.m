@@ -98,6 +98,7 @@ static NSString * const nonVowelString = @"nonVowel";
         [self addChild:menuButton];
 
         [self generateNewTile];
+
         self.tileSlotsArray = [[NSMutableArray alloc] initWithObjects:keyNode1, keyNode2, keyNode3, keyNode4, keyNode5, keyNode6, keyNode7, nil];
 
         //timer lable
@@ -270,11 +271,16 @@ static NSString * const nonVowelString = @"nonVowel";
 
 	CGPoint translation = CGPointMake(positionInScene.x - previousPosition.x, positionInScene.y - previousPosition.y);
 
+	[self panForTranslation:translation];
+}
+
+-(void)checkForTileCollision
+{
     for (SKSpriteNode *node in self.tileSlotsArray)
     {
         _destinationNode = node;
 
-        if (CGRectContainsPoint(_destinationNode.frame, positionInScene))
+        if (CGRectContainsPoint(_destinationNode.frame, self.positionInScene))
         {
             _selectedNode.position = _destinationNode.position;
             self.hasCollidedAndScored = YES;
@@ -282,23 +288,21 @@ static NSString * const nonVowelString = @"nonVowel";
         }
 
         if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
+        {
+            if (_destinationNode.name == _selectedNode.name)
             {
-                if (_destinationNode.name == _selectedNode.name)
-                {
-                    [self incorrectDragByUser];
-                }else{
-                    _selectedNode.position = _destinationNode.position;
-                    self.hasComboed = YES;
-                    self.isMovable = NO;
-                    [_destinationNode removeFromParent];
-                }
+                [self incorrectDragByUser];
+            }else{
+                _selectedNode.position = _destinationNode.position;
+                self.hasComboed = YES;
+                self.isMovable = NO;
+                [_destinationNode removeFromParent];
             }
+        }
     }
-
-	[self panForTranslation:translation];
 }
 
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)checkForCombo
 {
     if (self.hasCollidedAndScored)
     {
@@ -312,7 +316,6 @@ static NSString * const nonVowelString = @"nonVowel";
         [self generateNewTile];
         [self updateScore];
         [self checkForCapPoint:self.selectedTileComboScore];
-        //[self resetTileMovement];
 
     }else{
         _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
@@ -330,11 +333,15 @@ static NSString * const nonVowelString = @"nonVowel";
             self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
             tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
         }
-
-        [self resetTileMovement];
     }
 
     self.hasCollidedAndScored = NO;
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self checkForTileCollision];
+    [self checkForCombo];
 }
 
 - (void)panForTranslation:(CGPoint)translation
@@ -368,8 +375,6 @@ static NSString * const nonVowelString = @"nonVowel";
         [self executeRotorAnimationForward];
         [self.tileSlotsArray addObject:self.rotorCapNode];
     }
-
-    [self executeRotorAnimationBackward];
 }
 
 -(void)executeRotorAnimationForward
