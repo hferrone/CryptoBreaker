@@ -31,6 +31,8 @@
     tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",comboScore];
     tileNode.comboLabel.fontSize = 12;
     tileNode.comboLabel.position = CGPointMake(13, 45);
+//    tileNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(25, 65)];
+//    tileNode.physicsBody.affectedByGravity = NO;
     [tileNode addChild:tileNode.comboLabel];
 
     tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",initCombo];

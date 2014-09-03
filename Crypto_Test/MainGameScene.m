@@ -117,6 +117,8 @@ static NSString * const nonVowelString = @"nonVowel";
         self.scoreLabel.fontSize = 16;
         self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
         [self addChild: self.scoreLabel];
+
+        //self.physicsWorld.gravity = CGVectorMake(0, 0);
     }
     return self;
 }
@@ -383,6 +385,8 @@ static NSString * const nonVowelString = @"nonVowel";
     self.rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
     self.rotorCapNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225);
     self.rotorCapNode.size = CGSizeMake(100, 150);
+//    self.rotorCapNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(100, 150)];
+//    self.rotorCapNode.physicsBody.affectedByGravity = NO;
     [self addChild:self.rotorCapNode];
 
     NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
