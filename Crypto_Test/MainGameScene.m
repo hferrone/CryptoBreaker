@@ -14,6 +14,7 @@
 #import "WinConditionScene.h"
 #import "LoseConditionScene.h"
 #import "Utilities.h"
+#import "PauseButtonNode.h"
 
 //global constant variables
 static NSString * const vowelString = @"vowel";
@@ -110,6 +111,9 @@ static NSString * const nonVowelString = @"nonVowel";
         self.timerLabel.text = @"Ready";
         self.timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) + 250);
         [self addChild:self.timerLabel];
+
+        PauseButtonNode *pauseButton = [PauseButtonNode pauseButtonLocation:CGPointMake(CGRectGetMidX(self.frame) + 125, CGRectGetMidX(self.frame) - 150)];
+        [self addChild:pauseButton];
 
         //score label
         self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
