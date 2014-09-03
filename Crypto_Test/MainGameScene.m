@@ -15,6 +15,7 @@
 #import "LoseConditionScene.h"
 #import "Utilities.h"
 #import "PauseButtonNode.h"
+#import <AVFoundation/AVFoundation.h>
 
 //global constant variables
 static NSString * const vowelString = @"vowel";
@@ -39,6 +40,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
 @property (nonatomic, strong) SKLabelNode *comboLabel;
 @property (nonatomic, strong) SKLabelNode *timerLabel;
+@property (nonatomic) AVAudioPlayer *backgroundMusic;
 
 @property NSTimeInterval startTime;
 
@@ -125,8 +127,20 @@ static NSString * const nonVowelString = @"nonVowel";
 
         self.physicsWorld.gravity = CGVectorMake(0, 0);
         self.physicsWorld.contactDelegate = self;
+
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"StartScreen" withExtension:@"mp3"];
+
+        //Setting up the background music -- Must init with URL of the start screen MP3
+        self.backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        self.backgroundMusic.numberOfLoops = -1;
+        [self.backgroundMusic prepareToPlay];
     }
     return self;
+}
+//Basically the viewDidLoad of the View Controller.
+-(void)didMoveToView:(SKView *)view
+{
+    [self.backgroundMusic play];
 }
 
 #pragma tile selection methods
