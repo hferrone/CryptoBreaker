@@ -51,7 +51,6 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property NSMutableArray *tileSlotsArray;
 
-
 @end
 
 @implementation MainGameScene
