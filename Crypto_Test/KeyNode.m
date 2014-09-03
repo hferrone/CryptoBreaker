@@ -7,6 +7,7 @@
 //
 
 #import "KeyNode.h"
+#import "Utilities.h"
 
 @implementation KeyNode
 
@@ -17,10 +18,20 @@
     keyTile.position = position;
     keyTile.anchorPoint = CGPointMake(0.5, 0.5);
     keyTile.name = @"keyNode";
-    keyTile.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(25, 65)];
-    keyTile.physicsBody.affectedByGravity = NO;
+
+    [keyTile setupPhysicsBody];
 
     return keyTile;
+}
+
+-(void)setupPhysicsBody
+{
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(25, 65)];
+    self.physicsBody.affectedByGravity = NO;
+    self.physicsBody.dynamic = NO;
+    self.physicsBody.categoryBitMask = ContactCategoryKey;
+    self.physicsBody.contactTestBitMask = ContactCategoryTile;
+    self.physicsBody.collisionBitMask = 0;
 }
 
 @end

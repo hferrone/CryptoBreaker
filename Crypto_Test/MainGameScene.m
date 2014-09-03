@@ -382,11 +382,8 @@ static NSString * const nonVowelString = @"nonVowel";
 -(void)executeRotorAnimationForward
 {
     //rotor instance
-    self.rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
-    self.rotorCapNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225);
-    self.rotorCapNode.size = CGSizeMake(100, 150);
-    self.rotorCapNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(100, 150)];
-    self.rotorCapNode.physicsBody.affectedByGravity = NO;
+    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
     [self addChild:self.rotorCapNode];
 
     NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
@@ -402,9 +399,8 @@ static NSString * const nonVowelString = @"nonVowel";
 -(void)executeRotorAnimationBackward
 {
     //rotor instance
-    self.rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
-    self.rotorCapNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225);
-    self.rotorCapNode.size = CGSizeMake(100, 150);
+    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor4"];
     [self addChild:self.rotorCapNode];
 
     NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor4"],
