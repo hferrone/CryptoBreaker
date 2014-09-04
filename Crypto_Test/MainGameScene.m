@@ -41,6 +41,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property (nonatomic, strong) SKLabelNode *comboLabel;
 @property (nonatomic, strong) SKLabelNode *timerLabel;
 @property (nonatomic) AVAudioPlayer *backgroundMusic;
+@property UIImageView *pauseView;
 
 @property NSTimeInterval startTime;
 
@@ -138,10 +139,7 @@ static NSString * const nonVowelString = @"nonVowel";
     return self;
 }
 //Basically the viewDidLoad of the View Controller.
--(void)didMoveToView:(SKView *)view
-{
-    [self.backgroundMusic play];
-}
+
 
 #pragma tile selection methods
 
@@ -215,6 +213,8 @@ static NSString * const nonVowelString = @"nonVowel";
 {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
+    [self touchInPauseButton:location];
+
     SKNode *node = [self nodeAtPoint:location];
 
     if ([node.name isEqualToString:@"backButtonNode"])
@@ -439,5 +439,40 @@ static NSString * const nonVowelString = @"nonVowel";
     SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
     [self.rotorCapNode runAction:animationRepeat];
 }
+
+#pragma Pause Logic
+
+-(void)didMoveToView:(SKView *)view
+{
+    UIImage *pauseImage = [UIImage imageNamed:@"pause.png"];
+    self.pauseView = [[UIImageView alloc]initWithImage:pauseImage];
+    self.pauseView.hidden = NO;
+    self.pauseView.center = CGPointMake(self.size.width*0.5, self.size.height*0.5);
+    [self.view addSubview:self.pauseView];
+
+    [self.backgroundMusic play];
+}
+
+- (BOOL)touchInPauseButton:(CGPoint)touchLocation
+{
+    if (self.view.paused) {
+        self.view.paused = NO;
+        return NO;
+    }
+    if (CGRectContainsPoint([self childNodeWithName:@"pauseButton"].frame, touchLocation)) {
+        [self pauseToggle];
+        return true;
+    }
+    return false;
+}
+
+-(void)pauseToggle
+{
+    SKView *view = (SKView*)self.view;
+    view.paused = (view.paused) ? NO : YES;
+    NSLog(@"view is %hhd",view.paused);
+}
+
+
 
 @end

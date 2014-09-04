@@ -11,6 +11,7 @@
 		251982D619B79BEE009AA435 /* TileParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 251982D419B79BEE009AA435 /* TileParticle.sks */; };
 		251982D719B79BEE009AA435 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 251982D519B79BEE009AA435 /* spark.png */; };
 		251982D919B7C5C9009AA435 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251982D819B7C5C9009AA435 /* AVFoundation.framework */; };
+		251982DD19B7F2F3009AA435 /* pause@2x~iphone copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */; };
 		25BC3FF719AEE9E400719EDB /* LoseConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */; };
 		362CA8C119B6341300EE09CE /* CryptoImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 362CA8C019B6341300EE09CE /* CryptoImages.atlas */; };
 		362CA8C419B7915E00EE09CE /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 362CA8C319B7915E00EE09CE /* Utilities.m */; };
@@ -56,6 +57,7 @@
 		251982D419B79BEE009AA435 /* TileParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TileParticle.sks; sourceTree = "<group>"; };
 		251982D519B79BEE009AA435 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		251982D819B7C5C9009AA435 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause@2x~iphone copy.png"; sourceTree = "<group>"; };
 		25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoseConditionScene.h; sourceTree = "<group>"; };
 		25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoseConditionScene.m; sourceTree = "<group>"; };
 		362CA8C019B6341300EE09CE /* CryptoImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = CryptoImages.atlas; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				362CA8C219B7915E00EE09CE /* Utilities.h */,
 				362CA8C319B7915E00EE09CE /* Utilities.m */,
 				36B7E2FF19A7DCE900BFFECC /* Images.xcassets */,
+				251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */,
 				36B7E2E919A7DCE900BFFECC /* Supporting Files */,
 			);
 			path = Crypto_Test;
@@ -311,6 +314,7 @@
 				36B7E30019A7DCE900BFFECC /* Images.xcassets in Resources */,
 				36B7E2F619A7DCE900BFFECC /* Main.storyboard in Resources */,
 				251982D619B79BEE009AA435 /* TileParticle.sks in Resources */,
+				251982DD19B7F2F3009AA435 /* pause@2x~iphone copy.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
