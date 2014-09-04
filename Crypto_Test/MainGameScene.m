@@ -95,9 +95,7 @@ static NSString * const nonVowelString = @"nonVowel";
         [self addChild:menuButton];
 
         [self generateNewTile];
-        //[self checkForCapPoint:1];
 
-        //self.tileSlotsArray = [[NSMutableArray alloc] initWithObjects:keyNode1, keyNode2, keyNode3, keyNode4, keyNode5, keyNode6, keyNode7, nil];
 
         //timer lable
         self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
@@ -285,6 +283,7 @@ static NSString * const nonVowelString = @"nonVowel";
 	[self panForTranslation:translation];
 }
 
+#pragma End Contact Physics Behavior
 -(void)didEndContact:(SKPhysicsContact *)contact
 {
     SKPhysicsBody *tileObject, *secondObject;
@@ -313,7 +312,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
         [self generateNewTile];
         [self updateScore];
-        //[self checkForCapPoint:self.selectedTileComboScore];
+        [self checkForCapPoint:self.selectedTileComboScore];
 
         if ([_destinationNode isKindOfClass:[TileNode class]])
         {
@@ -340,7 +339,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
             [self generateNewTile];
             [self updateScore];
-            //[self checkForCapPoint:self.selectedTileComboScore];
+            [self checkForCapPoint:self.selectedTileComboScore];
 
             [selectedTile removeFromParent];
         }
@@ -348,11 +347,20 @@ static NSString * const nonVowelString = @"nonVowel";
     //condition for tile and rotor contact
     else if(tileObject.categoryBitMask == ContactCategoryTile && secondObject.categoryBitMask == ContactCategoryRotor)
     {
+        TileNode *selectedTile = (TileNode*)tileObject.node;
+        TileNode *destinationNode = (TileNode*)secondObject.node;
         NSLog(@"Tile contact with rotor");
+        //checks for animation condition and combo is enough
+        [self checkForCapPoint:[selectedTile.comboLabel.text intValue]];
+        selectedTile.position = destinationNode.position;
+        //once it's done checking if you have enough add points to the rotary
+        [self updateScore];
+
     }
     else {
         TileNode *selectedTile = (TileNode*)tileObject.node;
         selectedTile.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+
     }
 }
 
@@ -450,31 +458,41 @@ static NSString * const nonVowelString = @"nonVowel";
     }
 }
 
-//-(void)checkForCapPoint:(NSInteger)tileCombo
-//{
-//    if (tileCombo >= 1)
-//    {
-//        [self executeRotorAnimationForward];
-//        //[self.tileSlotsArray addObject:self.rotorCapNode];
-//    }
-//}
+-(void)checkForCapPoint:(NSInteger)tileCombo
+{
+    //The problem right now is that it doesn't even check for the tile score.
+    NSLog(@"Entro!");
+    if (tileCombo >= 2)
+    {
+        [self executeRotorAnimationForward];
+        //[self.tileSlotsArray addObject:self.rotorCapNode];
+    }else{
+        UIAlertView *insufficentComboAlert = [[UIAlertView alloc] initWithTitle:@"HALT" message:@"You require more minerals to make this move" delegate:self cancelButtonTitle:@"Return" otherButtonTitles:nil];
+        [insufficentComboAlert show];
+    }
 
-//-(void)executeRotorAnimationForward
-//{
-//    //rotor instance
-//    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
-//    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
-//    [self addChild:rotorCapNode];
-//
-//    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
-//                                     [SKTexture textureWithImageNamed:@"rotor2"],
-//                                     [SKTexture textureWithImageNamed:@"rotor3"],
-//                                     [SKTexture textureWithImageNamed:@"rotor4"]];
-//
-//    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
-//    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
-//    [rotorCapNode runAction:animationRepeat];
-//}
+}
+
+-(void)executeRotorAnimationForward
+{
+//    SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
+//    menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 250);
+//    menuButton.size = CGSizeMake(65, 50);
+//    [menuButton setName:@"backButtonNode"];
+    NSLog(@"Entro!2");
+    //rotor instance
+    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+    [self addChild:rotorCapNode];
+
+    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
+                                     [SKTexture textureWithImageNamed:@"rotor2"],
+                                     [SKTexture textureWithImageNamed:@"rotor3"],
+                                     [SKTexture textureWithImageNamed:@"rotor4"]];
+
+    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
+    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
+    [rotorCapNode runAction:animationRepeat];
+}
 //
 //-(void)executeRotorAnimationBackward
 //{
