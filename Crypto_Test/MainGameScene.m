@@ -283,6 +283,9 @@ static NSString * const nonVowelString = @"nonVowel";
 	[self panForTranslation:translation];
 }
 
+#pragma End Contact Physics Behavior
+-(void)didEndContact:(SKPhysicsContact *)contact{}
+
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (self.hasIncorrectDrag)
@@ -331,19 +334,8 @@ static NSString * const nonVowelString = @"nonVowel";
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
-{
-//    SKPhysicsBody *tileObject, *secondObject;
-//
-//    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-//    {
-//        tileObject = contact.bodyA;
-//        secondObject = contact.bodyB;
-//    }else {
-//        NSLog(@"%d %d", contact.bodyA.categoryBitMask, contact.bodyB.categoryBitMask);
-//        tileObject = contact.bodyB;
-//        secondObject = contact.bodyA;
-//    }
 
+{
     //Condition for tile and key contact
     if ((contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask) == (ContactCategoryTile | ContactCategoryKey))
     {
@@ -373,7 +365,7 @@ static NSString * const nonVowelString = @"nonVowel";
             self.hasIncorrectDrag = YES;
         }
         else {
-            self.hasCollidedAndScored = YES;
+            [_selectedNode removeFromParent];
         }
     }
     //condition for tile and rotor contact
@@ -487,37 +479,49 @@ static NSString * const nonVowelString = @"nonVowel";
     }
 }
 
--(void)updateComboScore
-{
-    self.selectedTileComboScore = [_selectedNode.comboLabel.text intValue];
-    self.comboScore = self.selectedTileComboScore;
-    self.comboScore++;
-    _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
-}
-
 -(void)checkForCapPoint:(NSInteger)tileCombo
 {
-    if (tileCombo >= 7)
+    //The problem right now is that it doesn't even check for the tile score.
+    NSLog(@"Entro!");
+    if (tileCombo >= 2)
     {
         [self executeRotorAnimationForward];
+        //[self.tileSlotsArray addObject:self.rotorCapNode];
+    }else{
+        UIAlertView *insufficentComboAlert = [[UIAlertView alloc] initWithTitle:@"HALT" message:@"You require more minerals to make this move" delegate:self cancelButtonTitle:@"Return" otherButtonTitles:nil];
+        [insufficentComboAlert show];
     }
+
 }
 
 -(void)executeRotorAnimationForward
 {
+//    SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
+//    menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 250);
+//    menuButton.size = CGSizeMake(65, 50);
+//    [menuButton setName:@"backButtonNode"];
+    NSLog(@"Entro!2");
     //rotor instance
-    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame
-                                                                                                                  ))];
-    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
+    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
     [self addChild:rotorCapNode];
 
     NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
                                      [SKTexture textureWithImageNamed:@"rotor2"],
                                      [SKTexture textureWithImageNamed:@"rotor3"],
                                      [SKTexture textureWithImageNamed:@"rotor4"]];
+
     SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
     SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
     [rotorCapNode runAction:animationRepeat];
+}
+//
+
+-(void)updateComboScore
+{
+    self.selectedTileComboScore = [_selectedNode.comboLabel.text intValue];
+    self.comboScore = self.selectedTileComboScore;
+    self.comboScore++;
+    _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
 }
 
 //-(void)executeRotorAnimationBackward
