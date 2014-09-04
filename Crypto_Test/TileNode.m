@@ -41,11 +41,10 @@
 
 -(void)setupPhysicsBody
 {
-    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(25, 65)];
-    self.physicsBody.affectedByGravity = NO;
-    self.physicsBody.dynamic = NO;
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.frame.size];
+    self.physicsBody.dynamic = YES;
     self.physicsBody.categoryBitMask = ContactCategoryTile;
-    self.physicsBody.contactTestBitMask = ContactCategoryTile | ContactCategoryTile | ContactCategoryKey;
+    self.physicsBody.contactTestBitMask = ContactCategoryTile | ContactCategoryRotor | ContactCategoryKey;
     self.physicsBody.collisionBitMask = 0;
 }
 

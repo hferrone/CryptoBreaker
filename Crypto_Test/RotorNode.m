@@ -16,7 +16,7 @@
     //custom node properties
     RotorNode *rotorTile = [RotorNode spriteNodeWithImageNamed:@"rotor"];
     rotorTile.position = position;
-    rotorTile.anchorPoint = CGPointMake(0.5, 0);
+    //rotorTile.anchorPoint = CGPointMake(0.5, 0.5);
     rotorTile.name = @"rotorNode";
     rotorTile.size = CGSizeMake(100, 150);
 
@@ -28,8 +28,7 @@
 -(void)setupPhysicsBody
 {
     //physics setup and contact bitmask assignment
-    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(100, 150)];
-    self.physicsBody.affectedByGravity = NO;
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.frame.size];
     self.physicsBody.dynamic = NO;
     self.physicsBody.categoryBitMask = ContactCategoryRotor;
     self.physicsBody.contactTestBitMask = ContactCategoryTile;

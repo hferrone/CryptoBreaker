@@ -63,32 +63,25 @@ static NSString * const nonVowelString = @"nonVowel";
         self.gameStartTimer = NO;
 
         //instances and positioning of keys
-        KeyNode *keyNode1 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode1.position = CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 15);
+        KeyNode *keyNode1 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 15)];
         [self addChild:keyNode1];
 
-        KeyNode *keyNode2 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode2.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 155);
+        KeyNode *keyNode2 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 155)];
         [self addChild:keyNode2];
 
-        KeyNode *keyNode3 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode3.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 15);
+        KeyNode *keyNode3 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 15)];
         [self addChild:keyNode3];
 
-        KeyNode *keyNode4 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode4.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 155);
+        KeyNode *keyNode4 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 155)];
         [self addChild:keyNode4];
 
-        KeyNode *keyNode5 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode5.position = CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 15);
+        KeyNode *keyNode5 = [KeyNode keyNodeAtPosition: CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 15)];
         [self addChild:keyNode5];
 
-        KeyNode *keyNode6 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode6.position = CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) + 105);
+        KeyNode *keyNode6 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) + 105)];
         [self addChild:keyNode6];
 
-        KeyNode *keyNode7 = [KeyNode spriteNodeWithColor:[UIColor yellowColor] size:CGSizeMake(25, 65)];
-        keyNode7.position = CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) + 105);
+        KeyNode *keyNode7 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) + 105)];
         [self addChild:keyNode7];
 
         //back button
@@ -99,6 +92,7 @@ static NSString * const nonVowelString = @"nonVowel";
         [self addChild:menuButton];
 
         [self generateNewTile];
+        //[self checkForCapPoint:1];
 
         //self.tileSlotsArray = [[NSMutableArray alloc] initWithObjects:keyNode1, keyNode2, keyNode3, keyNode4, keyNode5, keyNode6, keyNode7, nil];
 
@@ -272,91 +266,148 @@ static NSString * const nonVowelString = @"nonVowel";
 	CGPoint previousPosition = [touch previousLocationInNode:self];
 	CGPoint translation = CGPointMake(positionInScene.x - previousPosition.x, positionInScene.y - previousPosition.y);
 
+    _selectedNode.physicsBody.dynamic = YES;
+
 	[self panForTranslation:translation];
 }
 
 -(void)didEndContact:(SKPhysicsContact *)contact
 {
+    SKPhysicsBody *tileObject, *secondObject;
 
-    //Condition for key and tile contact
-    if (contact.bodyA.categoryBitMask == ContactCategoryTile  && contact.bodyB.categoryBitMask == ContactCategoryKey) {
-        NSLog(@"Tile contact with key");
-    }else if (contact.bodyA.categoryBitMask == ContactCategoryTile && contact.bodyB.categoryBitMask == ContactCategoryTile){
-        NSLog(@"Tile contact with tile");
-    }else if(contact.bodyA.categoryBitMask == ContactCategoryTile && contact.bodyB.categoryBitMask == ContactCategoryRotor){
-        NSLog(@"Tile contact with rotor");
-    }
-}
-
--(void)checkForTileCollision
-{
-    for (SKSpriteNode *node in self.tileSlotsArray)
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
     {
-        _destinationNode = node;
-
-        if (CGRectContainsPoint(_destinationNode.frame, self.positionInScene))
-        {
-            _selectedNode.position = _destinationNode.position;
-            self.hasCollidedAndScored = YES;
-            self.isMovable = NO;
-        }
-
-        if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
-        {
-            if (_destinationNode.name == _selectedNode.name)
-            {
-                [self incorrectDragByUser];
-            }else{
-                _selectedNode.position = _destinationNode.position;
-                self.hasComboed = YES;
-                self.isMovable = NO;
-                [_destinationNode removeFromParent];
-            }
-        }
+        tileObject = contact.bodyA;
+        secondObject = contact.bodyB;
+    }else {
+        tileObject = contact.bodyB;
+        secondObject = contact.bodyA;
     }
-}
 
--(void)checkForCombo
-{
-    if (self.hasCollidedAndScored)
+    //Condition for tile and key contact
+    if (tileObject.categoryBitMask == ContactCategoryTile  && secondObject.categoryBitMask == ContactCategoryKey)
     {
-        TileNode *tileNode = (TileNode*)_selectedNode;
-        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
-        self.selectedTileComboScore++;
-        tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.selectedTileComboScore];
+        TileNode *selectedTile = (TileNode*)tileObject.node;
+        KeyNode *destinationNode = (KeyNode*)secondObject.node;
 
-        [self.tileSlotsArray addObject:_selectedNode];
+        selectedTile.position = destinationNode.position;
+
+        self.selectedTileComboScore = [selectedTile.comboLabel.text intValue];
+        self.comboScore = self.selectedTileComboScore;
+        self.comboScore++;
+        selectedTile.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
 
         [self generateNewTile];
         [self updateScore];
-        [self checkForCapPoint:self.selectedTileComboScore];
+        //[self checkForCapPoint:self.selectedTileComboScore];
 
-    }else{
-        _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
-        self.isMovable = YES;
+        [destinationNode removeFromParent];
     }
-
-    if (self.hasComboed)
+    //condition for tile and tile contact
+    else if (tileObject.categoryBitMask == ContactCategoryTile && tileObject.categoryBitMask == ContactCategoryTile)
     {
-        TileNode *tileNode = (TileNode*)_selectedNode;
-        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
+        TileNode *selectedTile = (TileNode*)tileObject.node;
+        TileNode *destinationNode = (TileNode*)secondObject.node;
 
-        for (SKLabelNode *labelNode in _destinationNode.children)
+        if (selectedTile.name == destinationNode.name)
         {
-            self.destinationTileComboScore = [labelNode.text intValue];
-            self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
-            tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+            [self incorrectDragByUser];
+        }
+        else {
+            selectedTile.position = destinationNode.position;
+
+            self.selectedTileComboScore = [selectedTile.comboLabel.text intValue];
+            self.destinationTileComboScore = [destinationNode.comboLabel.text intValue];
+            self.comboScore = self.selectedTileComboScore + self.destinationTileComboScore;
+            selectedTile.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+
+            [self generateNewTile];
+            [self updateScore];
+            //[self checkForCapPoint:self.selectedTileComboScore];
+
+            [selectedTile removeFromParent];
         }
     }
-
-    self.hasCollidedAndScored = NO;
+    //condition for tile and rotor contact
+    else if(tileObject.categoryBitMask == ContactCategoryTile && secondObject.categoryBitMask == ContactCategoryRotor)
+    {
+        NSLog(@"Tile contact with rotor");
+    }
+    else {
+        TileNode *selectedTile = (TileNode*)tileObject.node;
+        selectedTile.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+    }
 }
 
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self checkForTileCollision];
-    [self checkForCombo];
-}
+//-(void)checkForTileCollision
+//{
+//    for (SKSpriteNode *node in self.tileSlotsArray)
+//    {
+//        _destinationNode = node;
+//
+//        if (CGRectContainsPoint(_destinationNode.frame, self.positionInScene))
+//        {
+//            _selectedNode.position = _destinationNode.position;
+//            self.hasCollidedAndScored = YES;
+//            self.isMovable = NO;
+//        }
+//
+//        if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
+//        {
+//            if (_destinationNode.name == _selectedNode.name)
+//            {
+//                [self incorrectDragByUser];
+//            }else{
+//                _selectedNode.position = _destinationNode.position;
+//                self.hasComboed = YES;
+//                self.isMovable = NO;
+//                [_destinationNode removeFromParent];
+//            }
+//        }
+//    }
+//}
+//
+//-(void)checkForCombo
+//{
+//    if (self.hasCollidedAndScored)
+//    {
+//        TileNode *tileNode = (TileNode*)_selectedNode;
+//        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
+//        self.selectedTileComboScore++;
+//        tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.selectedTileComboScore];
+//
+//        [self.tileSlotsArray addObject:_selectedNode];
+//
+//        [self generateNewTile];
+//        [self updateScore];
+//        [self checkForCapPoint:self.selectedTileComboScore];
+//
+//    }else{
+//        _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+//        self.isMovable = YES;
+//    }
+//
+//    if (self.hasComboed)
+//    {
+//        TileNode *tileNode = (TileNode*)_selectedNode;
+//        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
+//
+//        for (SKLabelNode *labelNode in _destinationNode.children)
+//        {
+//            self.destinationTileComboScore = [labelNode.text intValue];
+//            self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
+//            tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+//        }
+//    }
+//
+//    self.hasCollidedAndScored = NO;
+//}
+//
+//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self checkForTileCollision];
+//    [self checkForCombo];
+//}
 
 - (void)panForTranslation:(CGPoint)translation
 {
@@ -382,47 +433,47 @@ static NSString * const nonVowelString = @"nonVowel";
     }
 }
 
--(void)checkForCapPoint:(NSInteger)tileCombo
-{
-    if (tileCombo >= 1)
-    {
-        [self executeRotorAnimationForward];
-        //[self.tileSlotsArray addObject:self.rotorCapNode];
-    }
-}
+//-(void)checkForCapPoint:(NSInteger)tileCombo
+//{
+//    if (tileCombo >= 1)
+//    {
+//        [self executeRotorAnimationForward];
+//        //[self.tileSlotsArray addObject:self.rotorCapNode];
+//    }
+//}
 
--(void)executeRotorAnimationForward
-{
-    //rotor instance
-    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
-    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
-    [self addChild:self.rotorCapNode];
-
-    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
-                                     [SKTexture textureWithImageNamed:@"rotor2"],
-                                     [SKTexture textureWithImageNamed:@"rotor3"],
-                                     [SKTexture textureWithImageNamed:@"rotor4"]];
-
-    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
-    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
-    [self.rotorCapNode runAction:animationRepeat];
-}
-
--(void)executeRotorAnimationBackward
-{
-    //rotor instance
-    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
-    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor4"];
-    [self addChild:self.rotorCapNode];
-
-    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor4"],
-                                     [SKTexture textureWithImageNamed:@"rotor3"],
-                                     [SKTexture textureWithImageNamed:@"rotor2"],
-                                     [SKTexture textureWithImageNamed:@"rotor1"]];
-
-    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
-    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
-    [self.rotorCapNode runAction:animationRepeat];
-}
+//-(void)executeRotorAnimationForward
+//{
+//    //rotor instance
+//    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+//    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
+//    [self addChild:rotorCapNode];
+//
+//    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
+//                                     [SKTexture textureWithImageNamed:@"rotor2"],
+//                                     [SKTexture textureWithImageNamed:@"rotor3"],
+//                                     [SKTexture textureWithImageNamed:@"rotor4"]];
+//
+//    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
+//    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
+//    [rotorCapNode runAction:animationRepeat];
+//}
+//
+//-(void)executeRotorAnimationBackward
+//{
+//    //rotor instance
+//    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+//    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
+//    [self addChild:self.rotorCapNode];
+//
+//    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor4"],
+//                                     [SKTexture textureWithImageNamed:@"rotor3"],
+//                                     [SKTexture textureWithImageNamed:@"rotor2"],
+//                                     [SKTexture textureWithImageNamed:@"rotor1"]];
+//
+//    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
+//    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
+//    [self.rotorCapNode runAction:animationRepeat];
+//}
 
 @end
