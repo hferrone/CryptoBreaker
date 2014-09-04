@@ -30,7 +30,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property CGPoint positionInScene;
 
-@property (nonatomic, strong) SKSpriteNode *selectedNode;
+@property (nonatomic, strong) TileNode *selectedNode;
 @property (nonatomic, strong) SKSpriteNode *destinationNode;
 @property (nonatomic, strong) SKSpriteNode *previousSelectedNode;
 
@@ -249,7 +249,7 @@ static NSString * const nonVowelString = @"nonVowel";
     TileNode *touchedNode = (TileNode *)[self nodeAtPoint:touchLocation];
 
     //2
-	if(![_selectedNode isEqual:touchedNode])
+	if(![_selectedNode isEqual:touchedNode] && [_selectedNode isKindOfClass:[TileNode class]])
     {
 		[_selectedNode removeAllActions];
 		[_selectedNode runAction:[SKAction rotateToAngle:0.0f duration:0.1]];
@@ -287,21 +287,24 @@ static NSString * const nonVowelString = @"nonVowel";
     //Condition for tile and key contact
     if (tileObject.categoryBitMask == ContactCategoryTile  && secondObject.categoryBitMask == ContactCategoryKey)
     {
-        TileNode *selectedTile = (TileNode*)tileObject.node;
-        KeyNode *destinationNode = (KeyNode*)secondObject.node;
+        _selectedNode = (TileNode*)tileObject.node;
+        _destinationNode = (KeyNode*)secondObject.node;
 
-        selectedTile.position = destinationNode.position;
+        _selectedNode.position = _destinationNode.position;
 
-        self.selectedTileComboScore = [selectedTile.comboLabel.text intValue];
+        self.selectedTileComboScore = [_selectedNode.comboLabel.text intValue];
         self.comboScore = self.selectedTileComboScore;
         self.comboScore++;
-        selectedTile.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+        _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
 
         [self generateNewTile];
         [self updateScore];
         //[self checkForCapPoint:self.selectedTileComboScore];
 
-        [destinationNode removeFromParent];
+        if ([_destinationNode isKindOfClass:[TileNode class]])
+        {
+            [_destinationNode removeFromParent];
+        }
     }
     //condition for tile and tile contact
     else if (tileObject.categoryBitMask == ContactCategoryTile && tileObject.categoryBitMask == ContactCategoryTile)
