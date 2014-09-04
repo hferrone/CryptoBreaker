@@ -263,7 +263,7 @@ static NSString * const nonVowelString = @"nonVowel";
     TileNode *touchedNode = (TileNode *)[self nodeAtPoint:touchLocation];
 
     //2
-	if(![_selectedNode isEqual:touchedNode] && [_selectedNode isKindOfClass:[TileNode class]])
+	if(![_selectedNode isEqual:touchedNode])
     {
 		[_selectedNode removeAllActions];
 		[_selectedNode runAction:[SKAction rotateToAngle:0.0f duration:0.1]];
@@ -429,7 +429,7 @@ static NSString * const nonVowelString = @"nonVowel";
 - (void)panForTranslation:(CGPoint)translation
 {
     CGPoint position = [_selectedNode position];
-    if(self.isMovable) {
+    if(self.isMovable && [_selectedNode isKindOfClass:[TileNode class]]) {
         [_selectedNode setPosition:CGPointMake(position.x + translation.x, position.y + translation.y)];
     }
 }
