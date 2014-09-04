@@ -48,7 +48,10 @@ static NSString * const nonVowelString = @"nonVowel";
 @property BOOL gameStartTimer;
 @property BOOL startGame;
 @property BOOL hasCollidedAndScored;
+@property BOOL hasComboed;
+@property BOOL hasScoredWithRotor;
 @property BOOL hasMissedContact;
+@property BOOL hasIncorrectDrag;
 @property BOOL hasNewDestination;
 @property BOOL isMovable;
 
@@ -282,13 +285,25 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (self.hasIncorrectDrag)
+    {
+        [self incorrectDragByUser];
+        self.hasIncorrectDrag = NO;
+    }
+
     if (self.hasCollidedAndScored)
     {
+        if ([_destinationNode isKindOfClass:[TileNode class]])
+        {
+            [_destinationNode removeFromParent];
+        }
+
         [self generateNewTile];
         [self updateScore];
         [self updateComboScore];
         [self checkForCapPoint:self.selectedTileComboScore];
         [self setSelectedNodePositionToDestination];
+        self.hasCollidedAndScored = NO;
     }
 
     if (self.hasMissedContact)
@@ -317,55 +332,64 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
 {
-    SKPhysicsBody *tileObject, *secondObject;
-
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-    {
-        tileObject = contact.bodyA;
-        secondObject = contact.bodyB;
-    }else {
-        tileObject = contact.bodyB;
-        secondObject = contact.bodyA;
-    }
+//    SKPhysicsBody *tileObject, *secondObject;
+//
+//    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
+//    {
+//        tileObject = contact.bodyA;
+//        secondObject = contact.bodyB;
+//    }else {
+//        NSLog(@"%d %d", contact.bodyA.categoryBitMask, contact.bodyB.categoryBitMask);
+//        tileObject = contact.bodyB;
+//        secondObject = contact.bodyA;
+//    }
 
     //Condition for tile and key contact
-    if (tileObject.categoryBitMask == ContactCategoryTile  && secondObject.categoryBitMask == ContactCategoryKey)
+    if ((contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask) == (ContactCategoryTile | ContactCategoryKey))
     {
-        _selectedNode = (TileNode*)tileObject.node;
-        _destinationNode = (KeyNode*)secondObject.node;
-        self.hasCollidedAndScored = YES;
-
-        if ([_destinationNode isKindOfClass:[TileNode class]])
+        if (contact.bodyA.categoryBitMask == ContactCategoryTile)
         {
-            [_destinationNode removeFromParent];
+            _selectedNode = (TileNode*)contact.bodyA.node;
+            _destinationNode = (KeyNode*)contact.bodyB.node;
+        }else{
+            _selectedNode = (TileNode*)contact.bodyB.node;
+            _destinationNode = (KeyNode*)contact.bodyA.node;
         }
+        self.hasCollidedAndScored = YES;
     }
     //condition for tile and tile contact
-    else if (tileObject.categoryBitMask == ContactCategoryTile && tileObject.categoryBitMask == ContactCategoryTile)
+    else if (contact.bodyA.categoryBitMask == contact.bodyB.categoryBitMask)
     {
-        _selectedNode = (TileNode*)tileObject.node;
-        _destinationNode = (TileNode*)secondObject.node;
-
-        if ((_selectedNode.name == _destinationNode.name) && ![_destinationNode isKindOfClass:[KeyNode class]])
+        if (contact.bodyA.categoryBitMask == ContactCategoryTile)
         {
-            [self incorrectDragByUser];
+            _selectedNode = (TileNode*)contact.bodyA.node;
+            _destinationNode = (TileNode*)contact.bodyB.node;
+        }
+
+        self.hasComboed = YES;
+
+        if (_selectedNode.name == _destinationNode.name)
+        {
+            self.hasIncorrectDrag = YES;
         }
         else {
             self.hasCollidedAndScored = YES;
-
-            [_selectedNode removeFromParent];
         }
     }
     //condition for tile and rotor contact
-    else if(tileObject.categoryBitMask == ContactCategoryTile && secondObject.categoryBitMask == ContactCategoryRotor)
+    else if((contact.bodyA.contactTestBitMask | contact.bodyB.contactTestBitMask) == (ContactCategoryTile | ContactCategoryRotor))
     {
-        _selectedNode = (TileNode*)tileObject.node;
+        if (contact.bodyA.categoryBitMask == ContactCategoryTile) {
+        _selectedNode = (TileNode*)contact.bodyA.node;
+        _destinationNode = (RotorNode*)contact.bodyB.node;
+        }else{
+            _selectedNode = (TileNode*)contact.bodyB.node;
+            _destinationNode = (RotorNode*)contact.bodyA.node;
+        }
+
         [self checkForCapPoint:[_selectedNode.comboLabel.text intValue]];
-    }
-    else {
-        _selectedNode = (TileNode*)tileObject.node;
-        _destinationNode = (KeyNode*)secondObject.node;
-        self.hasMissedContact = YES;
+
+        self.hasScoredWithRotor = YES;
     }
 }
 
