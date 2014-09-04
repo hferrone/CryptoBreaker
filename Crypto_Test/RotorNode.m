@@ -29,7 +29,7 @@
 {
     //physics setup and contact bitmask assignment
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.frame.size];
-    self.physicsBody.dynamic = NO;
+    self.physicsBody.dynamic = YES;
     self.physicsBody.categoryBitMask = ContactCategoryRotor;
     self.physicsBody.contactTestBitMask = ContactCategoryTile;
     self.physicsBody.collisionBitMask = 0;
