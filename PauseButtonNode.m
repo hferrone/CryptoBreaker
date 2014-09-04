@@ -12,7 +12,7 @@
 
 + (instancetype)pauseButtonLocation:(CGPoint)position
 {
-    PauseButtonNode *pauseButton = [self spriteNodeWithImageNamed:@"pause_button"];
+    PauseButtonNode *pauseButton = [self spriteNodeWithImageNamed:@"pause"];
     pauseButton.position = position;
     pauseButton.anchorPoint = CGPointMake(0.5, 0);
     pauseButton.size = CGSizeMake(65, 50);
