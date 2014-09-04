@@ -48,7 +48,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property BOOL gameStartTimer;
 @property BOOL startGame;
 @property BOOL hasCollidedAndScored;
-@property BOOL hasComboed;
+@property BOOL hasMissedContact;
 @property BOOL hasNewDestination;
 @property BOOL isMovable;
 
@@ -95,9 +95,6 @@ static NSString * const nonVowelString = @"nonVowel";
         [self addChild:menuButton];
 
         [self generateNewTile];
-        //[self checkForCapPoint:1];
-
-        //self.tileSlotsArray = [[NSMutableArray alloc] initWithObjects:keyNode1, keyNode2, keyNode3, keyNode4, keyNode5, keyNode6, keyNode7, nil];
 
         //timer lable
         self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
@@ -280,12 +277,45 @@ static NSString * const nonVowelString = @"nonVowel";
 	CGPoint previousPosition = [touch previousLocationInNode:self];
 	CGPoint translation = CGPointMake(positionInScene.x - previousPosition.x, positionInScene.y - previousPosition.y);
 
-    _selectedNode.physicsBody.dynamic = YES;
-
 	[self panForTranslation:translation];
 }
 
--(void)didEndContact:(SKPhysicsContact *)contact
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if (self.hasCollidedAndScored)
+    {
+        [self generateNewTile];
+        [self updateScore];
+        [self updateComboScore];
+        [self checkForCapPoint:self.selectedTileComboScore];
+        [self setSelectedNodePositionToDestination];
+    }
+
+    if (self.hasMissedContact)
+    {
+        [self resetSelectedNodePositionToOrigin];
+    }
+}
+
+-(void)setSelectedNodePositionToDestination
+{
+    _selectedNode.position = _destinationNode.position;
+    self.hasCollidedAndScored = NO;
+}
+
+-(void)resetSelectedNodePositionToOrigin
+{
+    _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+    self.hasMissedContact = NO;
+}
+
+-(void)didSimulatePhysics
+{
+    [super didSimulatePhysics];
+
+}
+
+-(void)didBeginContact:(SKPhysicsContact *)contact
 {
     SKPhysicsBody *tileObject, *secondObject;
 
@@ -303,17 +333,7 @@ static NSString * const nonVowelString = @"nonVowel";
     {
         _selectedNode = (TileNode*)tileObject.node;
         _destinationNode = (KeyNode*)secondObject.node;
-
-        _selectedNode.position = _destinationNode.position;
-
-        self.selectedTileComboScore = [_selectedNode.comboLabel.text intValue];
-        self.comboScore = self.selectedTileComboScore;
-        self.comboScore++;
-        _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
-
-        [self generateNewTile];
-        [self updateScore];
-        //[self checkForCapPoint:self.selectedTileComboScore];
+        self.hasCollidedAndScored = YES;
 
         if ([_destinationNode isKindOfClass:[TileNode class]])
         {
@@ -323,36 +343,29 @@ static NSString * const nonVowelString = @"nonVowel";
     //condition for tile and tile contact
     else if (tileObject.categoryBitMask == ContactCategoryTile && tileObject.categoryBitMask == ContactCategoryTile)
     {
-        TileNode *selectedTile = (TileNode*)tileObject.node;
-        TileNode *destinationNode = (TileNode*)secondObject.node;
+        _selectedNode = (TileNode*)tileObject.node;
+        _destinationNode = (TileNode*)secondObject.node;
 
-        if (selectedTile.name == destinationNode.name)
+        if ((_selectedNode.name == _destinationNode.name) && ![_destinationNode isKindOfClass:[KeyNode class]])
         {
             [self incorrectDragByUser];
         }
         else {
-            selectedTile.position = destinationNode.position;
+            self.hasCollidedAndScored = YES;
 
-            self.selectedTileComboScore = [selectedTile.comboLabel.text intValue];
-            self.destinationTileComboScore = [destinationNode.comboLabel.text intValue];
-            self.comboScore = self.selectedTileComboScore + self.destinationTileComboScore;
-            selectedTile.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
-
-            [self generateNewTile];
-            [self updateScore];
-            //[self checkForCapPoint:self.selectedTileComboScore];
-
-            [selectedTile removeFromParent];
+            [_selectedNode removeFromParent];
         }
     }
     //condition for tile and rotor contact
     else if(tileObject.categoryBitMask == ContactCategoryTile && secondObject.categoryBitMask == ContactCategoryRotor)
     {
-        NSLog(@"Tile contact with rotor");
+        _selectedNode = (TileNode*)tileObject.node;
+        [self checkForCapPoint:[_selectedNode.comboLabel.text intValue]];
     }
     else {
-        TileNode *selectedTile = (TileNode*)tileObject.node;
-        selectedTile.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
+        _selectedNode = (TileNode*)tileObject.node;
+        _destinationNode = (KeyNode*)secondObject.node;
+        self.hasMissedContact = YES;
     }
 }
 
@@ -450,32 +463,39 @@ static NSString * const nonVowelString = @"nonVowel";
     }
 }
 
-//-(void)checkForCapPoint:(NSInteger)tileCombo
-//{
-//    if (tileCombo >= 1)
-//    {
-//        [self executeRotorAnimationForward];
-//        //[self.tileSlotsArray addObject:self.rotorCapNode];
-//    }
-//}
+-(void)updateComboScore
+{
+    self.selectedTileComboScore = [_selectedNode.comboLabel.text intValue];
+    self.comboScore = self.selectedTileComboScore;
+    self.comboScore++;
+    _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+}
 
-//-(void)executeRotorAnimationForward
-//{
-//    //rotor instance
-//    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
-//    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
-//    [self addChild:rotorCapNode];
-//
-//    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
-//                                     [SKTexture textureWithImageNamed:@"rotor2"],
-//                                     [SKTexture textureWithImageNamed:@"rotor3"],
-//                                     [SKTexture textureWithImageNamed:@"rotor4"]];
-//
-//    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
-//    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
-//    [rotorCapNode runAction:animationRepeat];
-//}
-//
+-(void)checkForCapPoint:(NSInteger)tileCombo
+{
+    if (tileCombo >= 7)
+    {
+        [self executeRotorAnimationForward];
+    }
+}
+
+-(void)executeRotorAnimationForward
+{
+    //rotor instance
+    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame
+                                                                                                                  ))];
+    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
+    [self addChild:rotorCapNode];
+
+    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
+                                     [SKTexture textureWithImageNamed:@"rotor2"],
+                                     [SKTexture textureWithImageNamed:@"rotor3"],
+                                     [SKTexture textureWithImageNamed:@"rotor4"]];
+    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
+    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
+    [rotorCapNode runAction:animationRepeat];
+}
+
 //-(void)executeRotorAnimationBackward
 //{
 //    //rotor instance
