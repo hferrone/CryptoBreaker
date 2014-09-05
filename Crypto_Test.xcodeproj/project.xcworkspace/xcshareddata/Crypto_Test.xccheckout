@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>3B1FA879-0EC1-4B4A-86D7-234FAD2EE41C</string>
+	<string>D39F2743-AB43-4B9B-B02F-C2B15F98FA50</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Crypto_Test</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>F590FD8A-7E8E-4DAA-BE9E-F5A83A1BF6A0</key>
-		<string>https://github.com/hferrone/CyrptoEnigma.git</string>
+		<key>EFBC1C94-B0C0-4AB3-9669-F02B23C49A27</key>
+		<string>https://github.com/hferrone/CryptoEnigma.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Crypto_Test.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F590FD8A-7E8E-4DAA-BE9E-F5A83A1BF6A0</key>
+		<key>EFBC1C94-B0C0-4AB3-9669-F02B23C49A27</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/hferrone/CyrptoEnigma.git</string>
+	<string>https://github.com/hferrone/CryptoEnigma.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F590FD8A-7E8E-4DAA-BE9E-F5A83A1BF6A0</string>
+	<string>EFBC1C94-B0C0-4AB3-9669-F02B23C49A27</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F590FD8A-7E8E-4DAA-BE9E-F5A83A1BF6A0</string>
+			<string>EFBC1C94-B0C0-4AB3-9669-F02B23C49A27</string>
 			<key>IDESourceControlWCCName</key>
-			<string>CyrptoEnigma</string>
+			<string>CryptoEnigma</string>
 		</dict>
 	</array>
 </dict>

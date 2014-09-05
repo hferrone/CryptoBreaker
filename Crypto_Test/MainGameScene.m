@@ -102,7 +102,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
         //timer lable
         self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        self.timerLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
+        self.timerLabel.text = [NSString stringWithFormat:@"%ld", (long)self.levelScore];
         self.timerLabel.fontColor = [UIColor whiteColor];
         self.timerLabel.fontSize = 16;
         self.timerLabel.text = @"Ready";
@@ -114,7 +114,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
         //score label
         self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
+        self.scoreLabel.text = [NSString stringWithFormat: @"%ld",(long)self.levelScore];
         self.scoreLabel.fontColor = [UIColor whiteColor];
         self.scoreLabel.fontSize = 16;
         self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
@@ -129,6 +129,7 @@ static NSString * const nonVowelString = @"nonVowel";
         self.backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
         self.backgroundMusic.numberOfLoops = -1;
         [self.backgroundMusic prepareToPlay];
+        [self.backgroundMusic play];
     }
     return self;
 }
@@ -543,7 +544,6 @@ static NSString * const nonVowelString = @"nonVowel";
     self.pauseView.center = CGPointMake(self.size.width*0.5, self.size.height*0.5);
     [self.view addSubview:self.pauseView];
 
-    [self.backgroundMusic play];
 }
 
 - (BOOL)touchInPauseButton:(CGPoint)touchLocation
