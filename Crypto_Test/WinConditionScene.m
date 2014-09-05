@@ -8,6 +8,13 @@
 
 #import "WinConditionScene.h"
 #import "MenuScene.h"
+#import <AVFoundation/AVFoundation.h>
+
+@interface WinConditionScene ()
+
+@property AVAudioPlayer *winConditionScene;
+
+@end
 
 @implementation WinConditionScene
 
@@ -26,6 +33,14 @@
         menuButton.size = CGSizeMake(75, 65);
         [menuButton setName:@"backButtonNode"];
         [self addChild:menuButton];
+
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"Victory Fanfare" withExtension:@"mp3"];
+
+        //Setting up the background music -- Must init with URL of the start screen MP3
+        self.winConditionScene = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        self.winConditionScene.numberOfLoops = -1;
+        [self.winConditionScene prepareToPlay];
+        [self.winConditionScene play];
     }
 
     return self;
@@ -44,6 +59,7 @@
         MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:menuScene transition:transition];
+        [self.winConditionScene stop];
     }
 }
 

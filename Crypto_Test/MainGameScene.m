@@ -468,7 +468,7 @@ static NSString * const nonVowelString = @"nonVowel";
     self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
 
     //win condition and segue back to menu (resets game conditions)
-    if (self.levelScore > 1000)
+    if (self.levelScore > 200)
     {
         WinConditionScene *menuScene = [WinConditionScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
