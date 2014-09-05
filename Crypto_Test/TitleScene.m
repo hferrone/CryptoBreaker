@@ -16,7 +16,8 @@
     {
         //background setup and segue with fade
         SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"TitleScene"];
-        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 50);
+
         [self addChild:background];
 
         [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];

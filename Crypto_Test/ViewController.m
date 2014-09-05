@@ -21,7 +21,6 @@
     {
         skView.showsFPS = YES;
         skView.showsNodeCount = YES;
-        [skView sizeToFit];
 
         // Create and configure the scene.
         SKScene * scene = [TitleScene sceneWithSize:skView.bounds.size];

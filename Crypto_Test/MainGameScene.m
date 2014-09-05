@@ -434,7 +434,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
     [self endGameCodeAlert];
 
-    [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
+    [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:2.0];
 }
 
 -(void)segueToMenu
