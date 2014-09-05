@@ -129,6 +129,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		362CA8C519B94BCE00EE09CE /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				36B7E31C19A7DD1C00BFFECC /* TitleScene.h */,
+				36B7E31D19A7DD1C00BFFECC /* TitleScene.m */,
+				36ACCAE219A90D2700AA29D4 /* MenuScene.h */,
+				36ACCAE319A90D2700AA29D4 /* MenuScene.m */,
+				36B7E31F19A7DF8A00BFFECC /* MainGameScene.h */,
+				36B7E32019A7DF8A00BFFECC /* MainGameScene.m */,
+				36ACCB3D19A99DA700AA29D4 /* CreditsScene.h */,
+				36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */,
+				36ACCB4019A99DB600AA29D4 /* ProfileScene.h */,
+				36ACCB4119A99DB600AA29D4 /* ProfileScene.m */,
+				36ACCB4319ABC16100AA29D4 /* WinConditionScene.h */,
+				36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */,
+				25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */,
+				25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		362CA8C619B94BEA00EE09CE /* Custom Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				251982D119B794D5009AA435 /* PauseButtonNode.h */,
+				251982D219B794D5009AA435 /* PauseButtonNode.m */,
+				36ACCAD919A7E48500AA29D4 /* KeyNode.h */,
+				36ACCADA19A7E48500AA29D4 /* KeyNode.m */,
+				36ACCADF19A7EB3600AA29D4 /* TileNode.h */,
+				36ACCAE019A7EB3600AA29D4 /* TileNode.m */,
+				36ACCADC19A7E96700AA29D4 /* RotorNode.h */,
+				36ACCADD19A7E96700AA29D4 /* RotorNode.m */,
+			);
+			name = "Custom Nodes";
+			sourceTree = "<group>";
+		};
+		362CA8C719B94C0000EE09CE /* Particle System */ = {
+			isa = PBXGroup;
+			children = (
+				251982D419B79BEE009AA435 /* TileParticle.sks */,
+			);
+			name = "Particle System";
+			sourceTree = "<group>";
+		};
+		362CA8C819B94C2000EE09CE /* Boiler Plate */ = {
+			isa = PBXGroup;
+			children = (
+				36B7E2F119A7DCE900BFFECC /* AppDelegate.h */,
+				36B7E2F219A7DCE900BFFECC /* AppDelegate.m */,
+				36B7E2F419A7DCE900BFFECC /* Main.storyboard */,
+				36B7E2F719A7DCE900BFFECC /* ViewController.h */,
+				36B7E2F819A7DCE900BFFECC /* ViewController.m */,
+			);
+			name = "Boiler Plate";
+			sourceTree = "<group>";
+		};
+		362CA8C919B94C3200EE09CE /* Utilities & Constants */ = {
+			isa = PBXGroup;
+			children = (
+				362CA8C219B7915E00EE09CE /* Utilities.h */,
+				362CA8C319B7915E00EE09CE /* Utilities.m */,
+			);
+			name = "Utilities & Constants";
+			sourceTree = "<group>";
+		};
 		36B7E2D419A7DCE900BFFECC = {
 			isa = PBXGroup;
 			children = (
@@ -164,40 +229,15 @@
 		36B7E2E819A7DCE900BFFECC /* Crypto_Test */ = {
 			isa = PBXGroup;
 			children = (
+				362CA8C519B94BCE00EE09CE /* Scenes */,
+				362CA8C619B94BEA00EE09CE /* Custom Nodes */,
+				362CA8C819B94C2000EE09CE /* Boiler Plate */,
+				362CA8C719B94C0000EE09CE /* Particle System */,
+				362CA8C919B94C3200EE09CE /* Utilities & Constants */,
 				362CA8C019B6341300EE09CE /* CryptoImages.atlas */,
-				36B7E2F119A7DCE900BFFECC /* AppDelegate.h */,
-				36B7E2F219A7DCE900BFFECC /* AppDelegate.m */,
-				36B7E2F419A7DCE900BFFECC /* Main.storyboard */,
-				36B7E2F719A7DCE900BFFECC /* ViewController.h */,
-				36B7E2F819A7DCE900BFFECC /* ViewController.m */,
-				251982D119B794D5009AA435 /* PauseButtonNode.h */,
-				251982D219B794D5009AA435 /* PauseButtonNode.m */,
-				36B7E31C19A7DD1C00BFFECC /* TitleScene.h */,
-				36B7E31D19A7DD1C00BFFECC /* TitleScene.m */,
-				36ACCAE219A90D2700AA29D4 /* MenuScene.h */,
-				36ACCAE319A90D2700AA29D4 /* MenuScene.m */,
-				36B7E31F19A7DF8A00BFFECC /* MainGameScene.h */,
-				36B7E32019A7DF8A00BFFECC /* MainGameScene.m */,
-				251982D419B79BEE009AA435 /* TileParticle.sks */,
-				251982D519B79BEE009AA435 /* spark.png */,
-				36ACCAD919A7E48500AA29D4 /* KeyNode.h */,
-				36ACCADA19A7E48500AA29D4 /* KeyNode.m */,
-				36ACCADF19A7EB3600AA29D4 /* TileNode.h */,
-				36ACCAE019A7EB3600AA29D4 /* TileNode.m */,
-				36ACCADC19A7E96700AA29D4 /* RotorNode.h */,
-				36ACCADD19A7E96700AA29D4 /* RotorNode.m */,
-				36ACCB3D19A99DA700AA29D4 /* CreditsScene.h */,
-				36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */,
-				36ACCB4019A99DB600AA29D4 /* ProfileScene.h */,
-				36ACCB4119A99DB600AA29D4 /* ProfileScene.m */,
-				36ACCB4319ABC16100AA29D4 /* WinConditionScene.h */,
-				36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */,
-				25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */,
-				25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */,
-				362CA8C219B7915E00EE09CE /* Utilities.h */,
-				362CA8C319B7915E00EE09CE /* Utilities.m */,
 				36B7E2FF19A7DCE900BFFECC /* Images.xcassets */,
 				251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */,
+				251982D519B79BEE009AA435 /* spark.png */,
 				36B7E2E919A7DCE900BFFECC /* Supporting Files */,
 			);
 			path = Crypto_Test;

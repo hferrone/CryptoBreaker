@@ -31,9 +31,10 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property CGPoint positionInScene;
 
+@property (nonatomic, strong) KeyNode *blankTileNode;
 @property (nonatomic, strong) TileNode *selectedNode;
-@property (nonatomic, strong) SKSpriteNode *destinationNode;
-@property (nonatomic, strong) SKSpriteNode *previousSelectedNode;
+@property (nonatomic, strong) TileNode *destinationNode;
+@property (nonatomic, strong) RotorNode *rotorDestinationNode;
 
 @property (nonatomic, strong) RotorNode *rotorCapNode;
 
@@ -296,11 +297,6 @@ static NSString * const nonVowelString = @"nonVowel";
 
     if (self.hasCollidedAndScored)
     {
-        if ([_destinationNode isKindOfClass:[TileNode class]])
-        {
-            [_destinationNode removeFromParent];
-        }
-
         [self generateNewTile];
         [self updateScore];
         [self updateComboScore];
@@ -308,16 +304,11 @@ static NSString * const nonVowelString = @"nonVowel";
         [self setSelectedNodePositionToDestination];
         self.hasCollidedAndScored = NO;
     }
-
-    if (self.hasMissedContact)
-    {
-        [self resetSelectedNodePositionToOrigin];
-    }
 }
 
 -(void)setSelectedNodePositionToDestination
 {
-    _selectedNode.position = _destinationNode.position;
+    _selectedNode.position = _blankTileNode.position;
     self.hasCollidedAndScored = NO;
 }
 
@@ -334,7 +325,6 @@ static NSString * const nonVowelString = @"nonVowel";
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
-
 {
     //Condition for tile and key contact
     if ((contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask) == (ContactCategoryTile | ContactCategoryKey))
@@ -342,10 +332,10 @@ static NSString * const nonVowelString = @"nonVowel";
         if (contact.bodyA.categoryBitMask == ContactCategoryTile)
         {
             _selectedNode = (TileNode*)contact.bodyA.node;
-            _destinationNode = (KeyNode*)contact.bodyB.node;
+            _blankTileNode = (KeyNode*)contact.bodyB.node;
         }else{
             _selectedNode = (TileNode*)contact.bodyB.node;
-            _destinationNode = (KeyNode*)contact.bodyA.node;
+            _blankTileNode = (KeyNode*)contact.bodyA.node;
         }
         self.hasCollidedAndScored = YES;
     }
@@ -356,16 +346,22 @@ static NSString * const nonVowelString = @"nonVowel";
         {
             _selectedNode = (TileNode*)contact.bodyA.node;
             _destinationNode = (TileNode*)contact.bodyB.node;
+        }else{
+            _selectedNode = (TileNode*)contact.bodyB.node;
+            _destinationNode = (TileNode*)contact.bodyA.node;
         }
 
-        self.hasComboed = YES;
+        self.selectedTileComboScore = [_selectedNode.comboLabel.text intValue];
+        self.destinationTileComboScore = [_destinationNode.comboLabel.text intValue];
+        self.comboScore = self.selectedTileComboScore + self.destinationTileComboScore;
+        _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
 
         if (_selectedNode.name == _destinationNode.name)
         {
             self.hasIncorrectDrag = YES;
         }
         else {
-            [_selectedNode removeFromParent];
+            [_destinationNode removeFromParent];
         }
     }
     //condition for tile and rotor contact
@@ -373,10 +369,10 @@ static NSString * const nonVowelString = @"nonVowel";
     {
         if (contact.bodyA.categoryBitMask == ContactCategoryTile) {
         _selectedNode = (TileNode*)contact.bodyA.node;
-        _destinationNode = (RotorNode*)contact.bodyB.node;
+        _rotorDestinationNode = (RotorNode*)contact.bodyB.node;
         }else{
             _selectedNode = (TileNode*)contact.bodyB.node;
-            _destinationNode = (RotorNode*)contact.bodyA.node;
+            _rotorDestinationNode = (RotorNode*)contact.bodyA.node;
         }
 
         [self checkForCapPoint:[_selectedNode.comboLabel.text intValue]];
@@ -483,13 +479,9 @@ static NSString * const nonVowelString = @"nonVowel";
 {
     //The problem right now is that it doesn't even check for the tile score.
     NSLog(@"Entro!");
-    if (tileCombo >= 2)
+    if (tileCombo >= 8)
     {
         [self executeRotorAnimationForward];
-        //[self.tileSlotsArray addObject:self.rotorCapNode];
-    }else{
-        UIAlertView *insufficentComboAlert = [[UIAlertView alloc] initWithTitle:@"HALT" message:@"You require more minerals to make this move" delegate:self cancelButtonTitle:@"Return" otherButtonTitles:nil];
-        [insufficentComboAlert show];
     }
 
 }
