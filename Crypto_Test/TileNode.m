@@ -44,7 +44,6 @@
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.frame.size];
     self.physicsBody.dynamic = YES;
     self.physicsBody.categoryBitMask = ContactCategoryTile;
-    NSLog(@"CATEGORY TILE %d",self.physicsBody.categoryBitMask);
     self.physicsBody.contactTestBitMask = ContactCategoryTile | ContactCategoryRotor | ContactCategoryKey;
     self.physicsBody.collisionBitMask = 0;
 }

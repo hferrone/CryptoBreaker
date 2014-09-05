@@ -21,10 +21,12 @@
     {
         skView.showsFPS = YES;
         skView.showsNodeCount = YES;
+        [skView sizeToFit];
 
         // Create and configure the scene.
         SKScene * scene = [TitleScene sceneWithSize:skView.bounds.size];
         scene.scaleMode = SKSceneScaleModeAspectFill;
+        scene.size = CGSizeMake(320, 568);
 
         // Present the scene.
         [skView presentScene:scene];

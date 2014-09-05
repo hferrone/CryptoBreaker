@@ -28,20 +28,27 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSInteger initialCombo;
 @property NSInteger selectedTileComboScore;
 @property NSInteger destinationTileComboScore;
+@property NSInteger breakCountdown;
 
 @property CGPoint positionInScene;
 
+@property (nonatomic, strong) SKSpriteNode *countDownSpriteNode;
+@property (nonatomic, strong) SKLabelNode *countDownLabelNode;
+
 @property (nonatomic, strong) KeyNode *blankTileNode;
+
 @property (nonatomic, strong) TileNode *selectedNode;
 @property (nonatomic, strong) TileNode *destinationNode;
-@property (nonatomic, strong) RotorNode *rotorDestinationNode;
 
-@property (nonatomic, strong) RotorNode *rotorCapNode;
+//@property (nonatomic, strong) RotorNode *rotorDestinationNode;
+@property (nonatomic, strong) RotorNode *rotorAnimationNode;
 
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
 @property (nonatomic, strong) SKLabelNode *comboLabel;
 @property (nonatomic, strong) SKLabelNode *timerLabel;
+
 @property (nonatomic) AVAudioPlayer *backgroundMusic;
+
 @property UIImageView *pauseView;
 
 @property NSTimeInterval startTime;
@@ -68,6 +75,7 @@ static NSString * const nonVowelString = @"nonVowel";
         //[self randomTileSelection];
         self.levelScore = 0;
         self.gameStartTimer = NO;
+        self.breakCountdown = 1;
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 15)];
@@ -119,6 +127,17 @@ static NSString * const nonVowelString = @"nonVowel";
         self.scoreLabel.fontSize = 16;
         self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
         [self addChild: self.scoreLabel];
+
+        //code break countdown setup
+        self.countDownSpriteNode = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:CGSizeMake(50, 300)];
+        self.countDownSpriteNode.position = CGPointMake(CGRectGetMidX(self.frame) + 150, CGRectGetMidY(self.frame));
+        [self addChild:self.countDownSpriteNode];
+        self.countDownLabelNode = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+        self.countDownLabelNode.fontColor = [UIColor blackColor];
+        self.countDownLabelNode.fontSize = 26;
+        self.countDownLabelNode.position = CGPointMake(-5, -5);
+        self.countDownSpriteNode.name = @"Cat";
+        [self.countDownSpriteNode addChild: self.countDownLabelNode];
 
         self.physicsWorld.gravity = CGVectorMake(0, 0);
         self.physicsWorld.contactDelegate = self;
@@ -187,17 +206,29 @@ static NSString * const nonVowelString = @"nonVowel";
     [self addChild:tileNode1];
 }
 
-- (void) incorrectDragByUser
+-(void)incorrectDragByUser
 {
     UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"HALT!" message:@"A good cryptologist knows when to pair keys. Try combining a vowel with a consonant." delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
     [alertView show];
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+-(void)endGameCodeAlert
+{
+    NSString* messageString = [NSString stringWithFormat: @"You're recent break: %@", self.countDownSpriteNode.name];
+    UIAlertView * alertView2 = [[UIAlertView alloc] initWithTitle:@"BROKEN!" message: messageString delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
+    [alertView2 show];
+}
+
+-(void)alertView:(UIAlertView *)alertView alert2:(UIAlertView*)alertView2 clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == alertView.cancelButtonIndex)
     {
         _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 155);
+    }
+
+    if (buttonIndex == alertView2.cancelButtonIndex)
+    {
+        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
     }
 }
 
@@ -304,6 +335,17 @@ static NSString * const nonVowelString = @"nonVowel";
         [self setSelectedNodePositionToDestination];
         self.hasCollidedAndScored = NO;
     }
+
+    if (self.hasScoredWithRotor)
+    {
+        self.breakCountdown--;
+        self.countDownLabelNode.text = [NSString stringWithFormat:@"%d", self.breakCountdown];
+
+        if (self.breakCountdown == 0)
+        {
+            [self initiateEndGame];
+        }
+    }
 }
 
 -(void)setSelectedNodePositionToDestination
@@ -312,17 +354,10 @@ static NSString * const nonVowelString = @"nonVowel";
     self.hasCollidedAndScored = NO;
 }
 
--(void)resetSelectedNodePositionToOrigin
-{
-    _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
-    self.hasMissedContact = NO;
-}
-
--(void)didSimulatePhysics
-{
-    [super didSimulatePhysics];
-
-}
+//-(void)didSimulatePhysics
+//{
+//    [super didSimulatePhysics];
+//}
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
 {
@@ -365,91 +400,22 @@ static NSString * const nonVowelString = @"nonVowel";
         }
     }
     //condition for tile and rotor contact
-    else if((contact.bodyA.contactTestBitMask | contact.bodyB.contactTestBitMask) == (ContactCategoryTile | ContactCategoryRotor))
+    else if((contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask) == (ContactCategoryTile | ContactCategoryRotor))
     {
-        if (contact.bodyA.categoryBitMask == ContactCategoryTile) {
-        _selectedNode = (TileNode*)contact.bodyA.node;
-        _rotorDestinationNode = (RotorNode*)contact.bodyB.node;
+        if (contact.bodyA.categoryBitMask == ContactCategoryTile)
+        {
+            _selectedNode = (TileNode*)contact.bodyA.node;
+            _rotorAnimationNode = (RotorNode*)contact.bodyB.node;
         }else{
             _selectedNode = (TileNode*)contact.bodyB.node;
-            _rotorDestinationNode = (RotorNode*)contact.bodyA.node;
+            _rotorAnimationNode = (RotorNode*)contact.bodyA.node;
         }
 
-        [self checkForCapPoint:[_selectedNode.comboLabel.text intValue]];
-
         self.hasScoredWithRotor = YES;
+        [self checkForCapPoint:[_selectedNode.comboLabel.text intValue]];
+        [_selectedNode removeFromParent];
     }
 }
-
-//-(void)checkForTileCollision
-//{
-//    for (SKSpriteNode *node in self.tileSlotsArray)
-//    {
-//        _destinationNode = node;
-//
-//        if (CGRectContainsPoint(_destinationNode.frame, self.positionInScene))
-//        {
-//            _selectedNode.position = _destinationNode.position;
-//            self.hasCollidedAndScored = YES;
-//            self.isMovable = NO;
-//        }
-//
-//        if (CGRectContainsRect(_destinationNode.frame, _selectedNode.frame))
-//        {
-//            if (_destinationNode.name == _selectedNode.name)
-//            {
-//                [self incorrectDragByUser];
-//            }else{
-//                _selectedNode.position = _destinationNode.position;
-//                self.hasComboed = YES;
-//                self.isMovable = NO;
-//                [_destinationNode removeFromParent];
-//            }
-//        }
-//    }
-//}
-//
-//-(void)checkForCombo
-//{
-//    if (self.hasCollidedAndScored)
-//    {
-//        TileNode *tileNode = (TileNode*)_selectedNode;
-//        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
-//        self.selectedTileComboScore++;
-//        tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.selectedTileComboScore];
-//
-//        [self.tileSlotsArray addObject:_selectedNode];
-//
-//        [self generateNewTile];
-//        [self updateScore];
-//        [self checkForCapPoint:self.selectedTileComboScore];
-//
-//    }else{
-//        _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 230);
-//        self.isMovable = YES;
-//    }
-//
-//    if (self.hasComboed)
-//    {
-//        TileNode *tileNode = (TileNode*)_selectedNode;
-//        self.selectedTileComboScore = [tileNode.comboLabel.text intValue];
-//
-//        for (SKLabelNode *labelNode in _destinationNode.children)
-//        {
-//            self.destinationTileComboScore = [labelNode.text intValue];
-//            self.comboScore = self.destinationTileComboScore + self.selectedTileComboScore;
-//            tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
-//        }
-//    }
-//
-//    self.hasCollidedAndScored = NO;
-//}
-//
-//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    [self checkForTileCollision];
-//    [self checkForCombo];
-//}
 
 - (void)panForTranslation:(CGPoint)translation
 {
@@ -457,6 +423,26 @@ static NSString * const nonVowelString = @"nonVowel";
     if(self.isMovable && [_selectedNode isKindOfClass:[TileNode class]]) {
         [_selectedNode setPosition:CGPointMake(position.x + translation.x, position.y + translation.y)];
     }
+}
+
+-(void)initiateEndGame
+{
+    self.countDownSpriteNode = [SKSpriteNode spriteNodeWithImageNamed:@"Cat"];
+    self.countDownSpriteNode.position = CGPointMake(CGRectGetMidX(self.frame) + 150, CGRectGetMidY(self.frame));
+    self.countDownSpriteNode.name = @"Cat";
+    [self addChild:self.countDownSpriteNode];
+
+    [self endGameCodeAlert];
+
+    [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
+}
+
+-(void)segueToMenu
+{
+    //segue to next scene - menu scene
+    WinConditionScene *winScene = [WinConditionScene sceneWithSize:self.frame.size];
+    SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+    [self.view presentScene:winScene transition:transition];
 }
 
 #pragma scoring methods
@@ -469,33 +455,23 @@ static NSString * const nonVowelString = @"nonVowel";
     //win condition and segue back to menu (resets game conditions)
     if (self.levelScore > 1000)
     {
-        WinConditionScene *menuScene = [WinConditionScene sceneWithSize:self.frame.size];
-        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
-        [self.view presentScene:menuScene transition:transition];
+        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
     }
 }
 
 -(void)checkForCapPoint:(NSInteger)tileCombo
 {
-    //The problem right now is that it doesn't even check for the tile score.
-    NSLog(@"Entro!");
-    if (tileCombo >= 8)
+    if (tileCombo >= 2)
     {
         [self executeRotorAnimationForward];
     }
-
 }
 
 -(void)executeRotorAnimationForward
 {
-//    SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
-//    menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 250);
-//    menuButton.size = CGSizeMake(65, 50);
-//    [menuButton setName:@"backButtonNode"];
-    NSLog(@"Entro!2");
     //rotor instance
-    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
-    [self addChild:rotorCapNode];
+    RotorNode *rotorAnimationNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+    [self addChild:rotorAnimationNode];
 
     NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor1"],
                                      [SKTexture textureWithImageNamed:@"rotor2"],
@@ -504,7 +480,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
     SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
     SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
-    [rotorCapNode runAction:animationRepeat];
+    [rotorAnimationNode runAction:animationRepeat];
 }
 //
 
@@ -565,7 +541,5 @@ static NSString * const nonVowelString = @"nonVowel";
     view.paused = (view.paused) ? NO : YES;
     NSLog(@"view is %hhd",view.paused);
 }
-
-
 
 @end

@@ -31,7 +31,6 @@
     self.physicsBody.dynamic = YES;
     self.physicsBody.categoryBitMask = ContactCategoryKey;
     self.physicsBody.contactTestBitMask = ContactCategoryTile;
-    NSLog(@"CATEGORY KEYNODE %d",self.physicsBody.categoryBitMask);
 
     self.physicsBody.collisionBitMask = 0;
 }
