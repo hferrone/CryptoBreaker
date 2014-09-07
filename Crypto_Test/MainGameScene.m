@@ -101,7 +101,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
         //back button
         SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
-        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 250);
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) + 200);
         menuButton.size = CGSizeMake(65, 50);
         [menuButton setName:@"backButtonNode"];
         [self addChild:menuButton];
@@ -117,23 +117,23 @@ static NSString * const nonVowelString = @"nonVowel";
         self.timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) + 250);
         [self addChild:self.timerLabel];
 
-        PauseButtonNode *pauseButton = [PauseButtonNode pauseButtonLocation:CGPointMake(CGRectGetMidX(self.frame) + 125, CGRectGetMidX(self.frame) - 150)];
-        [self addChild:pauseButton];
+//        PauseButtonNode *pauseButton = [PauseButtonNode pauseButtonLocation:CGPointMake(CGRectGetMidX(self.frame) + 125, CGRectGetMidX(self.frame) - 150)];
+//        [self addChild:pauseButton];
 
         //score label
         self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
+        self.scoreLabel.text = [NSString stringWithFormat: @"Score: %d",self.levelScore];
         self.scoreLabel.fontColor = [UIColor whiteColor];
-        self.scoreLabel.fontSize = 20;
-        self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
+        self.scoreLabel.fontSize = 14;
+        self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 120, CGRectGetMidY(self.frame) + 250);
         [self addChild: self.scoreLabel];
 
         //code break countdown setup
         self.countDownLabelNode = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
         self.countDownLabelNode.fontColor = [UIColor whiteColor];
-        self.countDownLabelNode.fontSize = 20;
-        self.countDownLabelNode.text = [NSString stringWithFormat:@"%d", self.breakCountdown];
-        self.countDownLabelNode.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 200);
+        self.countDownLabelNode.fontSize = 14;
+        self.countDownLabelNode.text = [NSString stringWithFormat:@"Breaks: %d", self.breakCountdown];
+        self.countDownLabelNode.position = CGPointMake(CGRectGetMidX(self.frame) + 120, CGRectGetMidY(self.frame) + 200);
         self.countDownSpriteNode.name = @"Cat";
         [self addChild: self.countDownLabelNode];
 
@@ -149,8 +149,6 @@ static NSString * const nonVowelString = @"nonVowel";
     }
     return self;
 }
-//Basically the viewDidLoad of the View Controller.
-
 
 #pragma tile selection methods
 
@@ -448,7 +446,7 @@ static NSString * const nonVowelString = @"nonVowel";
 -(void)updateScore
 {
     self.levelScore += 50;
-    self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
+    self.scoreLabel.text = [NSString stringWithFormat: @"Score: %d",self.levelScore];
 
     //win condition and segue back to menu (resets game conditions)
     if (self.levelScore > 1000)
