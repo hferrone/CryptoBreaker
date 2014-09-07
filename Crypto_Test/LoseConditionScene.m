@@ -8,6 +8,13 @@
 
 #import "LoseConditionScene.h"
 #import "MenuScene.h"
+#import <AVFoundation/AVFoundation.h>
+
+@interface LoseConditionScene ()
+
+@property AVAudioPlayer *loseConditionMusic;
+
+@end
 
 @implementation LoseConditionScene
 
@@ -28,6 +35,14 @@
         [self addChild:menuButton];
     }
 
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"GameOver copy" withExtension:@"mp3"];
+
+    //Setting up the background music -- Must init with URL of the start screen MP3
+    self.loseConditionMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    self.loseConditionMusic.numberOfLoops = -1;
+    [self.loseConditionMusic prepareToPlay];
+    [self.loseConditionMusic play];
+
     return self;
 }
 
@@ -44,6 +59,7 @@
         MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:menuScene transition:transition];
+        [self.loseConditionMusic stop];
     }
 }
 

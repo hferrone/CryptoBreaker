@@ -110,7 +110,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
         //timer lable
         self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        self.timerLabel.text = [NSString stringWithFormat:@"%d", self.levelScore];
+        self.timerLabel.text = [NSString stringWithFormat:@"%ld", (long)self.levelScore];
         self.timerLabel.fontColor = [UIColor whiteColor];
         self.timerLabel.fontSize = 16;
         self.timerLabel.text = @"Ready";
@@ -146,6 +146,7 @@ static NSString * const nonVowelString = @"nonVowel";
         self.backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
         self.backgroundMusic.numberOfLoops = -1;
         [self.backgroundMusic prepareToPlay];
+        [self.backgroundMusic play];
     }
     return self;
 }
@@ -449,7 +450,7 @@ static NSString * const nonVowelString = @"nonVowel";
     self.scoreLabel.text = [NSString stringWithFormat: @"Score: %d",self.levelScore];
 
     //win condition and segue back to menu (resets game conditions)
-    if (self.levelScore > 1000)
+    if (self.levelScore > 200)
     {
         [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
     }
@@ -515,7 +516,6 @@ static NSString * const nonVowelString = @"nonVowel";
     self.pauseView.center = CGPointMake(self.size.width*0.5, self.size.height*0.5);
     [self.view addSubview:self.pauseView];
 
-    [self.backgroundMusic play];
 }
 
 - (BOOL)touchInPauseButton:(CGPoint)touchLocation

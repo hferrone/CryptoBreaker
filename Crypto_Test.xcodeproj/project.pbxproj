@@ -12,6 +12,9 @@
 		251982D719B79BEE009AA435 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 251982D519B79BEE009AA435 /* spark.png */; };
 		251982D919B7C5C9009AA435 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251982D819B7C5C9009AA435 /* AVFoundation.framework */; };
 		251982DD19B7F2F3009AA435 /* pause@2x~iphone copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */; };
+		2598099319BA14BC00CBA2DF /* StartScreen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099219BA14BC00CBA2DF /* StartScreen.mp3 */; };
+		2598099519BA14CD00CBA2DF /* GameOver copy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099419BA14CD00CBA2DF /* GameOver copy.mp3 */; };
+		2598099719BA174F00CBA2DF /* Victory Fanfare.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099619BA174F00CBA2DF /* Victory Fanfare.mp3 */; };
 		25BC3FF719AEE9E400719EDB /* LoseConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */; };
 		362CA8C119B6341300EE09CE /* CryptoImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 362CA8C019B6341300EE09CE /* CryptoImages.atlas */; };
 		362CA8C419B7915E00EE09CE /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 362CA8C319B7915E00EE09CE /* Utilities.m */; };
@@ -58,6 +61,9 @@
 		251982D519B79BEE009AA435 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		251982D819B7C5C9009AA435 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause@2x~iphone copy.png"; sourceTree = "<group>"; };
+		2598099219BA14BC00CBA2DF /* StartScreen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = StartScreen.mp3; sourceTree = "<group>"; };
+		2598099419BA14CD00CBA2DF /* GameOver copy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "GameOver copy.mp3"; sourceTree = "<group>"; };
+		2598099619BA174F00CBA2DF /* Victory Fanfare.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Victory Fanfare.mp3"; sourceTree = "<group>"; };
 		25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoseConditionScene.h; sourceTree = "<group>"; };
 		25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoseConditionScene.m; sourceTree = "<group>"; };
 		362CA8C019B6341300EE09CE /* CryptoImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = CryptoImages.atlas; sourceTree = "<group>"; };
@@ -129,6 +135,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2598099119BA14AE00CBA2DF /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				2598099419BA14CD00CBA2DF /* GameOver copy.mp3 */,
+				2598099219BA14BC00CBA2DF /* StartScreen.mp3 */,
+				2598099619BA174F00CBA2DF /* Victory Fanfare.mp3 */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 		362CA8C519B94BCE00EE09CE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +245,7 @@
 		36B7E2E819A7DCE900BFFECC /* Crypto_Test */ = {
 			isa = PBXGroup;
 			children = (
+				2598099119BA14AE00CBA2DF /* Sounds */,
 				362CA8C519B94BCE00EE09CE /* Scenes */,
 				362CA8C619B94BEA00EE09CE /* Custom Nodes */,
 				362CA8C819B94C2000EE09CE /* Boiler Plate */,
@@ -349,8 +366,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				362CA8C119B6341300EE09CE /* CryptoImages.atlas in Resources */,
+				2598099519BA14CD00CBA2DF /* GameOver copy.mp3 in Resources */,
 				251982D719B79BEE009AA435 /* spark.png in Resources */,
 				36B7E2ED19A7DCE900BFFECC /* InfoPlist.strings in Resources */,
+				2598099719BA174F00CBA2DF /* Victory Fanfare.mp3 in Resources */,
+				2598099319BA14BC00CBA2DF /* StartScreen.mp3 in Resources */,
 				36B7E30019A7DCE900BFFECC /* Images.xcassets in Resources */,
 				36B7E2F619A7DCE900BFFECC /* Main.storyboard in Resources */,
 				251982D619B79BEE009AA435 /* TileParticle.sks in Resources */,
