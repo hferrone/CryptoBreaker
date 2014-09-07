@@ -20,7 +20,7 @@
 
         [self addChild:background];
 
-        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
+        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:1.5];
     }
     return self;
 }

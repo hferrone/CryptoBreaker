@@ -78,25 +78,25 @@ static NSString * const nonVowelString = @"nonVowel";
         self.breakCountdown = 1;
 
         //instances and positioning of keys
-        KeyNode *keyNode1 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 100, CGRectGetMidY(self.frame) - 15)];
+        KeyNode *keyNode1 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 125)];
         [self addChild:keyNode1];
 
-        KeyNode *keyNode2 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) - 155)];
+        KeyNode *keyNode2 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 85, CGRectGetMidY(self.frame) - 25)];
         [self addChild:keyNode2];
 
-        KeyNode *keyNode3 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 15)];
+        KeyNode *keyNode3 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 45, CGRectGetMidY(self.frame) + 65)];
         [self addChild:keyNode3];
 
-        KeyNode *keyNode4 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) - 155)];
+        KeyNode *keyNode4 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 105)];
         [self addChild:keyNode4];
 
-        KeyNode *keyNode5 = [KeyNode keyNodeAtPosition: CGPointMake(CGRectGetMidX(self.frame) + 100, CGRectGetMidY(self.frame) - 15)];
+        KeyNode *keyNode5 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 45, CGRectGetMidY(self.frame) + 65)];
         [self addChild:keyNode5];
 
-        KeyNode *keyNode6 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 50, CGRectGetMidY(self.frame) + 105)];
+        KeyNode *keyNode6 = [KeyNode keyNodeAtPosition: CGPointMake(CGRectGetMidX(self.frame) + 85, CGRectGetMidY(self.frame) - 25)];
         [self addChild:keyNode6];
 
-        KeyNode *keyNode7 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 50, CGRectGetMidY(self.frame) + 105)];
+        KeyNode *keyNode7 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 125, CGRectGetMidY(self.frame) - 125)];
         [self addChild:keyNode7];
 
         //back button
@@ -124,20 +124,18 @@ static NSString * const nonVowelString = @"nonVowel";
         self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
         self.scoreLabel.text = [NSString stringWithFormat: @"%d",self.levelScore];
         self.scoreLabel.fontColor = [UIColor whiteColor];
-        self.scoreLabel.fontSize = 16;
+        self.scoreLabel.fontSize = 20;
         self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 250);
         [self addChild: self.scoreLabel];
 
         //code break countdown setup
-        self.countDownSpriteNode = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:CGSizeMake(50, 300)];
-        self.countDownSpriteNode.position = CGPointMake(CGRectGetMidX(self.frame) + 150, CGRectGetMidY(self.frame));
-        [self addChild:self.countDownSpriteNode];
         self.countDownLabelNode = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        self.countDownLabelNode.fontColor = [UIColor blackColor];
-        self.countDownLabelNode.fontSize = 26;
-        self.countDownLabelNode.position = CGPointMake(-5, -5);
+        self.countDownLabelNode.fontColor = [UIColor whiteColor];
+        self.countDownLabelNode.fontSize = 20;
+        self.countDownLabelNode.text = [NSString stringWithFormat:@"%d", self.breakCountdown];
+        self.countDownLabelNode.position = CGPointMake(CGRectGetMidX(self.frame) + 140, CGRectGetMidY(self.frame) + 200);
         self.countDownSpriteNode.name = @"Cat";
-        [self.countDownSpriteNode addChild: self.countDownLabelNode];
+        [self addChild: self.countDownLabelNode];
 
         self.physicsWorld.gravity = CGVectorMake(0, 0);
         self.physicsWorld.contactDelegate = self;
