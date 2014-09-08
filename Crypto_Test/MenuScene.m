@@ -10,6 +10,7 @@
 #import "MainGameScene.h"
 #import "CreditsScene.h"
 #import "ProfileScene.h"
+#import "TutorialGameScenes.h"
 
 @implementation MenuScene
 
@@ -43,6 +44,13 @@
         [creditsButton setName:@"credits"];
         [creditsButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) - 60)];
         [self addChild:creditsButton];
+
+        //tutorial UI Bbutton
+        SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed:@"Credits"];
+        tutorialButton.size = CGSizeMake(75, 65);
+        [tutorialButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) - 90)];
+        [tutorialButton setName:@"GoToTutorial"];
+        [self addChild:tutorialButton];
     }
 
     return self;
@@ -69,6 +77,10 @@
         CreditsScene *creditScene = [CreditsScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:creditScene transition:transition];
+    }else if ([node.name isEqualToString:@"GoToTutorial"]){
+        TutorialGameScenes *tutorialGameSceneOne = [TutorialGameScenes sceneWithSize:self.frame.size];
+        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+        [self.view presentScene:tutorialGameSceneOne transition:transition];
     }
 }
 
