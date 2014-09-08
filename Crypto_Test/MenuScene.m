@@ -10,7 +10,7 @@
 #import "MainGameScene.h"
 #import "CreditsScene.h"
 #import "ProfileScene.h"
-#import "TutorialGameScenes.h"
+#import "TutorialScene1.h"
 
 @implementation MenuScene
 
@@ -78,7 +78,7 @@
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:creditScene transition:transition];
     }else if ([node.name isEqualToString:@"GoToTutorial"]){
-        TutorialGameScenes *tutorialGameSceneOne = [TutorialGameScenes sceneWithSize:self.frame.size];
+        TutorialScene1 *tutorialGameSceneOne = [TutorialScene1 sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:tutorialGameSceneOne transition:transition];
     }

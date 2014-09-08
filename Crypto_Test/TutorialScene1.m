@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Mobile Makers. All rights reserved.
 //
 
-#import "TutorialGameScenes.h"
+#import "TutorialScene1.h"
 #import "NextTutorialGameScene.h"
 
-@implementation TutorialGameScenes
+@implementation TutorialScene1
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
