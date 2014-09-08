@@ -21,13 +21,6 @@
         tutorialScene.name = @"GoToTutorial";
         [self addChild:tutorialScene];
 
-        //back button
-        SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
-        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) - 50);
-        menuButton.size = CGSizeMake(75, 65);
-        [menuButton setName:@"backButtonNode"];
-        [self addChild:menuButton];
-
     }
     
     return self;
@@ -41,10 +34,13 @@
     CGPoint location = [tutorialTouch locationInNode:self];
     //create a node where location can be accepted
     SKNode *node = [self nodeAtPoint:location];
+    node.name = @"GoToTut3";
+    NSLog(@"SUP");
 
     if([node.name isEqualToString:@"GoToTut3"]){
         NextTutorialGameScene *tutorialSceneTwo = [NextTutorialGameScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:0.5];
+        [tutorialSceneTwo setName:@"GoToTutorial"];
         [self.view presentScene:tutorialSceneTwo transition:transition];
     }
     

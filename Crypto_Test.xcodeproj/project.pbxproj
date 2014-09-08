@@ -14,6 +14,7 @@
 		251982DD19B7F2F3009AA435 /* pause@2x~iphone copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */; };
 		2576B33E19BE25A500F83703 /* TutorialScene1.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576B33D19BE25A500F83703 /* TutorialScene1.m */; };
 		2576B34119BE2FA400F83703 /* NextTutorialGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576B34019BE2FA400F83703 /* NextTutorialGameScene.m */; };
+		2576B34419BE504B00F83703 /* FinalTutorialScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576B34319BE504B00F83703 /* FinalTutorialScene.m */; };
 		2598099319BA14BC00CBA2DF /* StartScreen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099219BA14BC00CBA2DF /* StartScreen.mp3 */; };
 		2598099519BA14CD00CBA2DF /* GameOver copy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099419BA14CD00CBA2DF /* GameOver copy.mp3 */; };
 		2598099719BA174F00CBA2DF /* Victory Fanfare.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099619BA174F00CBA2DF /* Victory Fanfare.mp3 */; };
@@ -67,6 +68,8 @@
 		2576B33D19BE25A500F83703 /* TutorialScene1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialScene1.m; sourceTree = "<group>"; };
 		2576B33F19BE2FA400F83703 /* NextTutorialGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextTutorialGameScene.h; sourceTree = "<group>"; };
 		2576B34019BE2FA400F83703 /* NextTutorialGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextTutorialGameScene.m; sourceTree = "<group>"; };
+		2576B34219BE504B00F83703 /* FinalTutorialScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalTutorialScene.h; sourceTree = "<group>"; };
+		2576B34319BE504B00F83703 /* FinalTutorialScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalTutorialScene.m; sourceTree = "<group>"; };
 		2598099219BA14BC00CBA2DF /* StartScreen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = StartScreen.mp3; sourceTree = "<group>"; };
 		2598099419BA14CD00CBA2DF /* GameOver copy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "GameOver copy.mp3"; sourceTree = "<group>"; };
 		2598099619BA174F00CBA2DF /* Victory Fanfare.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Victory Fanfare.mp3"; sourceTree = "<group>"; };
@@ -168,6 +171,8 @@
 				2576B33D19BE25A500F83703 /* TutorialScene1.m */,
 				2576B33F19BE2FA400F83703 /* NextTutorialGameScene.h */,
 				2576B34019BE2FA400F83703 /* NextTutorialGameScene.m */,
+				2576B34219BE504B00F83703 /* FinalTutorialScene.h */,
+				2576B34319BE504B00F83703 /* FinalTutorialScene.m */,
 				36ACCB4319ABC16100AA29D4 /* WinConditionScene.h */,
 				36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */,
 				25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */,
@@ -404,6 +409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36B7E2F919A7DCE900BFFECC /* ViewController.m in Sources */,
+				2576B34419BE504B00F83703 /* FinalTutorialScene.m in Sources */,
 				36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */,
 				25BC3FF719AEE9E400719EDB /* LoseConditionScene.m in Sources */,
 				36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */,
