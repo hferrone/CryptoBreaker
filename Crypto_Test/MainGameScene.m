@@ -32,6 +32,8 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property CGPoint positionInScene;
 
+@property (nonatomic) SKAction *tileLock;
+
 @property (nonatomic, strong) SKSpriteNode *countDownSpriteNode;
 @property (nonatomic, strong) SKLabelNode *countDownLabelNode;
 
