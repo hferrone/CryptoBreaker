@@ -35,7 +35,7 @@
         [newGameButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 120)];
         [self addChild:newGameButton];
         //We don't want our action to wait until the entire sound file is played.
-        self.pressStartSFX = [SKAction playSoundFileNamed:@"" waitForCompletion:NO];
+        //self.pressStartSFX = [SKAction playSoundFileNamed:@"" waitForCompletion:NO];
 
         //profile UI button
         SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed: @"Tutorial"];
