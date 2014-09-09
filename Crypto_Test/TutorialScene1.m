@@ -7,7 +7,7 @@
 //
 
 #import "TutorialScene1.h"
-#import "NextTutorialGameScene.h"
+#import "TutorialScene2.h"
 
 @implementation TutorialScene1
 
@@ -18,9 +18,7 @@
         SKSpriteNode *tutorialScene = [SKSpriteNode spriteNodeWithImageNamed:@"TutorialScreen2"];
         tutorialScene.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         tutorialScene.size = CGSizeMake(320, 568);
-        tutorialScene.name = @"GoToTutorial";
         [self addChild:tutorialScene];
-
     }
     
     return self;
@@ -28,22 +26,10 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    //Set up a touch event
-    UITouch *tutorialTouch = [touches anyObject];
-    //Create a CGLocation point
-    CGPoint location = [tutorialTouch locationInNode:self];
-    //create a node where location can be accepted
-    SKNode *node = [self nodeAtPoint:location];
-    node.name = @"GoToTut3";
-    NSLog(@"SUP");
+    TutorialScene2 *toTutorial2 = [TutorialScene2 sceneWithSize:self.frame.size];
+    SKTransition *transition = [SKTransition fadeWithDuration:1.0];
 
-    if([node.name isEqualToString:@"GoToTut3"]){
-        NextTutorialGameScene *tutorialSceneTwo = [NextTutorialGameScene sceneWithSize:self.frame.size];
-        SKTransition *transition = [SKTransition fadeWithDuration:0.5];
-        [tutorialSceneTwo setName:@"GoToTutorial"];
-        [self.view presentScene:tutorialSceneTwo transition:transition];
-    }
-    
+    [self.view presentScene:toTutorial2 transition:transition];
 }
 
 @end
