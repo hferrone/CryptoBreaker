@@ -29,8 +29,11 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSInteger selectedTileComboScore;
 @property NSInteger destinationTileComboScore;
 @property NSInteger breakCountdown;
+@property NSInteger randomTime;
 
 @property CGPoint positionInScene;
+
+@property NSString *levelLocation;
 
 @property (nonatomic, strong) SKSpriteNode *countDownSpriteNode;
 @property (nonatomic, strong) SKLabelNode *countDownLabelNode;
@@ -107,6 +110,7 @@ static NSString * const nonVowelString = @"nonVowel";
         [self addChild:menuButton];
 
         [self generateNewTile];
+        [self generateLocationCodeAndDifficulty];
 
         //timer lable
         self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
@@ -203,6 +207,22 @@ static NSString * const nonVowelString = @"nonVowel";
     [self addChild:tileNode1];
 }
 
+-(void)generateLocationCodeAndDifficulty
+{
+    //randomely selecting location for each game
+    NSArray *locationsArray = @[@"Paris, France", @"Hamburg, Germany", @""];
+    int randomLocationGenerator = arc4random_uniform(2);
+    self.levelLocation = [locationsArray objectAtIndex:randomLocationGenerator];
+
+    //randomely selecting difficulty (Break Count) for each game
+    int randomBreakCount = arc4random_uniform(4) + 2;
+    self.breakCountdown = randomBreakCount;
+
+    //Randomely selecting timer time for each game
+    int randomTime = arc4random_uniform(46) + 15;
+    self.randomTime = randomTime;
+}
+
 -(void)incorrectDragByUser
 {
     UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"HALT!" message:@"A good cryptologist knows when to pair keys. Try combining a vowel with a consonant." delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
@@ -211,7 +231,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)endGameCodeAlert
 {
-    NSString* messageString = [NSString stringWithFormat: @"You're recent break: %@", self.countDownSpriteNode.name];
+    NSString* messageString = [NSString stringWithFormat: @"You're recent break: %@", self.levelLocation];
     UIAlertView * alertView2 = [[UIAlertView alloc] initWithTitle:@"BROKEN!" message: messageString delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
     [alertView2 show];
 }
@@ -275,7 +295,7 @@ static NSString * const nonVowelString = @"nonVowel";
         self.startTime = currentTime;
         self.startGame = NO;
     }
-    int countDownInt = 30.0 - (int)(currentTime - self.startTime);
+    int countDownInt = self.randomTime - (int)(currentTime - self.startTime);
 
     if (self.gameStartTimer) {
         if (countDownInt>0){
