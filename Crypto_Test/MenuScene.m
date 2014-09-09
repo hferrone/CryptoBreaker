@@ -46,7 +46,7 @@
         [self addChild:creditsButton];
 
         //tutorial UI Bbutton
-        SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed:@"Credits"];
+        SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed:@"Tutorial"];
         tutorialButton.size = CGSizeMake(75, 65);
         [tutorialButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) - 140)];
         [tutorialButton setName:@"GoToTutorial"];

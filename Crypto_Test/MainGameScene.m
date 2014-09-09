@@ -233,6 +233,9 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    _destinationNode = nil;
+    _selectedNode = nil;
+
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     [self touchInPauseButton:location];
@@ -323,9 +326,16 @@ static NSString * const nonVowelString = @"nonVowel";
         self.hasIncorrectDrag = NO;
     }
 
-    if (self.hasCollidedAndScored)
+    if (self.hasComboed)
     {
         [self generateNewTile];
+    }else if(self.hasCollidedAndScored)
+    {
+        if (self.children.count == 12)
+        {
+            [self generateNewTile];
+        }
+
         [self updateScore];
         [self updateComboScore];
         [self checkForCapPoint:self.selectedTileComboScore];
@@ -387,8 +397,9 @@ static NSString * const nonVowelString = @"nonVowel";
         self.destinationTileComboScore = [_destinationNode.comboLabel.text intValue];
         self.comboScore = self.selectedTileComboScore + self.destinationTileComboScore;
         _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+        self.hasComboed = YES;
 
-        if (_selectedNode.name == _destinationNode.name)
+        if ([_selectedNode.name isEqualToString:_destinationNode.name])
         {
             self.hasIncorrectDrag = YES;
         }
