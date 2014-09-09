@@ -11,6 +11,11 @@
 #import "TutorialScene1.h"
 #import "StoryScene.h"
 
+@interface MenuScene ()
+@property (nonatomic) SKAction *pressStartSFX;
+
+@end
+
 @implementation MenuScene
 
 -(id)initWithSize:(CGSize)size {
@@ -29,6 +34,8 @@
         [newGameButton setName:@"newGame"];
         [newGameButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 120)];
         [self addChild:newGameButton];
+        //We don't want our action to wait until the entire sound file is played.
+        self.pressStartSFX = [SKAction playSoundFileNamed:@"" waitForCompletion:NO];
 
         //profile UI button
         SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed: @"Tutorial"];
@@ -50,10 +57,13 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+
     //user touch location - UI button interaction
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
+
+    [self runAction:self.pressStartSFX];
 
     //checking to see what label is touched and performing connected segue to correct scene
     if ([node.name isEqualToString:@"newGame"])

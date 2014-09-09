@@ -32,10 +32,12 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSInteger randomTime;
 
 @property CGPoint positionInScene;
+@property (nonatomic) SKAction *tileLock;
 
 @property int contactCounter;
 
 @property NSString *levelLocation;
+
 
 @property (nonatomic, strong) SKSpriteNode *countDownSpriteNode;
 @property (nonatomic, strong) SKLabelNode *countDownLabelNode;
