@@ -58,7 +58,6 @@ static NSString * const nonVowelString = @"nonVowel";
 @property UIImageView *pauseView;
 
 @property NSTimeInterval startTime;
-
 @property BOOL gameStartTimer;
 @property BOOL startGame;
 @property BOOL hasCollidedAndScored;
