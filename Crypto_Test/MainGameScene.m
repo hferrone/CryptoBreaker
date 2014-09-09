@@ -78,7 +78,6 @@ static NSString * const nonVowelString = @"nonVowel";
         //[self randomTileSelection];
         self.levelScore = 0;
         self.gameStartTimer = NO;
-        self.breakCountdown = 1;
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 125)];
@@ -210,8 +209,8 @@ static NSString * const nonVowelString = @"nonVowel";
 -(void)generateLocationCodeAndDifficulty
 {
     //randomely selecting location for each game
-    NSArray *locationsArray = @[@"Paris, France", @"Hamburg, Germany", @""];
-    int randomLocationGenerator = arc4random_uniform(2);
+    NSArray *locationsArray = @[@"Paris, France", @"London, England", @"Frankfurt, Germany", @"Normandy, France", @"Berlin, Germany", @"Wielun, Poland", @"Belfast, Northern Ireland", @"Norwich, England", @"Alsace, France", @"Lorraine, France"];
+    int randomLocationGenerator = arc4random_uniform(9);
     self.levelLocation = [locationsArray objectAtIndex:randomLocationGenerator];
 
     //randomely selecting difficulty (Break Count) for each game
@@ -245,7 +244,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
     if (buttonIndex == alertView2.cancelButtonIndex)
     {
-        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
+        [self segueToWin];
     }
 }
 
@@ -302,9 +301,7 @@ static NSString * const nonVowelString = @"nonVowel";
             self.timerLabel.text = [NSString stringWithFormat:@"%i", countDownInt];
         }else if (countDownInt == 0) {
             self.timerLabel.text = [NSString stringWithFormat:@"%@", @"TIME"];
-            LoseConditionScene *loseScene = [LoseConditionScene sceneWithSize:self.frame.size];
-            SKTransition *transition = [SKTransition fadeWithDuration:1.0];
-            [self.view presentScene:loseScene transition:transition];
+            [self segueToLose];
         }
     }
 }
@@ -366,11 +363,11 @@ static NSString * const nonVowelString = @"nonVowel";
     if (self.hasScoredWithRotor)
     {
         self.breakCountdown--;
-        self.countDownLabelNode.text = [NSString stringWithFormat:@"%d", self.breakCountdown];
+        self.countDownLabelNode.text = [NSString stringWithFormat:@"Breaks: %d", self.breakCountdown];
 
         if (self.breakCountdown == 0)
         {
-            [self initiateEndGame];
+            [self endGameCodeAlert];
         }
     }
 }
@@ -453,24 +450,20 @@ static NSString * const nonVowelString = @"nonVowel";
     }
 }
 
--(void)initiateEndGame
-{
-    self.countDownSpriteNode = [SKSpriteNode spriteNodeWithImageNamed:@"Cat"];
-    self.countDownSpriteNode.position = CGPointMake(CGRectGetMidX(self.frame) + 150, CGRectGetMidY(self.frame));
-    self.countDownSpriteNode.name = @"Cat";
-    [self addChild:self.countDownSpriteNode];
-
-    [self endGameCodeAlert];
-
-    [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:2.0];
-}
-
--(void)segueToMenu
+-(void)segueToWin
 {
     //segue to next scene - menu scene
     WinConditionScene *winScene = [WinConditionScene sceneWithSize:self.frame.size];
     SKTransition *transition = [SKTransition fadeWithDuration:1.0];
     [self.view presentScene:winScene transition:transition];
+}
+
+-(void)segueToLose
+{
+    //segue to next scene - menu scene
+    LoseConditionScene *loseScene = [LoseConditionScene sceneWithSize:self.frame.size];
+    SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+    [self.view presentScene:loseScene transition:transition];
 }
 
 #pragma scoring methods
@@ -479,12 +472,6 @@ static NSString * const nonVowelString = @"nonVowel";
 {
     self.levelScore += 50;
     self.scoreLabel.text = [NSString stringWithFormat: @"Score: %d",self.levelScore];
-
-    //win condition and segue back to menu (resets game conditions)
-    if (self.levelScore > 200)
-    {
-        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
-    }
 }
 
 -(void)checkForCapPoint:(NSInteger)tileCombo
