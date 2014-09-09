@@ -31,11 +31,11 @@
         [self addChild:newGameButton];
 
         //profile UI button
-        SKSpriteNode *profileButton = [SKSpriteNode spriteNodeWithImageNamed: @"Tutorial"];
-        profileButton.size = CGSizeMake(75, 65);
-        [profileButton setName:@"tutorial"];
-        [profileButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 30)];
-        [self addChild:profileButton];
+        SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed: @"Tutorial"];
+        tutorialButton.size = CGSizeMake(75, 65);
+        [tutorialButton setName:@"tutorial"];
+        [tutorialButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 30)];
+        [self addChild:tutorialButton];
 
         //credits UI button
         SKSpriteNode *creditsButton = [SKSpriteNode spriteNodeWithImageNamed: @"Credits"];

@@ -33,6 +33,8 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property CGPoint positionInScene;
 
+@property int contactCounter;
+
 @property NSString *levelLocation;
 
 @property (nonatomic, strong) SKSpriteNode *countDownSpriteNode;
@@ -42,6 +44,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property (nonatomic, strong) TileNode *selectedNode;
 @property (nonatomic, strong) TileNode *destinationNode;
+@property (nonatomic, strong) TileNode *generatedTile;
 
 //@property (nonatomic, strong) RotorNode *rotorDestinationNode;
 @property (nonatomic, strong) RotorNode *rotorAnimationNode;
@@ -65,6 +68,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property BOOL hasIncorrectDrag;
 @property BOOL hasNewDestination;
 @property BOOL isMovable;
+@property BOOL hasEnteredTile;
 
 @property NSMutableArray *tileSlotsArray;
 
@@ -78,6 +82,7 @@ static NSString * const nonVowelString = @"nonVowel";
         //[self randomTileSelection];
         self.levelScore = 0;
         self.gameStartTimer = NO;
+        self.contactCounter = 0;
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 125)];
@@ -200,10 +205,10 @@ static NSString * const nonVowelString = @"nonVowel";
     self.initialCombo = 1;
     CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 180);
 
-    TileNode *tileNode1 = [TileNode tileNodeAtPosition:position tileComboScore:self.comboScore tileArray:tileImagesArray randomNumber:randomTileGenerator initialCombo:self.initialCombo];
+    self.generatedTile = [TileNode tileNodeAtPosition:position tileComboScore:self.comboScore tileArray:tileImagesArray randomNumber:randomTileGenerator initialCombo:self.initialCombo];
     self.isMovable = YES;
 
-    [self addChild:tileNode1];
+    [self addChild:self.generatedTile];
 }
 
 -(void)generateLocationCodeAndDifficulty
@@ -228,12 +233,12 @@ static NSString * const nonVowelString = @"nonVowel";
     [alertView show];
 }
 
--(void)endGameCodeAlert
-{
-    NSString* messageString = [NSString stringWithFormat: @"You're recent break: %@", self.levelLocation];
-    UIAlertView * alertView2 = [[UIAlertView alloc] initWithTitle:@"BROKEN!" message: messageString delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
-    [alertView2 show];
-}
+//-(void)endGameCodeAlert
+//{
+//    NSString* messageString = [NSString stringWithFormat: @"You're recent break: %@", self.levelLocation];
+//    UIAlertView * alertView2 = [[UIAlertView alloc] initWithTitle:@"BROKEN!" message: messageString delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
+//    [alertView2 show];
+//}
 
 -(void)alertView:(UIAlertView *)alertView alert2:(UIAlertView*)alertView2 clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -241,19 +246,12 @@ static NSString * const nonVowelString = @"nonVowel";
     {
         _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 155);
     }
-
-    if (buttonIndex == alertView2.cancelButtonIndex)
-    {
-        [self segueToWin];
-    }
 }
 
 #pragma dragging and dropping methods
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _destinationNode = nil;
-    _selectedNode = nil;
 
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
@@ -333,8 +331,6 @@ static NSString * const nonVowelString = @"nonVowel";
 }
 
 #pragma End Contact Physics Behavior
--(void)didEndContact:(SKPhysicsContact *)contact{}
-
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (self.hasIncorrectDrag)
@@ -348,11 +344,7 @@ static NSString * const nonVowelString = @"nonVowel";
         [self generateNewTile];
     }else if(self.hasCollidedAndScored)
     {
-        if (self.children.count == 12)
-        {
-            [self generateNewTile];
-        }
-
+        [self generateNewTile];
         [self updateScore];
         [self updateComboScore];
         [self checkForCapPoint:self.selectedTileComboScore];
@@ -364,10 +356,11 @@ static NSString * const nonVowelString = @"nonVowel";
     {
         self.breakCountdown--;
         self.countDownLabelNode.text = [NSString stringWithFormat:@"Breaks: %d", self.breakCountdown];
+        [self generateNewTile];
 
         if (self.breakCountdown == 0)
         {
-            [self endGameCodeAlert];
+            [self segueToWin];
         }
     }
 }
@@ -377,11 +370,6 @@ static NSString * const nonVowelString = @"nonVowel";
     _selectedNode.position = _blankTileNode.position;
     self.hasCollidedAndScored = NO;
 }
-
-//-(void)didSimulatePhysics
-//{
-//    [super didSimulatePhysics];
-//}
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
 {
@@ -397,6 +385,13 @@ static NSString * const nonVowelString = @"nonVowel";
             _blankTileNode = (KeyNode*)contact.bodyA.node;
         }
         self.hasCollidedAndScored = YES;
+        self.contactCounter++;
+
+        if (self.contactCounter == 1)
+        {
+            [self generateNewTile];
+        }
+
     }
     //condition for tile and tile contact
     else if (contact.bodyA.categoryBitMask == contact.bodyB.categoryBitMask)
@@ -436,9 +431,14 @@ static NSString * const nonVowelString = @"nonVowel";
             _rotorAnimationNode = (RotorNode*)contact.bodyA.node;
         }
 
-        self.hasScoredWithRotor = YES;
-        [self checkForCapPoint:[_selectedNode.comboLabel.text intValue]];
-        [_selectedNode removeFromParent];
+        if ([_selectedNode.comboLabel.text intValue] >= 6)
+        {
+            self.hasScoredWithRotor = YES;
+            [self checkForCapPoint:[_selectedNode.comboLabel.text intValue]];
+            [_selectedNode removeFromParent];
+        }else{
+            [_selectedNode removeFromParent];
+        }
     }
 }
 
@@ -476,10 +476,19 @@ static NSString * const nonVowelString = @"nonVowel";
 
 -(void)checkForCapPoint:(NSInteger)tileCombo
 {
-    if (tileCombo >= 2)
+    if (tileCombo >= 6 && self.rotorAnimationNode == nil)
     {
         [self executeRotorAnimationForward];
     }
+//    else{
+//        for (TileNode *tileNode in self.tileSlotsArray)
+//        {
+//            if ([tileNode.comboLabel.text intValue] < 6)
+//            {
+//                [self executeRotorAnimationBackward];
+//            }
+//        }
+//    }
 }
 
 -(void)executeRotorAnimationForward
@@ -507,22 +516,22 @@ static NSString * const nonVowelString = @"nonVowel";
     _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
 }
 
-//-(void)executeRotorAnimationBackward
-//{
-//    //rotor instance
-//    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
-//    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
-//    [self addChild:self.rotorCapNode];
-//
-//    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor4"],
-//                                     [SKTexture textureWithImageNamed:@"rotor3"],
-//                                     [SKTexture textureWithImageNamed:@"rotor2"],
-//                                     [SKTexture textureWithImageNamed:@"rotor1"]];
-//
-//    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
-//    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
-//    [self.rotorCapNode runAction:animationRepeat];
-//}
+-(void)executeRotorAnimationBackward
+{
+    //rotor instance
+    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
+    [self addChild:rotorCapNode];
+
+    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor4"],
+                                     [SKTexture textureWithImageNamed:@"rotor3"],
+                                     [SKTexture textureWithImageNamed:@"rotor2"],
+                                     [SKTexture textureWithImageNamed:@"rotor1"]];
+
+    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
+    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
+    [rotorCapNode runAction:animationRepeat];
+}
 
 #pragma Pause Logic
 
