@@ -332,18 +332,8 @@ static NSString * const nonVowelString = @"nonVowel";
 #pragma End Contact Physics Behavior
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (self.hasIncorrectDrag)
+    if(self.hasCollidedAndScored)
     {
-        [self incorrectDragByUser];
-        self.hasIncorrectDrag = NO;
-    }
-
-    if (self.hasComboed)
-    {
-        [self generateNewTile];
-    }else if(self.hasCollidedAndScored)
-    {
-        [self generateNewTile];
         [self updateScore];
         [self updateComboScore];
         [self checkForCapPoint:self.selectedTileComboScore];
@@ -351,23 +341,35 @@ static NSString * const nonVowelString = @"nonVowel";
         self.hasCollidedAndScored = NO;
     }
 
+    if (self.hasComboed)
+    {
+        [self generateNewTile];
+        self.hasComboed = NO;
+    }
+
     if (self.hasScoredWithRotor)
     {
         self.breakCountdown--;
         self.countDownLabelNode.text = [NSString stringWithFormat:@"Breaks: %d", self.breakCountdown];
         [self generateNewTile];
+        self.hasScoredWithRotor = NO;
 
         if (self.breakCountdown == 0)
         {
             [self segueToWin];
         }
     }
+
+    if (self.hasIncorrectDrag)
+    {
+        [self incorrectDragByUser];
+        self.hasIncorrectDrag = NO;
+    }
 }
 
 -(void)setSelectedNodePositionToDestination
 {
     _selectedNode.position = _blankTileNode.position;
-    self.hasCollidedAndScored = NO;
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
@@ -383,13 +385,13 @@ static NSString * const nonVowelString = @"nonVowel";
             _selectedNode = (TileNode*)contact.bodyB.node;
             _blankTileNode = (KeyNode*)contact.bodyA.node;
         }
-        self.hasCollidedAndScored = YES;
-        self.contactCounter++;
 
+        self.contactCounter++;
         if (self.contactCounter == 1)
         {
             [self generateNewTile];
         }
+        self.hasCollidedAndScored = YES;
 
     }
     //condition for tile and tile contact
