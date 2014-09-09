@@ -7,10 +7,9 @@
 //
 
 #import "MenuScene.h"
-#import "MainGameScene.h"
 #import "CreditsScene.h"
-#import "ProfileScene.h"
-#import "TutorialGameScenes.h"
+#import "TutorialScene1.h"
+#import "StoryScene.h"
 
 @interface MenuScene ()
 @property (nonatomic) SKAction *pressStartSFX;
@@ -39,11 +38,11 @@
         self.pressStartSFX = [SKAction playSoundFileNamed:@"" waitForCompletion:NO];
 
         //profile UI button
-        SKSpriteNode *profileButton = [SKSpriteNode spriteNodeWithImageNamed: @"Profile"];
-        profileButton.size = CGSizeMake(75, 65);
-        [profileButton setName:@"profile"];
-        [profileButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 30)];
-        [self addChild:profileButton];
+        SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed: @"Tutorial"];
+        tutorialButton.size = CGSizeMake(75, 65);
+        [tutorialButton setName:@"tutorial"];
+        [tutorialButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 30)];
+        [self addChild:tutorialButton];
 
         //credits UI button
         SKSpriteNode *creditsButton = [SKSpriteNode spriteNodeWithImageNamed: @"Credits"];
@@ -51,13 +50,6 @@
         [creditsButton setName:@"credits"];
         [creditsButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) - 60)];
         [self addChild:creditsButton];
-
-        //tutorial UI Bbutton
-        SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed:@"Credits"];
-        tutorialButton.size = CGSizeMake(75, 65);
-        [tutorialButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) - 140)];
-        [tutorialButton setName:@"GoToTutorial"];
-        [self addChild:tutorialButton];
     }
 
     return self;
@@ -76,21 +68,17 @@
     //checking to see what label is touched and performing connected segue to correct scene
     if ([node.name isEqualToString:@"newGame"])
     {
-        MainGameScene *mainGameScene = [MainGameScene sceneWithSize:self.frame.size];
+        StoryScene *storyScene = [StoryScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
-        [self.view presentScene:mainGameScene transition:transition];
-    }else if ([node.name isEqualToString:@"profile"]){
-        ProfileScene *profileScene = [ProfileScene sceneWithSize:self.frame.size];
+        [self.view presentScene:storyScene transition:transition];
+    }else if ([node.name isEqualToString:@"tutorial"]){
+        TutorialScene1 *tutorial1 = [TutorialScene1 sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
-        [self.view presentScene:profileScene transition:transition];
+        [self.view presentScene:tutorial1 transition:transition];
     }else if ([node.name isEqualToString:@"credits"]){
         CreditsScene *creditScene = [CreditsScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];
         [self.view presentScene:creditScene transition:transition];
-    }else if ([node.name isEqualToString:@"GoToTutorial"]){
-        TutorialGameScenes *tutorialGameSceneOne = [TutorialGameScenes sceneWithSize:self.frame.size];
-        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
-        [self.view presentScene:tutorialGameSceneOne transition:transition];
     }
 }
 

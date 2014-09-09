@@ -12,8 +12,8 @@
 		251982D719B79BEE009AA435 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 251982D519B79BEE009AA435 /* spark.png */; };
 		251982D919B7C5C9009AA435 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251982D819B7C5C9009AA435 /* AVFoundation.framework */; };
 		251982DD19B7F2F3009AA435 /* pause@2x~iphone copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */; };
-		2576B33E19BE25A500F83703 /* TutorialGameScenes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576B33D19BE25A500F83703 /* TutorialGameScenes.m */; };
-		2576B34119BE2FA400F83703 /* NextTutorialGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576B34019BE2FA400F83703 /* NextTutorialGameScene.m */; };
+		2576B33E19BE25A500F83703 /* TutorialScene1.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576B33D19BE25A500F83703 /* TutorialScene1.m */; };
+		2576B34119BE2FA400F83703 /* TutorialScene2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576B34019BE2FA400F83703 /* TutorialScene2.m */; };
 		2576B34419BE504B00F83703 /* FinalTutorialScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576B34319BE504B00F83703 /* FinalTutorialScene.m */; };
 		2598099319BA14BC00CBA2DF /* StartScreen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099219BA14BC00CBA2DF /* StartScreen.mp3 */; };
 		2598099519BA14CD00CBA2DF /* GameOver copy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099419BA14CD00CBA2DF /* GameOver copy.mp3 */; };
@@ -26,7 +26,6 @@
 		36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE019A7EB3600AA29D4 /* TileNode.m */; };
 		36ACCAE419A90D2700AA29D4 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE319A90D2700AA29D4 /* MenuScene.m */; };
 		36ACCB3F19A99DA700AA29D4 /* CreditsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */; };
-		36ACCB4219A99DB600AA29D4 /* ProfileScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB4119A99DB600AA29D4 /* ProfileScene.m */; };
 		36ACCB4519ABC16100AA29D4 /* WinConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */; };
 		36B7E2E119A7DCE900BFFECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E019A7DCE900BFFECC /* Foundation.framework */; };
 		36B7E2E319A7DCE900BFFECC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */; };
@@ -45,6 +44,7 @@
 		36B7E31319A7DCE900BFFECC /* Crypto_TestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B7E31219A7DCE900BFFECC /* Crypto_TestTests.m */; };
 		36B7E31E19A7DD1C00BFFECC /* TitleScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B7E31D19A7DD1C00BFFECC /* TitleScene.m */; };
 		36B7E32119A7DF8A00BFFECC /* MainGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B7E32019A7DF8A00BFFECC /* MainGameScene.m */; };
+		36BAAA2919BF4D8400C51644 /* StoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BAAA2819BF4D8400C51644 /* StoryScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,10 +64,10 @@
 		251982D519B79BEE009AA435 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		251982D819B7C5C9009AA435 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause@2x~iphone copy.png"; sourceTree = "<group>"; };
-		2576B33C19BE25A500F83703 /* TutorialGameScenes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialGameScenes.h; sourceTree = "<group>"; };
-		2576B33D19BE25A500F83703 /* TutorialGameScenes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialGameScenes.m; sourceTree = "<group>"; };
-		2576B33F19BE2FA400F83703 /* NextTutorialGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextTutorialGameScene.h; sourceTree = "<group>"; };
-		2576B34019BE2FA400F83703 /* NextTutorialGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextTutorialGameScene.m; sourceTree = "<group>"; };
+		2576B33C19BE25A500F83703 /* TutorialScene1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialScene1.h; sourceTree = "<group>"; };
+		2576B33D19BE25A500F83703 /* TutorialScene1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialScene1.m; sourceTree = "<group>"; };
+		2576B33F19BE2FA400F83703 /* TutorialScene2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialScene2.h; sourceTree = "<group>"; };
+		2576B34019BE2FA400F83703 /* TutorialScene2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialScene2.m; sourceTree = "<group>"; };
 		2576B34219BE504B00F83703 /* FinalTutorialScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalTutorialScene.h; sourceTree = "<group>"; };
 		2576B34319BE504B00F83703 /* FinalTutorialScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalTutorialScene.m; sourceTree = "<group>"; };
 		2598099219BA14BC00CBA2DF /* StartScreen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = StartScreen.mp3; sourceTree = "<group>"; };
@@ -88,8 +88,6 @@
 		36ACCAE319A90D2700AA29D4 /* MenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
 		36ACCB3D19A99DA700AA29D4 /* CreditsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsScene.h; sourceTree = "<group>"; };
 		36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsScene.m; sourceTree = "<group>"; };
-		36ACCB4019A99DB600AA29D4 /* ProfileScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileScene.h; sourceTree = "<group>"; };
-		36ACCB4119A99DB600AA29D4 /* ProfileScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileScene.m; sourceTree = "<group>"; };
 		36ACCB4319ABC16100AA29D4 /* WinConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinConditionScene.h; sourceTree = "<group>"; };
 		36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinConditionScene.m; sourceTree = "<group>"; };
 		36B7E2DD19A7DCE900BFFECC /* Crypto_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crypto_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +114,8 @@
 		36B7E31D19A7DD1C00BFFECC /* TitleScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleScene.m; sourceTree = "<group>"; };
 		36B7E31F19A7DF8A00BFFECC /* MainGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGameScene.h; sourceTree = "<group>"; };
 		36B7E32019A7DF8A00BFFECC /* MainGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainGameScene.m; sourceTree = "<group>"; };
+		36BAAA2719BF4D8400C51644 /* StoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryScene.h; sourceTree = "<group>"; };
+		36BAAA2819BF4D8400C51644 /* StoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,16 +161,16 @@
 				36B7E31D19A7DD1C00BFFECC /* TitleScene.m */,
 				36ACCAE219A90D2700AA29D4 /* MenuScene.h */,
 				36ACCAE319A90D2700AA29D4 /* MenuScene.m */,
+				36BAAA2719BF4D8400C51644 /* StoryScene.h */,
+				36BAAA2819BF4D8400C51644 /* StoryScene.m */,
 				36B7E31F19A7DF8A00BFFECC /* MainGameScene.h */,
 				36B7E32019A7DF8A00BFFECC /* MainGameScene.m */,
 				36ACCB3D19A99DA700AA29D4 /* CreditsScene.h */,
 				36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */,
-				36ACCB4019A99DB600AA29D4 /* ProfileScene.h */,
-				36ACCB4119A99DB600AA29D4 /* ProfileScene.m */,
-				2576B33C19BE25A500F83703 /* TutorialGameScenes.h */,
-				2576B33D19BE25A500F83703 /* TutorialGameScenes.m */,
-				2576B33F19BE2FA400F83703 /* NextTutorialGameScene.h */,
-				2576B34019BE2FA400F83703 /* NextTutorialGameScene.m */,
+				2576B33C19BE25A500F83703 /* TutorialScene1.h */,
+				2576B33D19BE25A500F83703 /* TutorialScene1.m */,
+				2576B33F19BE2FA400F83703 /* TutorialScene2.h */,
+				2576B34019BE2FA400F83703 /* TutorialScene2.m */,
 				2576B34219BE504B00F83703 /* FinalTutorialScene.h */,
 				2576B34319BE504B00F83703 /* FinalTutorialScene.m */,
 				36ACCB4319ABC16100AA29D4 /* WinConditionScene.h */,
@@ -412,6 +412,7 @@
 				2576B34419BE504B00F83703 /* FinalTutorialScene.m in Sources */,
 				36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */,
 				25BC3FF719AEE9E400719EDB /* LoseConditionScene.m in Sources */,
+				36BAAA2919BF4D8400C51644 /* StoryScene.m in Sources */,
 				36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */,
 				36B7E2F319A7DCE900BFFECC /* AppDelegate.m in Sources */,
 				36B7E2EF19A7DCE900BFFECC /* main.m in Sources */,
@@ -422,10 +423,9 @@
 				36B7E32119A7DF8A00BFFECC /* MainGameScene.m in Sources */,
 				36B7E31E19A7DD1C00BFFECC /* TitleScene.m in Sources */,
 				362CA8C419B7915E00EE09CE /* Utilities.m in Sources */,
-				2576B34119BE2FA400F83703 /* NextTutorialGameScene.m in Sources */,
+				2576B34119BE2FA400F83703 /* TutorialScene2.m in Sources */,
 				251982D319B794D5009AA435 /* PauseButtonNode.m in Sources */,
-				2576B33E19BE25A500F83703 /* TutorialGameScenes.m in Sources */,
-				36ACCB4219A99DB600AA29D4 /* ProfileScene.m in Sources */,
+				2576B33E19BE25A500F83703 /* TutorialScene1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -29,10 +29,15 @@ static NSString * const nonVowelString = @"nonVowel";
 @property NSInteger selectedTileComboScore;
 @property NSInteger destinationTileComboScore;
 @property NSInteger breakCountdown;
+@property NSInteger randomTime;
 
 @property CGPoint positionInScene;
-
 @property (nonatomic) SKAction *tileLock;
+
+@property int contactCounter;
+
+@property NSString *levelLocation;
+
 
 @property (nonatomic, strong) SKSpriteNode *countDownSpriteNode;
 @property (nonatomic, strong) SKLabelNode *countDownLabelNode;
@@ -41,6 +46,7 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property (nonatomic, strong) TileNode *selectedNode;
 @property (nonatomic, strong) TileNode *destinationNode;
+@property (nonatomic, strong) TileNode *generatedTile;
 
 //@property (nonatomic, strong) RotorNode *rotorDestinationNode;
 @property (nonatomic, strong) RotorNode *rotorAnimationNode;
@@ -64,6 +70,7 @@ static NSString * const nonVowelString = @"nonVowel";
 @property BOOL hasIncorrectDrag;
 @property BOOL hasNewDestination;
 @property BOOL isMovable;
+@property BOOL hasEnteredTile;
 
 @property NSMutableArray *tileSlotsArray;
 
@@ -77,7 +84,7 @@ static NSString * const nonVowelString = @"nonVowel";
         //[self randomTileSelection];
         self.levelScore = 0;
         self.gameStartTimer = NO;
-        self.breakCountdown = 1;
+        self.contactCounter = 0;
 
         //instances and positioning of keys
         KeyNode *keyNode1 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 125)];
@@ -109,6 +116,7 @@ static NSString * const nonVowelString = @"nonVowel";
         [self addChild:menuButton];
 
         [self generateNewTile];
+        [self generateLocationCodeAndDifficulty];
 
         //timer lable
         self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
@@ -199,10 +207,26 @@ static NSString * const nonVowelString = @"nonVowel";
     self.initialCombo = 1;
     CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 180);
 
-    TileNode *tileNode1 = [TileNode tileNodeAtPosition:position tileComboScore:self.comboScore tileArray:tileImagesArray randomNumber:randomTileGenerator initialCombo:self.initialCombo];
+    self.generatedTile = [TileNode tileNodeAtPosition:position tileComboScore:self.comboScore tileArray:tileImagesArray randomNumber:randomTileGenerator initialCombo:self.initialCombo];
     self.isMovable = YES;
 
-    [self addChild:tileNode1];
+    [self addChild:self.generatedTile];
+}
+
+-(void)generateLocationCodeAndDifficulty
+{
+    //randomely selecting location for each game
+    NSArray *locationsArray = @[@"Paris, France", @"London, England", @"Frankfurt, Germany", @"Normandy, France", @"Berlin, Germany", @"Wielun, Poland", @"Belfast, Northern Ireland", @"Norwich, England", @"Alsace, France", @"Lorraine, France"];
+    int randomLocationGenerator = arc4random_uniform(9);
+    self.levelLocation = [locationsArray objectAtIndex:randomLocationGenerator];
+
+    //randomely selecting difficulty (Break Count) for each game
+    int randomBreakCount = arc4random_uniform(4) + 2;
+    self.breakCountdown = randomBreakCount;
+
+    //Randomely selecting timer time for each game
+    int randomTime = arc4random_uniform(46) + 15;
+    self.randomTime = randomTime;
 }
 
 -(void)incorrectDragByUser
@@ -211,12 +235,12 @@ static NSString * const nonVowelString = @"nonVowel";
     [alertView show];
 }
 
--(void)endGameCodeAlert
-{
-    NSString* messageString = [NSString stringWithFormat: @"You're recent break: %@", self.countDownSpriteNode.name];
-    UIAlertView * alertView2 = [[UIAlertView alloc] initWithTitle:@"BROKEN!" message: messageString delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
-    [alertView2 show];
-}
+//-(void)endGameCodeAlert
+//{
+//    NSString* messageString = [NSString stringWithFormat: @"You're recent break: %@", self.levelLocation];
+//    UIAlertView * alertView2 = [[UIAlertView alloc] initWithTitle:@"BROKEN!" message: messageString delegate:self cancelButtonTitle:@"Return" otherButtonTitles:@"Quit", nil];
+//    [alertView2 show];
+//}
 
 -(void)alertView:(UIAlertView *)alertView alert2:(UIAlertView*)alertView2 clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -224,17 +248,13 @@ static NSString * const nonVowelString = @"nonVowel";
     {
         _selectedNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 155);
     }
-
-    if (buttonIndex == alertView2.cancelButtonIndex)
-    {
-        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
-    }
 }
 
 #pragma dragging and dropping methods
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    _destinationNode = nil;
+
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     [self touchInPauseButton:location];
@@ -274,16 +294,14 @@ static NSString * const nonVowelString = @"nonVowel";
         self.startTime = currentTime;
         self.startGame = NO;
     }
-    int countDownInt = 30.0 - (int)(currentTime - self.startTime);
+    int countDownInt = self.randomTime - (int)(currentTime - self.startTime);
 
     if (self.gameStartTimer) {
         if (countDownInt>0){
             self.timerLabel.text = [NSString stringWithFormat:@"%i", countDownInt];
         }else if (countDownInt == 0) {
             self.timerLabel.text = [NSString stringWithFormat:@"%@", @"TIME"];
-            LoseConditionScene *loseScene = [LoseConditionScene sceneWithSize:self.frame.size];
-            SKTransition *transition = [SKTransition fadeWithDuration:1.0];
-            [self.view presentScene:loseScene transition:transition];
+            [self segueToLose];
         }
     }
 }
@@ -315,8 +333,6 @@ static NSString * const nonVowelString = @"nonVowel";
 }
 
 #pragma End Contact Physics Behavior
--(void)didEndContact:(SKPhysicsContact *)contact{}
-
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (self.hasIncorrectDrag)
@@ -325,7 +341,10 @@ static NSString * const nonVowelString = @"nonVowel";
         self.hasIncorrectDrag = NO;
     }
 
-    if (self.hasCollidedAndScored)
+    if (self.hasComboed)
+    {
+        [self generateNewTile];
+    }else if(self.hasCollidedAndScored)
     {
         [self generateNewTile];
         [self updateScore];
@@ -338,11 +357,12 @@ static NSString * const nonVowelString = @"nonVowel";
     if (self.hasScoredWithRotor)
     {
         self.breakCountdown--;
-        self.countDownLabelNode.text = [NSString stringWithFormat:@"%d", self.breakCountdown];
+        self.countDownLabelNode.text = [NSString stringWithFormat:@"Breaks: %d", self.breakCountdown];
+        [self generateNewTile];
 
         if (self.breakCountdown == 0)
         {
-            [self initiateEndGame];
+            [self segueToWin];
         }
     }
 }
@@ -352,11 +372,6 @@ static NSString * const nonVowelString = @"nonVowel";
     _selectedNode.position = _blankTileNode.position;
     self.hasCollidedAndScored = NO;
 }
-
-//-(void)didSimulatePhysics
-//{
-//    [super didSimulatePhysics];
-//}
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
 {
@@ -372,6 +387,13 @@ static NSString * const nonVowelString = @"nonVowel";
             _blankTileNode = (KeyNode*)contact.bodyA.node;
         }
         self.hasCollidedAndScored = YES;
+        self.contactCounter++;
+
+        if (self.contactCounter == 1)
+        {
+            [self generateNewTile];
+        }
+
     }
     //condition for tile and tile contact
     else if (contact.bodyA.categoryBitMask == contact.bodyB.categoryBitMask)
@@ -389,8 +411,9 @@ static NSString * const nonVowelString = @"nonVowel";
         self.destinationTileComboScore = [_destinationNode.comboLabel.text intValue];
         self.comboScore = self.selectedTileComboScore + self.destinationTileComboScore;
         _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
+        self.hasComboed = YES;
 
-        if (_selectedNode.name == _destinationNode.name)
+        if ([_selectedNode.name isEqualToString:_destinationNode.name])
         {
             self.hasIncorrectDrag = YES;
         }
@@ -410,9 +433,14 @@ static NSString * const nonVowelString = @"nonVowel";
             _rotorAnimationNode = (RotorNode*)contact.bodyA.node;
         }
 
-        self.hasScoredWithRotor = YES;
-        [self checkForCapPoint:[_selectedNode.comboLabel.text intValue]];
-        [_selectedNode removeFromParent];
+        if ([_selectedNode.comboLabel.text intValue] >= 6)
+        {
+            self.hasScoredWithRotor = YES;
+            [self checkForCapPoint:[_selectedNode.comboLabel.text intValue]];
+            [_selectedNode removeFromParent];
+        }else{
+            [_selectedNode removeFromParent];
+        }
     }
 }
 
@@ -424,24 +452,20 @@ static NSString * const nonVowelString = @"nonVowel";
     }
 }
 
--(void)initiateEndGame
-{
-    self.countDownSpriteNode = [SKSpriteNode spriteNodeWithImageNamed:@"Cat"];
-    self.countDownSpriteNode.position = CGPointMake(CGRectGetMidX(self.frame) + 150, CGRectGetMidY(self.frame));
-    self.countDownSpriteNode.name = @"Cat";
-    [self addChild:self.countDownSpriteNode];
-
-    [self endGameCodeAlert];
-
-    [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:2.0];
-}
-
--(void)segueToMenu
+-(void)segueToWin
 {
     //segue to next scene - menu scene
     WinConditionScene *winScene = [WinConditionScene sceneWithSize:self.frame.size];
     SKTransition *transition = [SKTransition fadeWithDuration:1.0];
     [self.view presentScene:winScene transition:transition];
+}
+
+-(void)segueToLose
+{
+    //segue to next scene - menu scene
+    LoseConditionScene *loseScene = [LoseConditionScene sceneWithSize:self.frame.size];
+    SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+    [self.view presentScene:loseScene transition:transition];
 }
 
 #pragma scoring methods
@@ -450,20 +474,23 @@ static NSString * const nonVowelString = @"nonVowel";
 {
     self.levelScore += 50;
     self.scoreLabel.text = [NSString stringWithFormat: @"Score: %d",self.levelScore];
-
-    //win condition and segue back to menu (resets game conditions)
-    if (self.levelScore > 200)
-    {
-        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:3.0];
-    }
 }
 
 -(void)checkForCapPoint:(NSInteger)tileCombo
 {
-    if (tileCombo >= 2)
+    if (tileCombo >= 6 && self.rotorAnimationNode == nil)
     {
         [self executeRotorAnimationForward];
     }
+//    else{
+//        for (TileNode *tileNode in self.tileSlotsArray)
+//        {
+//            if ([tileNode.comboLabel.text intValue] < 6)
+//            {
+//                [self executeRotorAnimationBackward];
+//            }
+//        }
+//    }
 }
 
 -(void)executeRotorAnimationForward
@@ -491,22 +518,22 @@ static NSString * const nonVowelString = @"nonVowel";
     _selectedNode.comboLabel.text = [NSString stringWithFormat: @"%d",self.comboScore];
 }
 
-//-(void)executeRotorAnimationBackward
-//{
-//    //rotor instance
-//    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
-//    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
-//    [self addChild:self.rotorCapNode];
-//
-//    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor4"],
-//                                     [SKTexture textureWithImageNamed:@"rotor3"],
-//                                     [SKTexture textureWithImageNamed:@"rotor2"],
-//                                     [SKTexture textureWithImageNamed:@"rotor1"]];
-//
-//    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
-//    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
-//    [self.rotorCapNode runAction:animationRepeat];
-//}
+-(void)executeRotorAnimationBackward
+{
+    //rotor instance
+    RotorNode *rotorCapNode = [RotorNode rotorNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 225)];
+    rotorCapNode = [RotorNode spriteNodeWithImageNamed:@"rotor1"];
+    [self addChild:rotorCapNode];
+
+    NSArray *rotorAnimationArray = @[[SKTexture textureWithImageNamed:@"rotor4"],
+                                     [SKTexture textureWithImageNamed:@"rotor3"],
+                                     [SKTexture textureWithImageNamed:@"rotor2"],
+                                     [SKTexture textureWithImageNamed:@"rotor1"]];
+
+    SKAction *rotorAnimation = [SKAction animateWithTextures:rotorAnimationArray timePerFrame:0.05];
+    SKAction *animationRepeat = [SKAction repeatAction:rotorAnimation count:1];
+    [rotorCapNode runAction:animationRepeat];
+}
 
 #pragma Pause Logic
 

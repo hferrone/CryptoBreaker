@@ -1,5 +1,5 @@
 //
-//  TutorialGameScenes.h
+//  NextTutorialGameScene.h
 //  Crypto_Test
 //
 //  Created by Basel Farag on 9/8/14.
@@ -8,6 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface TutorialGameScenes : SKScene
+@interface TutorialScene2 : SKScene
 
 @end
