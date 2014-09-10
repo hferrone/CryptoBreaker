@@ -15,8 +15,9 @@
     if (self = [super initWithSize:size])
     {
         //background setup and segue with fade
-        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"TitleScene"];
-        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"TitleSceneBackground"];
+        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 50);
+        background.size = CGSizeMake(350, 225);
         background.color = [UIColor blackColor];
 
         [self addChild:background];
