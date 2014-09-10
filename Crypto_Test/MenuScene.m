@@ -22,14 +22,14 @@
     if (self = [super initWithSize:size])
     {
         //background setup
-        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"MenuSceneBackground"];
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"MenuScreenBackground"];
         background.size = CGSizeMake(320, 568);
         background.color = [UIColor blackColor];
         background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         [self addChild:background];
 
         //new game UI button
-        SKSpriteNode *newGameButton = [SKSpriteNode spriteNodeWithImageNamed: @"NewGame"];
+        SKSpriteNode *newGameButton = [SKSpriteNode spriteNodeWithImageNamed: @"NewGameButton"];
         newGameButton.size = CGSizeMake(75, 65);
         [newGameButton setName:@"newGame"];
         [newGameButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 120)];
@@ -38,18 +38,11 @@
         //self.pressStartSFX = [SKAction playSoundFileNamed:@"" waitForCompletion:NO];
 
         //profile UI button
-        SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed: @"Tutorial"];
+        SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed: @"TutorialButton"];
         tutorialButton.size = CGSizeMake(75, 65);
         [tutorialButton setName:@"tutorial"];
         [tutorialButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 30)];
         [self addChild:tutorialButton];
-
-        //credits UI button
-        SKSpriteNode *creditsButton = [SKSpriteNode spriteNodeWithImageNamed: @"Credits"];
-        creditsButton.size = CGSizeMake(75, 65);
-        [creditsButton setName:@"credits"];
-        [creditsButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) - 60)];
-        [self addChild:creditsButton];
     }
 
     return self;

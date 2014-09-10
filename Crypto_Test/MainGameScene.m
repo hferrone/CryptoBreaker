@@ -85,32 +85,39 @@ static NSString * const nonVowelString = @"nonVowel";
         self.gameStartTimer = NO;
         self.contactCounter = 0;
 
+        //background setup
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"MainGameSceneBackground"];
+        background.size = CGSizeMake(320, 568);
+        background.color = [UIColor blackColor];
+        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        [self addChild:background];
+
         //instances and positioning of keys
-        KeyNode *keyNode1 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) - 125)];
+        KeyNode *keyNode1 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 120, CGRectGetMidY(self.frame))];
         [self addChild:keyNode1];
 
-        KeyNode *keyNode2 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 85, CGRectGetMidY(self.frame) - 25)];
+        KeyNode *keyNode2 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame))];
         [self addChild:keyNode2];
 
-        KeyNode *keyNode3 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 45, CGRectGetMidY(self.frame) + 65)];
+        KeyNode *keyNode3 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) - 40, CGRectGetMidY(self.frame))];
         [self addChild:keyNode3];
 
-        KeyNode *keyNode4 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 105)];
+        KeyNode *keyNode4 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))];
         [self addChild:keyNode4];
 
-        KeyNode *keyNode5 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 45, CGRectGetMidY(self.frame) + 65)];
+        KeyNode *keyNode5 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 40, CGRectGetMidY(self.frame))];
         [self addChild:keyNode5];
 
-        KeyNode *keyNode6 = [KeyNode keyNodeAtPosition: CGPointMake(CGRectGetMidX(self.frame) + 85, CGRectGetMidY(self.frame) - 25)];
+        KeyNode *keyNode6 = [KeyNode keyNodeAtPosition: CGPointMake(CGRectGetMidX(self.frame) + 80, CGRectGetMidY(self.frame))];
         [self addChild:keyNode6];
 
-        KeyNode *keyNode7 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 125, CGRectGetMidY(self.frame) - 125)];
+        KeyNode *keyNode7 = [KeyNode keyNodeAtPosition:CGPointMake(CGRectGetMidX(self.frame) + 120, CGRectGetMidY(self.frame))];
         [self addChild:keyNode7];
 
         //back button
         SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
         menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) + 200);
-        menuButton.size = CGSizeMake(65, 50);
+        menuButton.size = CGSizeMake(50, 50);
         [menuButton setName:@"backButtonNode"];
         [self addChild:menuButton];
 
