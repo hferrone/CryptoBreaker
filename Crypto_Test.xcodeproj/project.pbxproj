@@ -25,7 +25,6 @@
 		36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADD19A7E96700AA29D4 /* RotorNode.m */; };
 		36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE019A7EB3600AA29D4 /* TileNode.m */; };
 		36ACCAE419A90D2700AA29D4 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE319A90D2700AA29D4 /* MenuScene.m */; };
-		36ACCB3F19A99DA700AA29D4 /* CreditsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */; };
 		36ACCB4519ABC16100AA29D4 /* WinConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */; };
 		36B7E2E119A7DCE900BFFECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E019A7DCE900BFFECC /* Foundation.framework */; };
 		36B7E2E319A7DCE900BFFECC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */; };
@@ -86,8 +85,6 @@
 		36ACCAE019A7EB3600AA29D4 /* TileNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileNode.m; sourceTree = "<group>"; };
 		36ACCAE219A90D2700AA29D4 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
 		36ACCAE319A90D2700AA29D4 /* MenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
-		36ACCB3D19A99DA700AA29D4 /* CreditsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsScene.h; sourceTree = "<group>"; };
-		36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsScene.m; sourceTree = "<group>"; };
 		36ACCB4319ABC16100AA29D4 /* WinConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinConditionScene.h; sourceTree = "<group>"; };
 		36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinConditionScene.m; sourceTree = "<group>"; };
 		36B7E2DD19A7DCE900BFFECC /* Crypto_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crypto_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,8 +162,6 @@
 				36BAAA2819BF4D8400C51644 /* StoryScene.m */,
 				36B7E31F19A7DF8A00BFFECC /* MainGameScene.h */,
 				36B7E32019A7DF8A00BFFECC /* MainGameScene.m */,
-				36ACCB3D19A99DA700AA29D4 /* CreditsScene.h */,
-				36ACCB3E19A99DA700AA29D4 /* CreditsScene.m */,
 				2576B33C19BE25A500F83703 /* TutorialScene1.h */,
 				2576B33D19BE25A500F83703 /* TutorialScene1.m */,
 				2576B33F19BE2FA400F83703 /* TutorialScene2.h */,
@@ -307,9 +302,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		36B7E2DC19A7DCE900BFFECC /* Crypto_Test */ = {
+		36B7E2DC19A7DCE900BFFECC /* Crypto */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 36B7E31619A7DCE900BFFECC /* Build configuration list for PBXNativeTarget "Crypto_Test" */;
+			buildConfigurationList = 36B7E31619A7DCE900BFFECC /* Build configuration list for PBXNativeTarget "Crypto" */;
 			buildPhases = (
 				36B7E2D919A7DCE900BFFECC /* Sources */,
 				36B7E2DA19A7DCE900BFFECC /* Frameworks */,
@@ -319,7 +314,7 @@
 			);
 			dependencies = (
 			);
-			name = Crypto_Test;
+			name = Crypto;
 			productName = Crypto_Test;
 			productReference = 36B7E2DD19A7DCE900BFFECC /* Crypto_Test.app */;
 			productType = "com.apple.product-type.application";
@@ -369,7 +364,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				36B7E2DC19A7DCE900BFFECC /* Crypto_Test */,
+				36B7E2DC19A7DCE900BFFECC /* Crypto */,
 				36B7E30419A7DCE900BFFECC /* Crypto_TestTests */,
 			);
 		};
@@ -419,7 +414,6 @@
 				36ACCB4519ABC16100AA29D4 /* WinConditionScene.m in Sources */,
 				36ACCADB19A7E48500AA29D4 /* KeyNode.m in Sources */,
 				36ACCAE419A90D2700AA29D4 /* MenuScene.m in Sources */,
-				36ACCB3F19A99DA700AA29D4 /* CreditsScene.m in Sources */,
 				36B7E32119A7DF8A00BFFECC /* MainGameScene.m in Sources */,
 				36B7E31E19A7DD1C00BFFECC /* TitleScene.m in Sources */,
 				362CA8C419B7915E00EE09CE /* Utilities.m in Sources */,
@@ -442,7 +436,7 @@
 /* Begin PBXTargetDependency section */
 		36B7E30B19A7DCE900BFFECC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 36B7E2DC19A7DCE900BFFECC /* Crypto_Test */;
+			target = 36B7E2DC19A7DCE900BFFECC /* Crypto */;
 			targetProxy = 36B7E30A19A7DCE900BFFECC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -626,7 +620,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		36B7E31619A7DCE900BFFECC /* Build configuration list for PBXNativeTarget "Crypto_Test" */ = {
+		36B7E31619A7DCE900BFFECC /* Build configuration list for PBXNativeTarget "Crypto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				36B7E31719A7DCE900BFFECC /* Debug */,

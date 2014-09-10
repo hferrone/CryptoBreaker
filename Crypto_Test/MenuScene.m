@@ -30,18 +30,18 @@
 
         //new game UI button
         SKSpriteNode *newGameButton = [SKSpriteNode spriteNodeWithImageNamed: @"NewGameButton"];
-        newGameButton.size = CGSizeMake(75, 65);
+        newGameButton.size = CGSizeMake(85, 65);
         [newGameButton setName:@"newGame"];
-        [newGameButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 120)];
+        [newGameButton setPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 25)];
         [self addChild:newGameButton];
         //We don't want our action to wait until the entire sound file is played.
         //self.pressStartSFX = [SKAction playSoundFileNamed:@"" waitForCompletion:NO];
 
         //profile UI button
         SKSpriteNode *tutorialButton = [SKSpriteNode spriteNodeWithImageNamed: @"TutorialButton"];
-        tutorialButton.size = CGSizeMake(75, 65);
+        tutorialButton.size = CGSizeMake(85, 65);
         [tutorialButton setName:@"tutorial"];
-        [tutorialButton setPosition:CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) + 30)];
+        [tutorialButton setPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 150)];
         [self addChild:tutorialButton];
     }
 
