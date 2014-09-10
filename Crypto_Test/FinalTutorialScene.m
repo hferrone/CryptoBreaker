@@ -28,7 +28,7 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     MenuScene *toMenuScene= [MenuScene sceneWithSize:self.frame.size];
-    SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+    SKTransition *transition = [SKTransition fadeWithDuration:0.5];
 
     [self.view presentScene:toMenuScene transition:transition];
 

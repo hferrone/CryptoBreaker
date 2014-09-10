@@ -22,7 +22,7 @@
 
         [self addChild:background];
 
-        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:1.0];
+        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:0.0];
     }
     return self;
 }
@@ -31,7 +31,7 @@
 {
     //segue to next scene - menu scene
     MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];
-    SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+    SKTransition *transition = [SKTransition fadeWithDuration:1.5];
     [self.view presentScene:menuScene transition:transition];
 }
 

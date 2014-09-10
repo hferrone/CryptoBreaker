@@ -7,7 +7,6 @@
 //
 
 #import "MenuScene.h"
-#import "CreditsScene.h"
 #import "TutorialScene1.h"
 #import "StoryScene.h"
 
@@ -62,16 +61,12 @@
     if ([node.name isEqualToString:@"newGame"])
     {
         StoryScene *storyScene = [StoryScene sceneWithSize:self.frame.size];
-        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+        SKTransition *transition = [SKTransition fadeWithDuration:0.5];
         [self.view presentScene:storyScene transition:transition];
     }else if ([node.name isEqualToString:@"tutorial"]){
         TutorialScene1 *tutorial1 = [TutorialScene1 sceneWithSize:self.frame.size];
-        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+        SKTransition *transition = [SKTransition fadeWithDuration:0.5];
         [self.view presentScene:tutorial1 transition:transition];
-    }else if ([node.name isEqualToString:@"credits"]){
-        CreditsScene *creditScene = [CreditsScene sceneWithSize:self.frame.size];
-        SKTransition *transition = [SKTransition fadeWithDuration:1.0];
-        [self.view presentScene:creditScene transition:transition];
     }
 }
 

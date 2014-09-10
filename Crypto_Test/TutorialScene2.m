@@ -27,7 +27,7 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     FinalTutorialScene *toTutorial3 = [FinalTutorialScene sceneWithSize:self.frame.size];
-    SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+    SKTransition *transition = [SKTransition fadeWithDuration:0.5];
 
     [self.view presentScene:toTutorial3 transition:transition];
 }
