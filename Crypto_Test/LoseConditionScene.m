@@ -56,7 +56,7 @@
     [self.loseConditionMusic stop];
 
     //segue to main menu and game reset
-    if ([node.name isEqualToString:@"restartButtonNode"])
+    if ([node.name isEqualToString:@"backButtonNode"])
     {
         MenuScene *menuScene = [MenuScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:1.0];

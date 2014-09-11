@@ -205,14 +205,56 @@ static NSString * const nonVowelString = @"nonVowel";
     TileNode *nodeI = [TileNode spriteNodeWithImageNamed:@"I"];
     nodeI.name = vowelString;
 
+    TileNode *nodeJ = [TileNode spriteNodeWithImageNamed:@"J"];
+    nodeJ.name = nonVowelString;
+
+    TileNode *nodeK = [TileNode spriteNodeWithImageNamed:@"K"];
+    nodeK.name = nonVowelString;
+
+    TileNode *nodeL = [TileNode spriteNodeWithImageNamed:@"L"];
+    nodeL.name = nonVowelString;
+
+    TileNode *nodeM = [TileNode spriteNodeWithImageNamed:@"M"];
+    nodeM.name = nonVowelString;
+
+    TileNode *nodeN = [TileNode spriteNodeWithImageNamed:@"N"];
+    nodeN.name = nonVowelString;
+
     TileNode *nodeO = [TileNode spriteNodeWithImageNamed:@"O"];
     nodeO.name = vowelString;
+
+    TileNode *nodeP = [TileNode spriteNodeWithImageNamed:@"P"];
+    nodeP.name = nonVowelString;
+
+    TileNode *nodeQ = [TileNode spriteNodeWithImageNamed:@"Q"];
+    nodeQ.name = nonVowelString;
+
+    TileNode *nodeR = [TileNode spriteNodeWithImageNamed:@"R"];
+    nodeR.name = nonVowelString;
+
+    TileNode *nodeS = [TileNode spriteNodeWithImageNamed:@"S"];
+    nodeS.name = nonVowelString;
+
+    TileNode *nodeT = [TileNode spriteNodeWithImageNamed:@"T"];
+    nodeT.name = nonVowelString;
 
     TileNode *nodeU= [TileNode spriteNodeWithImageNamed:@"U"];
     nodeU.name = vowelString;
 
+    TileNode *nodeV = [TileNode spriteNodeWithImageNamed:@"V"];
+    nodeV.name = nonVowelString;
+
+    TileNode *nodeW = [TileNode spriteNodeWithImageNamed:@"W"];
+    nodeW.name = nonVowelString;
+
+    TileNode *nodeX = [TileNode spriteNodeWithImageNamed:@"X"];
+    nodeX.name = nonVowelString;
+
     TileNode *nodeY = [TileNode spriteNodeWithImageNamed:@"Y"];
     nodeY.name = vowelString;
+
+    TileNode *nodeZ = [TileNode spriteNodeWithImageNamed:@"Z"];
+    nodeZ.name = nonVowelString;
 
     NSArray *tileImagesArray = @[nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG, nodeH, nodeI, nodeO, nodeU, nodeY];
     int randomTileGenerator = arc4random_uniform(11);
