@@ -465,6 +465,9 @@ static NSString * const nonVowelString = @"nonVowel";
     //segue to next scene - menu scene
     WinConditionScene *winScene = [WinConditionScene sceneWithSize:self.frame.size];
     SKTransition *transition = [SKTransition fadeWithDuration:1.0];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.levelLocation forKey:@"levelLocation"];
+    [defaults synchronize];
     [self.view presentScene:winScene transition:transition];
 }
 

@@ -13,6 +13,7 @@
 @interface WinConditionScene ()
 
 @property AVAudioPlayer *winConditionScene;
+@property (strong, nonatomic) NSString *levelLocation;
 
 @end
 
@@ -21,6 +22,9 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size])
     {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        self.levelLocation = [defaults stringForKey:@"levelLocation"];
+
         //background setup
         SKSpriteNode *creditBackground = [SKSpriteNode spriteNodeWithImageNamed:@"WinSceneBackground"];
         creditBackground.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
