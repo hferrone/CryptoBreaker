@@ -14,9 +14,9 @@
 +(instancetype)keyNodeAtPosition:(CGPoint)position
 {
     //custom class properties for generic yellow nodes in UI
-    KeyNode *keyTile = [KeyNode spriteNodeWithImageNamed:@"key"];
+    KeyNode *keyTile = [KeyNode spriteNodeWithImageNamed:@"BlankTile"];
     keyTile.position = position;
-    keyTile.size = CGSizeMake(25, 65);
+    keyTile.size = CGSizeMake(30, 75);
     keyTile.anchorPoint = CGPointMake(0.5, 0.5);
     keyTile.name = @"keyNode";
 

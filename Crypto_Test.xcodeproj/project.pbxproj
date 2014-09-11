@@ -17,15 +17,15 @@
 		2576B34419BE504B00F83703 /* FinalTutorialScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2576B34319BE504B00F83703 /* FinalTutorialScene.m */; };
 		2598099319BA14BC00CBA2DF /* StartScreen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099219BA14BC00CBA2DF /* StartScreen.mp3 */; };
 		2598099519BA14CD00CBA2DF /* GameOver copy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099419BA14CD00CBA2DF /* GameOver copy.mp3 */; };
-		2598099719BA174F00CBA2DF /* Victory Fanfare.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2598099619BA174F00CBA2DF /* Victory Fanfare.mp3 */; };
 		25BC3FF719AEE9E400719EDB /* LoseConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */; };
-		362CA8C119B6341300EE09CE /* CryptoImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 362CA8C019B6341300EE09CE /* CryptoImages.atlas */; };
 		362CA8C419B7915E00EE09CE /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 362CA8C319B7915E00EE09CE /* Utilities.m */; };
 		36ACCADB19A7E48500AA29D4 /* KeyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADA19A7E48500AA29D4 /* KeyNode.m */; };
 		36ACCADE19A7E96700AA29D4 /* RotorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCADD19A7E96700AA29D4 /* RotorNode.m */; };
 		36ACCAE119A7EB3600AA29D4 /* TileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE019A7EB3600AA29D4 /* TileNode.m */; };
 		36ACCAE419A90D2700AA29D4 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCAE319A90D2700AA29D4 /* MenuScene.m */; };
 		36ACCB4519ABC16100AA29D4 /* WinConditionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */; };
+		36B28A7F19C1452C006CDD25 /* CryptoImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 36B28A7E19C1452C006CDD25 /* CryptoImages.atlas */; };
+		36B5F96919C1CD47001BA464 /* export2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 36B5F96819C1CD47001BA464 /* export2.caf */; };
 		36B7E2E119A7DCE900BFFECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E019A7DCE900BFFECC /* Foundation.framework */; };
 		36B7E2E319A7DCE900BFFECC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */; };
 		36B7E2E519A7DCE900BFFECC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B7E2E419A7DCE900BFFECC /* UIKit.framework */; };
@@ -71,10 +71,8 @@
 		2576B34319BE504B00F83703 /* FinalTutorialScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalTutorialScene.m; sourceTree = "<group>"; };
 		2598099219BA14BC00CBA2DF /* StartScreen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = StartScreen.mp3; sourceTree = "<group>"; };
 		2598099419BA14CD00CBA2DF /* GameOver copy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "GameOver copy.mp3"; sourceTree = "<group>"; };
-		2598099619BA174F00CBA2DF /* Victory Fanfare.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Victory Fanfare.mp3"; sourceTree = "<group>"; };
 		25BC3FF519AEE9E400719EDB /* LoseConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoseConditionScene.h; sourceTree = "<group>"; };
 		25BC3FF619AEE9E400719EDB /* LoseConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoseConditionScene.m; sourceTree = "<group>"; };
-		362CA8C019B6341300EE09CE /* CryptoImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = CryptoImages.atlas; sourceTree = "<group>"; };
 		362CA8C219B7915E00EE09CE /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		362CA8C319B7915E00EE09CE /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		36ACCAD919A7E48500AA29D4 /* KeyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyNode.h; sourceTree = "<group>"; };
@@ -87,7 +85,10 @@
 		36ACCAE319A90D2700AA29D4 /* MenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
 		36ACCB4319ABC16100AA29D4 /* WinConditionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinConditionScene.h; sourceTree = "<group>"; };
 		36ACCB4419ABC16100AA29D4 /* WinConditionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinConditionScene.m; sourceTree = "<group>"; };
-		36B7E2DD19A7DCE900BFFECC /* Crypto_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crypto_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		36B28A7E19C1452C006CDD25 /* CryptoImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = CryptoImages.atlas; sourceTree = "<group>"; };
+		36B5F96819C1CD47001BA464 /* export2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = export2.caf; sourceTree = "<group>"; };
+		36B5F97019C1E614001BA464 /* Title.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Title.mp3; sourceTree = "<group>"; };
+		36B7E2DD19A7DCE900BFFECC /* Crypto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crypto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36B7E2E019A7DCE900BFFECC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		36B7E2E219A7DCE900BFFECC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		36B7E2E419A7DCE900BFFECC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -144,9 +145,10 @@
 		2598099119BA14AE00CBA2DF /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				36B5F97019C1E614001BA464 /* Title.mp3 */,
+				36B5F96819C1CD47001BA464 /* export2.caf */,
 				2598099419BA14CD00CBA2DF /* GameOver copy.mp3 */,
 				2598099219BA14BC00CBA2DF /* StartScreen.mp3 */,
-				2598099619BA174F00CBA2DF /* Victory Fanfare.mp3 */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -233,7 +235,7 @@
 		36B7E2DE19A7DCE900BFFECC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				36B7E2DD19A7DCE900BFFECC /* Crypto_Test.app */,
+				36B7E2DD19A7DCE900BFFECC /* Crypto.app */,
 				36B7E30519A7DCE900BFFECC /* Crypto_TestTests.xctest */,
 			);
 			name = Products;
@@ -261,8 +263,8 @@
 				362CA8C819B94C2000EE09CE /* Boiler Plate */,
 				362CA8C719B94C0000EE09CE /* Particle System */,
 				362CA8C919B94C3200EE09CE /* Utilities & Constants */,
-				362CA8C019B6341300EE09CE /* CryptoImages.atlas */,
 				36B7E2FF19A7DCE900BFFECC /* Images.xcassets */,
+				36B28A7E19C1452C006CDD25 /* CryptoImages.atlas */,
 				251982DC19B7F2F3009AA435 /* pause@2x~iphone copy.png */,
 				251982D519B79BEE009AA435 /* spark.png */,
 				36B7E2E919A7DCE900BFFECC /* Supporting Files */,
@@ -316,7 +318,7 @@
 			);
 			name = Crypto;
 			productName = Crypto_Test;
-			productReference = 36B7E2DD19A7DCE900BFFECC /* Crypto_Test.app */;
+			productReference = 36B7E2DD19A7DCE900BFFECC /* Crypto.app */;
 			productType = "com.apple.product-type.application";
 		};
 		36B7E30419A7DCE900BFFECC /* Crypto_TestTests */ = {
@@ -375,15 +377,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				362CA8C119B6341300EE09CE /* CryptoImages.atlas in Resources */,
 				2598099519BA14CD00CBA2DF /* GameOver copy.mp3 in Resources */,
 				251982D719B79BEE009AA435 /* spark.png in Resources */,
 				36B7E2ED19A7DCE900BFFECC /* InfoPlist.strings in Resources */,
-				2598099719BA174F00CBA2DF /* Victory Fanfare.mp3 in Resources */,
 				2598099319BA14BC00CBA2DF /* StartScreen.mp3 in Resources */,
 				36B7E30019A7DCE900BFFECC /* Images.xcassets in Resources */,
 				36B7E2F619A7DCE900BFFECC /* Main.storyboard in Resources */,
 				251982D619B79BEE009AA435 /* TileParticle.sks in Resources */,
+				36B5F96919C1CD47001BA464 /* export2.caf in Resources */,
+				36B28A7F19C1452C006CDD25 /* CryptoImages.atlas in Resources */,
 				251982DD19B7F2F3009AA435 /* pause@2x~iphone copy.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

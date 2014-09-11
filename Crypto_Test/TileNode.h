@@ -13,6 +13,7 @@
 //made label a property so that it can be accessed without iterating through nodes children in MainGameScene
 @property SKLabelNode *comboLabel;
 @property BOOL isMovable;
+@property BOOL hasFirstContact;
 
 //custom initializing method w/ position, comboScore, tileArray, and initalCombo
 +(instancetype)tileNodeAtPosition:(CGPoint)position tileComboScore:(NSInteger)comboScore tileArray:(NSArray*)array randomNumber:(int)randomNumber initialCombo:(NSInteger)initCombo;

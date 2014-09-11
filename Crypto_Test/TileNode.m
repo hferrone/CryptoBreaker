@@ -24,14 +24,15 @@
     //custom node properties
     TileNode *tileNode = [array objectAtIndex:randomNumber];
     tileNode.position = position;
-    tileNode.size = CGSizeMake(23, 63);
+    tileNode.size = CGSizeMake(30, 70);
+    tileNode.hasFirstContact = NO;
 
     //using label property from .h file and parenting to generated tileNode
     tileNode.comboLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
     tileNode.comboLabel.fontColor = [UIColor whiteColor];
     tileNode.comboLabel.text = [NSString stringWithFormat: @"%d",initCombo];
-    tileNode.comboLabel.fontSize = 12;
-    tileNode.comboLabel.position = CGPointMake(13, 45);
+    tileNode.comboLabel.fontSize = 18;
+    tileNode.comboLabel.position = CGPointMake(15, 45);
 
     [tileNode setupPhysicsBody];
     [tileNode addChild:tileNode.comboLabel];

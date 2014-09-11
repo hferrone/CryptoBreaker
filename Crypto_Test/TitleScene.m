@@ -9,6 +9,11 @@
 #import "TitleScene.h"
 #import "MenuScene.h"
 
+@interface TitleScene ()
+
+@end
+
+
 @implementation TitleScene
 
 -(id)initWithSize:(CGSize)size {
@@ -16,13 +21,13 @@
     {
         //background setup and segue with fade
         SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"TitleSceneBackground"];
-        background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 50);
-        background.size = CGSizeMake(350, 225);
+        background.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) + 125);
+        background.size = CGSizeMake(325, 200);
         background.color = [UIColor blackColor];
 
         [self addChild:background];
 
-        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:0.0];
+        [self performSelector:@selector(segueToMenu) withObject:self.view afterDelay:1.0];
     }
     return self;
 }

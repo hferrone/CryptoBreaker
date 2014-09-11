@@ -29,7 +29,6 @@
 {
     MenuScene *toMenuScene= [MenuScene sceneWithSize:self.frame.size];
     SKTransition *transition = [SKTransition fadeWithDuration:0.5];
-
     [self.view presentScene:toMenuScene transition:transition];
 
 }

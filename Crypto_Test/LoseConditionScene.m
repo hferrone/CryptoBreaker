@@ -22,16 +22,16 @@
     if (self = [super initWithSize:size])
     {
         //background setup
-        SKSpriteNode *creditBackground = [SKSpriteNode spriteNodeWithImageNamed:@"LoseSceneBackground"];
+        SKSpriteNode *creditBackground = [SKSpriteNode spriteNodeWithImageNamed:@"LoseSceenBackground"];
         creditBackground.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         creditBackground.size = CGSizeMake(320, 568);
         [self addChild:creditBackground];
 
         //back button
         SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
-        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 80, CGRectGetMidY(self.frame) - 50);
-        menuButton.size = CGSizeMake(75, 65);
-        [menuButton setName:@"restartButtonNode"];
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 140, CGRectGetMidY(self.frame) - 225);
+        menuButton.size = CGSizeMake(25, 65);
+        [menuButton setName:@"backButtonNode"];
         [self addChild:menuButton];
     }
 
@@ -52,6 +52,8 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
+
+    [self.loseConditionMusic stop];
 
     //segue to main menu and game reset
     if ([node.name isEqualToString:@"restartButtonNode"])

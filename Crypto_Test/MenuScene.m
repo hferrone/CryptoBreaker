@@ -9,9 +9,12 @@
 #import "MenuScene.h"
 #import "TutorialScene1.h"
 #import "StoryScene.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface MenuScene ()
 @property (nonatomic) SKAction *pressStartSFX;
+@property (nonatomic) AVAudioPlayer *titleMusic;
+
 
 @end
 
@@ -42,6 +45,13 @@
         [tutorialButton setName:@"tutorial"];
         [tutorialButton setPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 150)];
         [self addChild:tutorialButton];
+
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"Victory Fanfare" withExtension:@"mp3"];
+        self.titleMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        self.titleMusic.numberOfLoops = -1;
+        [self.titleMusic prepareToPlay];
+        [self.titleMusic play];
+
     }
 
     return self;
@@ -60,6 +70,7 @@
     //checking to see what label is touched and performing connected segue to correct scene
     if ([node.name isEqualToString:@"newGame"])
     {
+        [self.titleMusic stop];
         StoryScene *storyScene = [StoryScene sceneWithSize:self.frame.size];
         SKTransition *transition = [SKTransition fadeWithDuration:0.5];
         [self.view presentScene:storyScene transition:transition];

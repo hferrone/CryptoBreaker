@@ -33,8 +33,10 @@ static NSString * const nonVowelString = @"nonVowel";
 
 @property CGPoint positionInScene;
 @property (nonatomic) SKAction *tileLock;
+@property (nonatomic) SKAction *tileLockSFX;
 
 @property int contactCounter;
+@property int contactTimer;
 
 @property NSString *levelLocation;
 
@@ -84,6 +86,7 @@ static NSString * const nonVowelString = @"nonVowel";
         self.levelScore = 0;
         self.gameStartTimer = NO;
         self.contactCounter = 0;
+        self.contactTimer = 0;
 
         //background setup
         SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"MainGameSceneBackground"];
@@ -116,8 +119,8 @@ static NSString * const nonVowelString = @"nonVowel";
 
         //back button
         SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed: @"BackButton"];
-        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) + 200);
-        menuButton.size = CGSizeMake(50, 50);
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame) - 140, CGRectGetMidY(self.frame) - 225);
+        menuButton.size = CGSizeMake(25, 65);
         [menuButton setName:@"backButtonNode"];
         [self addChild:menuButton];
 
@@ -125,31 +128,31 @@ static NSString * const nonVowelString = @"nonVowel";
         [self generateLocationCodeAndDifficulty];
 
         //timer lable
-        self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+        self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Times New Roman"];
         self.timerLabel.text = [NSString stringWithFormat:@"%ld", (long)self.levelScore];
         self.timerLabel.fontColor = [UIColor whiteColor];
-        self.timerLabel.fontSize = 16;
-        self.timerLabel.text = @"Ready";
-        self.timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 125, CGRectGetMidY(self.frame) + 250);
+        self.timerLabel.fontSize = 26;
+        self.timerLabel.text = @"TIME";
+        self.timerLabel.position = CGPointMake(CGRectGetMidX(self.frame) - 90, CGRectGetMidY(self.frame) - 235);
         [self addChild:self.timerLabel];
 
 //        PauseButtonNode *pauseButton = [PauseButtonNode pauseButtonLocation:CGPointMake(CGRectGetMidX(self.frame) + 125, CGRectGetMidX(self.frame) - 150)];
 //        [self addChild:pauseButton];
 
         //score label
-        self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+        self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Times New Roman"];
         self.scoreLabel.text = [NSString stringWithFormat: @"Score: %d",self.levelScore];
         self.scoreLabel.fontColor = [UIColor whiteColor];
-        self.scoreLabel.fontSize = 14;
-        self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 120, CGRectGetMidY(self.frame) + 250);
+        self.scoreLabel.fontSize = 22;
+        self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 105, CGRectGetMidY(self.frame) + 250);
         [self addChild: self.scoreLabel];
 
         //code break countdown setup
-        self.countDownLabelNode = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+        self.countDownLabelNode = [SKLabelNode labelNodeWithFontNamed:@"Times New Roman"];
         self.countDownLabelNode.fontColor = [UIColor whiteColor];
-        self.countDownLabelNode.fontSize = 14;
+        self.countDownLabelNode.fontSize = 22;
         self.countDownLabelNode.text = [NSString stringWithFormat:@"Breaks: %d", self.breakCountdown];
-        self.countDownLabelNode.position = CGPointMake(CGRectGetMidX(self.frame) + 120, CGRectGetMidY(self.frame) + 200);
+        self.countDownLabelNode.position = CGPointMake(CGRectGetMidX(self.frame) + 115, CGRectGetMidY(self.frame) + 200);
         self.countDownSpriteNode.name = @"Cat";
         [self addChild: self.countDownLabelNode];
 
@@ -163,6 +166,10 @@ static NSString * const nonVowelString = @"nonVowel";
         self.backgroundMusic.numberOfLoops = -1;
         [self.backgroundMusic prepareToPlay];
         [self.backgroundMusic play];
+
+        //Setting up Sound SFX
+        self.tileLockSFX = [SKAction playSoundFileNamed:@"export2.caf" waitForCompletion:NO];
+
     }
     return self;
 }
@@ -231,7 +238,7 @@ static NSString * const nonVowelString = @"nonVowel";
     self.breakCountdown = randomBreakCount;
 
     //Randomely selecting timer time for each game
-    int randomTime = arc4random_uniform(46) + 15;
+    int randomTime = arc4random_uniform(12) + 25;
     self.randomTime = randomTime;
 }
 
@@ -275,11 +282,17 @@ static NSString * const nonVowelString = @"nonVowel";
     }
 
     //Timer logic.
-    for (UITouch *touch in touches){
+    for (UITouch *touch in touches)
+    {
         CGPoint location = [touch locationInNode:_selectedNode];
-        if (CGRectContainsPoint(self.frame, location)){
-            self.startGame = YES;
-            self.gameStartTimer = YES;
+        if (CGRectContainsPoint(self.frame, location))
+        {
+            self.contactTimer++;
+            if (self.contactTimer == 1)
+            {
+                self.startGame = YES;
+                self.gameStartTimer = YES;
+            }
         }
     }
 
@@ -303,9 +316,13 @@ static NSString * const nonVowelString = @"nonVowel";
     int countDownInt = self.randomTime - (int)(currentTime - self.startTime);
 
     if (self.gameStartTimer) {
-        if (countDownInt>0){
-            self.timerLabel.text = [NSString stringWithFormat:@"%i", countDownInt];
-        }else if (countDownInt == 0) {
+        if (countDownInt > 10){
+            self.timerLabel.text = [NSString stringWithFormat:@"0:%i", countDownInt];
+        }else if(countDownInt < 10 && countDownInt > 0)
+        {
+            self.timerLabel.text = [NSString stringWithFormat:@"0:0%i", countDownInt];
+        }
+        else if (countDownInt == 0) {
             self.timerLabel.text = [NSString stringWithFormat:@"%@", @"TIME"];
             [self segueToLose];
         }
@@ -341,6 +358,12 @@ static NSString * const nonVowelString = @"nonVowel";
 #pragma End Contact Physics Behavior
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+//    if (!_selectedNode.hasFirstContact)
+//    {
+//        [self generateNewTile];
+//        _selectedNode.hasFirstContact = YES;
+//    }
+
     if(self.hasCollidedAndScored)
     {
         [self updateScore];
@@ -379,6 +402,8 @@ static NSString * const nonVowelString = @"nonVowel";
 -(void)setSelectedNodePositionToDestination
 {
     _selectedNode.position = _blankTileNode.position;
+    [self runAction:self.tileLockSFX];
+    [self createNodeEmitter:_blankTileNode.position];
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
@@ -401,7 +426,6 @@ static NSString * const nonVowelString = @"nonVowel";
             [self generateNewTile];
         }
         self.hasCollidedAndScored = YES;
-
     }
     //condition for tile and tile contact
     else if (contact.bodyA.categoryBitMask == contact.bodyB.categoryBitMask)
@@ -578,4 +602,14 @@ static NSString * const nonVowelString = @"nonVowel";
     NSLog(@"view is %hhd",view.paused);
 }
 
+-(void)createNodeEmitter:(CGPoint)position
+{
+    NSString *emitterString = [[NSBundle mainBundle] pathForResource:@"TileParticle" ofType:@"sks"];
+    SKEmitterNode *emitter = [NSKeyedUnarchiver unarchiveObjectWithFile:emitterString];
+    emitter.position = position;
+
+    [emitter runAction:[SKAction waitForDuration:1.0] completion:^{
+        [self removeFromParent];
+    }];
+}
 @end
